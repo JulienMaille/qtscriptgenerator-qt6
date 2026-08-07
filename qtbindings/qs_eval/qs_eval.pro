@@ -1,0 +1,10 @@
+QT = core gui network script scripttools sql uitools widgets
+QT.script.libs = $$(QTSCRIPT_PREFIX)/lib
+QT.script.includes = $$(QTSCRIPT_PREFIX)/include $$(QTSCRIPT_PREFIX)/include/QtScript
+QT.script.bins = $$(QTSCRIPT_PREFIX)/bin
+QT.scripttools.libs = $$(QTSCRIPT_PREFIX)/lib
+QT.scripttools.includes = $$(QTSCRIPT_PREFIX)/include $$(QTSCRIPT_PREFIX)/include/QtScriptTools
+QT.scripttools.bins = $$(QTSCRIPT_PREFIX)/bin
+win32: CONFIG += console
+mac:CONFIG -= app_bundle
+SOURCES += main.cpp

@@ -1,0 +1,11 @@
+TEMPLATE = lib
+DEPENDPATH += .
+INCLUDEPATH += . $$PWD/include
+DESTDIR = $$PWD/../plugins/script
+QT += script
+QT.script.libs = $$(QTSCRIPT_PREFIX)/lib
+QT.script.includes = $$(QTSCRIPT_PREFIX)/include $$(QTSCRIPT_PREFIX)/include/QtScript
+QT.script.bins = $$(QTSCRIPT_PREFIX)/bin
+CONFIG += debug_and_release no_batch
+GENERATEDCPP = $$PWD/../generated_cpp
+TARGET=$$qtLibraryTarget($$TARGET)
