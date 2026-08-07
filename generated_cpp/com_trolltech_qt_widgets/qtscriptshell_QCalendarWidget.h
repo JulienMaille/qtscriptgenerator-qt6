@@ -23,7 +23,7 @@ public:
     void dragLeaveEvent(QDragLeaveEvent*  arg__1);
     void dragMoveEvent(QDragMoveEvent*  arg__1);
     void dropEvent(QDropEvent*  arg__1);
-    void enterEvent(QEvent*  arg__1);
+    void enterEvent(QEnterEvent*  arg__1);
     bool  event(QEvent*  event);
     bool  eventFilter(QObject*  watched, QEvent*  event);
     void focusInEvent(QFocusEvent*  arg__1);
@@ -45,7 +45,7 @@ public:
     void mousePressEvent(QMouseEvent*  event);
     void mouseReleaseEvent(QMouseEvent*  arg__1);
     void moveEvent(QMoveEvent*  arg__1);
-    bool  nativeEvent(const QByteArray&  eventType, void*  message, long*  result);
+    bool  nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result);
     void paintCell(QPainter*  painter, const QRect&  rect, const QDate&  date) const;
     QPaintEngine*  paintEngine() const;
     void paintEvent(QPaintEvent*  arg__1);

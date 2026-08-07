@@ -210,9 +210,9 @@ struct QMetaTypeId< QMap<int,QVariant > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QMap<int,QVariant > >("QMap<int,QVariant >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QMap<int,QVariant > >("QMap<int,QVariant >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 Q_DECLARE_METATYPE(QTextBlockFormat)
@@ -490,7 +490,6 @@ static const QTextFormat::FormatType qtscript_QTextFormat_FormatType_values[] = 
     , QTextFormat::BlockFormat
     , QTextFormat::CharFormat
     , QTextFormat::ListFormat
-    , QTextFormat::TableFormat
     , QTextFormat::FrameFormat
     , QTextFormat::UserFormat
 };
@@ -500,7 +499,6 @@ static const char * const qtscript_QTextFormat_FormatType_keys[] = {
     , "BlockFormat"
     , "CharFormat"
     , "ListFormat"
-    , "TableFormat"
     , "FrameFormat"
     , "UserFormat"
 };
@@ -556,7 +554,7 @@ static QScriptValue qtscript_create_QTextFormat_FormatType_class(QScriptEngine *
         qtscript_QTextFormat_FormatType_valueOf, qtscript_QTextFormat_FormatType_toString);
     qScriptRegisterMetaType<QTextFormat::FormatType>(engine, qtscript_QTextFormat_FormatType_toScriptValue,
         qtscript_QTextFormat_FormatType_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < 6; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QTextFormat_FormatType_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QTextFormat_FormatType_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -654,14 +652,14 @@ static void qtscript_QTextFormat_PageBreakFlags_fromScriptValue(const QScriptVal
     else if (var.userType() == qMetaTypeId<QTextFormat::PageBreakFlag>())
         out = qvariant_cast<QTextFormat::PageBreakFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QTextFormat_PageBreakFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QTextFormat::PageBreakFlags result = 0;
+    QTextFormat::PageBreakFlags result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QTextFormat::PageBreakFlags>(context->argument(0).toInt32());
+        result = QTextFormat::PageBreakFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

@@ -37,6 +37,7 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <qregexp.h>
+#include <qregularexpression.h>
 #include <qregion.h>
 #include <qscrollbar.h>
 #include <qsize.h>
@@ -301,14 +302,14 @@ static void qtscript_QTextEdit_AutoFormatting_fromScriptValue(const QScriptValue
     else if (var.userType() == qMetaTypeId<QTextEdit::AutoFormattingFlag>())
         out = qvariant_cast<QTextEdit::AutoFormattingFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QTextEdit_AutoFormatting(QScriptContext *context, QScriptEngine *engine)
 {
-    QTextEdit::AutoFormatting result = 0;
+    QTextEdit::AutoFormatting result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QTextEdit::AutoFormatting>(context->argument(0).toInt32());
+        result = QTextEdit::AutoFormatting::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -547,9 +548,9 @@ static QScriptValue qtscript_QTextEdit_prototype_call(QScriptContext *context, Q
 
     case 10:
     if (context->argumentCount() == 1) {
-        if (context->argument(0).isRegExp()) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
-            bool _q_result = _q_self->find(_q_arg0);
+        if (qtscriptIsRegExp(context->argument(0))) {
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
+            bool _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0));
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
@@ -558,11 +559,11 @@ static QScriptValue qtscript_QTextEdit_prototype_call(QScriptContext *context, Q
         }
     }
     if (context->argumentCount() == 2) {
-        if (context->argument(0).isRegExp()
+        if (qtscriptIsRegExp(context->argument(0))
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(1).toVariant().userType())) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             QFlags<QTextDocument::FindFlag> _q_arg1 = qscriptvalue_cast<QFlags<QTextDocument::FindFlag> >(context->argument(1));
-            bool _q_result = _q_self->find(_q_arg0, _q_arg1);
+            bool _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1);
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(1).toVariant().userType())) {

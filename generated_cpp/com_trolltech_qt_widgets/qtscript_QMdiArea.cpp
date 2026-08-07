@@ -226,14 +226,14 @@ static void qtscript_QMdiArea_AreaOptions_fromScriptValue(const QScriptValue &va
     else if (var.userType() == qMetaTypeId<QMdiArea::AreaOption>())
         out = qvariant_cast<QMdiArea::AreaOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QMdiArea_AreaOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QMdiArea::AreaOptions result = 0;
+    QMdiArea::AreaOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QMdiArea::AreaOptions>(context->argument(0).toInt32());
+        result = QMdiArea::AreaOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

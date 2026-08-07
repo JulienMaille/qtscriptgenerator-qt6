@@ -425,7 +425,6 @@ static const QFileDialog::FileMode qtscript_QFileDialog_FileMode_values[] = {
     , QFileDialog::ExistingFile
     , QFileDialog::Directory
     , QFileDialog::ExistingFiles
-    , QFileDialog::DirectoryOnly
 };
 
 static const char * const qtscript_QFileDialog_FileMode_keys[] = {
@@ -433,7 +432,6 @@ static const char * const qtscript_QFileDialog_FileMode_keys[] = {
     , "ExistingFile"
     , "Directory"
     , "ExistingFiles"
-    , "DirectoryOnly"
 };
 
 static QString qtscript_QFileDialog_FileMode_toStringHelper(QFileDialog::FileMode value)
@@ -487,7 +485,7 @@ static QScriptValue qtscript_create_QFileDialog_FileMode_class(QScriptEngine *en
         qtscript_QFileDialog_FileMode_valueOf, qtscript_QFileDialog_FileMode_toString);
     qScriptRegisterMetaType<QFileDialog::FileMode>(engine, qtscript_QFileDialog_FileMode_toScriptValue,
         qtscript_QFileDialog_FileMode_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 4; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QFileDialog_FileMode_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QFileDialog_FileMode_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -576,7 +574,6 @@ static const QFileDialog::Option qtscript_QFileDialog_Option_values[] = {
     QFileDialog::ShowDirsOnly
     , QFileDialog::DontResolveSymlinks
     , QFileDialog::DontConfirmOverwrite
-    , QFileDialog::DontUseSheet
     , QFileDialog::DontUseNativeDialog
     , QFileDialog::ReadOnly
     , QFileDialog::HideNameFilterDetails
@@ -587,7 +584,6 @@ static const char * const qtscript_QFileDialog_Option_keys[] = {
     "ShowDirsOnly"
     , "DontResolveSymlinks"
     , "DontConfirmOverwrite"
-    , "DontUseSheet"
     , "DontUseNativeDialog"
     , "ReadOnly"
     , "HideNameFilterDetails"
@@ -645,7 +641,7 @@ static QScriptValue qtscript_create_QFileDialog_Option_class(QScriptEngine *engi
         qtscript_QFileDialog_Option_valueOf, qtscript_QFileDialog_Option_toString);
     qScriptRegisterMetaType<QFileDialog::Option>(engine, qtscript_QFileDialog_Option_toScriptValue,
         qtscript_QFileDialog_Option_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QFileDialog_Option_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QFileDialog_Option_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -670,14 +666,14 @@ static void qtscript_QFileDialog_Options_fromScriptValue(const QScriptValue &val
     else if (var.userType() == qMetaTypeId<QFileDialog::Option>())
         out = qvariant_cast<QFileDialog::Option>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QFileDialog_Options(QScriptContext *context, QScriptEngine *engine)
 {
-    QFileDialog::Options result = 0;
+    QFileDialog::Options result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QFileDialog::Options>(context->argument(0).toInt32());
+        result = QFileDialog::Options::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -701,7 +697,7 @@ static QScriptValue qtscript_QFileDialog_Options_toString(QScriptContext *contex
 {
     QFileDialog::Options value = qscriptvalue_cast<QFileDialog::Options>(context->thisObject());
     QString result;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         if ((value & qtscript_QFileDialog_Option_values[i]) == qtscript_QFileDialog_Option_values[i]) {
             if (!result.isEmpty())
                 result.append(QString::fromLatin1(","));
@@ -785,14 +781,14 @@ static QScriptValue qtscript_QFileDialog_prototype_call(QScriptContext *context,
 
     case 4:
     if (context->argumentCount() == 0) {
-        QFileIconProvider* _q_result = _q_self->iconProvider();
+        QFileIconProvider* _q_result = dynamic_cast<QFileIconProvider*>(_q_self->iconProvider());
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
     case 5:
     if (context->argumentCount() == 0) {
-        bool _q_result = _q_self->isNameFilterDetailsVisible();
+        bool _q_result = !_q_self->testOption(QFileDialog::HideNameFilterDetails);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -994,7 +990,7 @@ static QScriptValue qtscript_QFileDialog_prototype_call(QScriptContext *context,
     case 30:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setNameFilterDetailsVisible(_q_arg0);
+        _q_self->setOption(QFileDialog::HideNameFilterDetails, !_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

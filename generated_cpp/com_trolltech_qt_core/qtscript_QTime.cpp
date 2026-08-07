@@ -10,6 +10,14 @@
 #include <QVariant>
 #include <qdatetime.h>
 
+// Keep returned QTime values on the generated QVariant prototype so value
+// methods remain usable with the Qt 6 QtScript conversion layer.
+static QScriptValue qtscript_QTime_value(QScriptEngine *engine,
+                                         const QTime &value)
+{
+    return engine->newVariant(qVariantFromValue(value));
+}
+
 static const char * const qtscript_QTime_function_names[] = {
     "QTime"
     // static
@@ -138,7 +146,7 @@ static QScriptValue qtscript_QTime_prototype_call(QScriptContext *context, QScri
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         QTime _q_result = _q_self->addMSecs(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QTime_value(context->engine(), _q_result);
     }
     break;
 
@@ -146,13 +154,13 @@ static QScriptValue qtscript_QTime_prototype_call(QScriptContext *context, QScri
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         QTime _q_result = _q_self->addSecs(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QTime_value(context->engine(), _q_result);
     }
     break;
 
     case 2:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->elapsed();
+        int _q_result = _q_self->msecsTo(QTime::currentTime());
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -210,7 +218,7 @@ static QScriptValue qtscript_QTime_prototype_call(QScriptContext *context, QScri
     case 10:
     if (context->argumentCount() == 1) {
         QTime _q_arg0 = qscriptvalue_cast<QTime>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -218,14 +226,16 @@ static QScriptValue qtscript_QTime_prototype_call(QScriptContext *context, QScri
     case 11:
     if (context->argumentCount() == 1) {
         QTime _q_arg0 = qscriptvalue_cast<QTime>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        bool _q_result = (*_q_self < _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 12:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->restart();
+        const QTime now = QTime::currentTime();
+        int _q_result = _q_self->msecsTo(now);
+        *_q_self = now;
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -265,7 +275,7 @@ static QScriptValue qtscript_QTime_prototype_call(QScriptContext *context, QScri
 
     case 16:
     if (context->argumentCount() == 0) {
-        _q_self->start();
+        *_q_self = QTime::currentTime();
         return context->engine()->undefinedValue();
     }
     break;
@@ -337,7 +347,7 @@ static QScriptValue qtscript_QTime_static_call(QScriptContext *context, QScriptE
     case 1:
     if (context->argumentCount() == 0) {
         QTime _q_result = QTime::currentTime();
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QTime_value(context->engine(), _q_result);
     }
     break;
 
@@ -345,7 +355,7 @@ static QScriptValue qtscript_QTime_static_call(QScriptContext *context, QScriptE
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         QTime _q_result = QTime::fromMSecsSinceStartOfDay(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QTime_value(context->engine(), _q_result);
     }
     break;
 
@@ -353,7 +363,7 @@ static QScriptValue qtscript_QTime_static_call(QScriptContext *context, QScriptE
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         QTime _q_result = QTime::fromString(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QTime_value(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         if (context->argument(0).isString()
@@ -361,13 +371,13 @@ static QScriptValue qtscript_QTime_static_call(QScriptContext *context, QScriptE
             QString _q_arg0 = context->argument(0).toString();
             Qt::DateFormat _q_arg1 = qscriptvalue_cast<Qt::DateFormat>(context->argument(1));
             QTime _q_result = QTime::fromString(_q_arg0, _q_arg1);
-            return qScriptValueFromValue(context->engine(), _q_result);
+            return qtscript_QTime_value(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && context->argument(1).isString()) {
             QString _q_arg0 = context->argument(0).toString();
             QString _q_arg1 = context->argument(1).toString();
             QTime _q_result = QTime::fromString(_q_arg0, _q_arg1);
-            return qScriptValueFromValue(context->engine(), _q_result);
+            return qtscript_QTime_value(context->engine(), _q_result);
         }
     }
     break;

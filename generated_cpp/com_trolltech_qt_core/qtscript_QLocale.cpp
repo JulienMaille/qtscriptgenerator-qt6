@@ -1607,14 +1607,14 @@ static void qtscript_QLocale_NumberOptions_fromScriptValue(const QScriptValue &v
     else if (var.userType() == qMetaTypeId<QLocale::NumberOption>())
         out = qvariant_cast<QLocale::NumberOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QLocale_NumberOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QLocale::NumberOptions result = 0;
+    QLocale::NumberOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QLocale::NumberOptions>(context->argument(0).toInt32());
+        result = QLocale::NumberOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -2451,7 +2451,7 @@ static QScriptValue qtscript_QLocale_prototype_call(QScriptContext *context, QSc
     case 20:
     if (context->argumentCount() == 1) {
         QLocale _q_arg0 = qscriptvalue_cast<QLocale>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

@@ -89,9 +89,9 @@ struct QMetaTypeId< QPair<qreal,QColor > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QPair<qreal,QColor > >("QPair<qreal,QColor >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QPair<qreal,QColor > >("QPair<qreal,QColor >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -101,9 +101,9 @@ struct QMetaTypeId< QVector<QPair<qreal,QColor > > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QVector<QPair<qreal,QColor > > >("QVector<QPair<qreal,QColor > >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QVector<QPair<qreal,QColor > > >("QVector<QPair<qreal,QColor > >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 

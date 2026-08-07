@@ -16,7 +16,6 @@
 
 Q_DECLARE_METATYPE(QChildEvent*)
 Q_DECLARE_METATYPE(QEvent*)
-Q_DECLARE_METATYPE(QVariant::Type)
 Q_DECLARE_METATYPE(QTimerEvent*)
 
 QtScriptShell_QMimeData::QtScriptShell_QMimeData()
@@ -106,7 +105,7 @@ bool  QtScriptShell_QMimeData::hasFormat(const QString&  mimetype) const
     }
 }
 
-QVariant  QtScriptShell_QMimeData::retrieveData(const QString&  mimetype, QVariant::Type  preferredType) const
+QVariant  QtScriptShell_QMimeData::retrieveData(const QString&  mimetype, QMetaType  preferredType) const
 {
     QScriptValue _q_function = __qtscript_self.property("retrieveData");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)

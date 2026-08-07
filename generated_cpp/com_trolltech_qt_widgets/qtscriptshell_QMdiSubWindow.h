@@ -9,7 +9,7 @@
 class QtScriptShell_QMdiSubWindow : public QMdiSubWindow
 {
 public:
-    QtScriptShell_QMdiSubWindow(QWidget*  parent = 0, Qt::WindowFlags  flags = 0);
+    QtScriptShell_QMdiSubWindow(QWidget*  parent = 0, Qt::WindowFlags  flags = {});
     ~QtScriptShell_QMdiSubWindow();
 
     void actionEvent(QActionEvent*  arg__1);
@@ -23,7 +23,7 @@ public:
     void dragLeaveEvent(QDragLeaveEvent*  arg__1);
     void dragMoveEvent(QDragMoveEvent*  arg__1);
     void dropEvent(QDropEvent*  arg__1);
-    void enterEvent(QEvent*  arg__1);
+    void enterEvent(QEnterEvent*  arg__1);
     bool  event(QEvent*  event);
     bool  eventFilter(QObject*  object, QEvent*  event);
     void focusInEvent(QFocusEvent*  focusInEvent);
@@ -44,7 +44,7 @@ public:
     void mousePressEvent(QMouseEvent*  mouseEvent);
     void mouseReleaseEvent(QMouseEvent*  mouseEvent);
     void moveEvent(QMoveEvent*  moveEvent);
-    bool  nativeEvent(const QByteArray&  eventType, void*  message, long*  result);
+    bool  nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result);
     QPaintEngine*  paintEngine() const;
     void paintEvent(QPaintEvent*  paintEvent);
     QPaintDevice*  redirected(QPoint*  offset) const;

@@ -26,7 +26,6 @@ QScriptValue qtscript_create_QPaintEngineState_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPixmapCache_Key_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QVector2D_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QFontMetrics_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QTouchEvent_TouchPoint_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBlock_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGradient_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextDocumentWriter_class(QScriptEngine *engine);
@@ -41,7 +40,6 @@ QScriptValue qtscript_create_QTextFormat_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRegion_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPalette_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QColor_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QPictureIO_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextLayout_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QQuaternion_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QVector4D_class(QScriptEngine *engine);
@@ -93,13 +91,10 @@ QScriptValue qtscript_create_QTextDocument_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QCloseEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextImageFormat_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDoubleValidator_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QWheelEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QContextMenuEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextTableCellFormat_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QRegExpValidator_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextTableFormat_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBlockGroup_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QTabletEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QMouseEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QKeyEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextFrame_class(QScriptEngine *engine);
@@ -138,7 +133,6 @@ static const char * const qtscript_com_trolltech_qt_gui_class_names[] = {
     , "QPixmapCache_Key"
     , "QVector2D"
     , "QFontMetrics"
-    , "QTouchEvent_TouchPoint"
     , "QTextBlock"
     , "QGradient"
     , "QTextDocumentWriter"
@@ -153,7 +147,6 @@ static const char * const qtscript_com_trolltech_qt_gui_class_names[] = {
     , "QRegion"
     , "QPalette"
     , "QColor"
-    , "QPictureIO"
     , "QTextLayout"
     , "QQuaternion"
     , "QVector4D"
@@ -205,13 +198,10 @@ static const char * const qtscript_com_trolltech_qt_gui_class_names[] = {
     , "QCloseEvent"
     , "QTextImageFormat"
     , "QDoubleValidator"
-    , "QWheelEvent"
     , "QContextMenuEvent"
     , "QTextTableCellFormat"
-    , "QRegExpValidator"
     , "QTextTableFormat"
     , "QTextBlockGroup"
-    , "QTabletEvent"
     , "QMouseEvent"
     , "QKeyEvent"
     , "QTextFrame"
@@ -252,7 +242,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
     , qtscript_create_QPixmapCache_Key_class
     , qtscript_create_QVector2D_class
     , qtscript_create_QFontMetrics_class
-    , qtscript_create_QTouchEvent_TouchPoint_class
     , qtscript_create_QTextBlock_class
     , qtscript_create_QGradient_class
     , qtscript_create_QTextDocumentWriter_class
@@ -267,7 +256,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
     , qtscript_create_QRegion_class
     , qtscript_create_QPalette_class
     , qtscript_create_QColor_class
-    , qtscript_create_QPictureIO_class
     , qtscript_create_QTextLayout_class
     , qtscript_create_QQuaternion_class
     , qtscript_create_QVector4D_class
@@ -319,13 +307,10 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
     , qtscript_create_QCloseEvent_class
     , qtscript_create_QTextImageFormat_class
     , qtscript_create_QDoubleValidator_class
-    , qtscript_create_QWheelEvent_class
     , qtscript_create_QContextMenuEvent_class
     , qtscript_create_QTextTableCellFormat_class
-    , qtscript_create_QRegExpValidator_class
     , qtscript_create_QTextTableFormat_class
     , qtscript_create_QTextBlockGroup_class
-    , qtscript_create_QTabletEvent_class
     , qtscript_create_QMouseEvent_class
     , qtscript_create_QKeyEvent_class
     , qtscript_create_QTextFrame_class
@@ -342,7 +327,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
 void qtscript_initialize_com_trolltech_qt_gui_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 110; ++i) {
+    for (int i = 0; i < 105; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_gui_class_names[i],
             qtscript_com_trolltech_qt_gui_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

@@ -337,7 +337,8 @@ static QScriptValue qtscript_QTextLine_prototype_call(QScriptContext *context, Q
         QPainter* _q_arg0 = qscriptvalue_cast<QPainter*>(context->argument(0));
         QPointF _q_arg1 = qscriptvalue_cast<QPointF>(context->argument(1));
         const QTextLayout::FormatRange* _q_arg2 = qscriptvalue_cast<const QTextLayout::FormatRange*>(context->argument(2));
-        _q_self->draw(_q_arg0, _q_arg1, _q_arg2);
+        Q_UNUSED(_q_arg2);
+        _q_self->draw(_q_arg0, _q_arg1);
         return context->engine()->undefinedValue();
     }
     break;

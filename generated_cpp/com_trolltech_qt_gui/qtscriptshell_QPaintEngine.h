@@ -9,7 +9,7 @@
 class QtScriptShell_QPaintEngine : public QPaintEngine
 {
 public:
-    QtScriptShell_QPaintEngine(QPaintEngine::PaintEngineFeatures  features = 0);
+    QtScriptShell_QPaintEngine(QPaintEngine::PaintEngineFeatures  features = QPaintEngine::PaintEngineFeatures());
     ~QtScriptShell_QPaintEngine();
 
     bool  begin(QPaintDevice*  pdev);

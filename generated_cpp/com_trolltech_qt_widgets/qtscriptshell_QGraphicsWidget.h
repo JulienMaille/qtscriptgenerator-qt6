@@ -9,7 +9,7 @@
 class QtScriptShell_QGraphicsWidget : public QGraphicsWidget
 {
 public:
-    QtScriptShell_QGraphicsWidget(QGraphicsItem*  parent = 0, Qt::WindowFlags  wFlags = 0);
+    QtScriptShell_QGraphicsWidget(QGraphicsItem*  parent = 0, Qt::WindowFlags  wFlags = {});
     ~QtScriptShell_QGraphicsWidget();
 
     void advance(int  phase);

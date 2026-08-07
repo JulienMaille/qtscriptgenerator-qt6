@@ -242,14 +242,14 @@ static void qtscript_QMdiSubWindow_SubWindowOptions_fromScriptValue(const QScrip
     else if (var.userType() == qMetaTypeId<QMdiSubWindow::SubWindowOption>())
         out = qvariant_cast<QMdiSubWindow::SubWindowOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QMdiSubWindow_SubWindowOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QMdiSubWindow::SubWindowOptions result = 0;
+    QMdiSubWindow::SubWindowOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QMdiSubWindow::SubWindowOptions>(context->argument(0).toInt32());
+        result = QMdiSubWindow::SubWindowOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

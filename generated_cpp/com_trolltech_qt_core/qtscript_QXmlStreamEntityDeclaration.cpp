@@ -62,7 +62,6 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_throw_ambiguity_error_h
 
 Q_DECLARE_METATYPE(QXmlStreamEntityDeclaration)
 Q_DECLARE_METATYPE(QXmlStreamEntityDeclaration*)
-Q_DECLARE_METATYPE(QStringRef)
 
 //
 // QXmlStreamEntityDeclaration
@@ -92,7 +91,7 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_prototype_call(QScriptC
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->name();
+        QStringView _q_result = _q_self->name();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -103,7 +102,7 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_prototype_call(QScriptC
 
     case 1:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->notationName();
+        QStringView _q_result = _q_self->notationName();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -115,14 +114,14 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_prototype_call(QScriptC
     case 2:
     if (context->argumentCount() == 1) {
         QXmlStreamEntityDeclaration _q_arg0 = qscriptvalue_cast<QXmlStreamEntityDeclaration>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 3:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->publicId();
+        QStringView _q_result = _q_self->publicId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -133,7 +132,7 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_prototype_call(QScriptC
 
     case 4:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->systemId();
+        QStringView _q_result = _q_self->systemId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -144,7 +143,7 @@ static QScriptValue qtscript_QXmlStreamEntityDeclaration_prototype_call(QScriptC
 
     case 5:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->value();
+        QStringView _q_result = _q_self->value();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();

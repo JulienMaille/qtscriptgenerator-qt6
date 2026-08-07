@@ -260,14 +260,14 @@ static void qtscript_QDialogButtonBox_StandardButtons_fromScriptValue(const QScr
     else if (var.userType() == qMetaTypeId<QDialogButtonBox::StandardButton>())
         out = qvariant_cast<QDialogButtonBox::StandardButton>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QDialogButtonBox_StandardButtons(QScriptContext *context, QScriptEngine *engine)
 {
-    QDialogButtonBox::StandardButtons result = 0;
+    QDialogButtonBox::StandardButtons result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QDialogButtonBox::StandardButtons>(context->argument(0).toInt32());
+        result = QDialogButtonBox::StandardButtons::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

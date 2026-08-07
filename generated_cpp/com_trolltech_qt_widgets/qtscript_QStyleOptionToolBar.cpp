@@ -372,14 +372,14 @@ static void qtscript_QStyleOptionToolBar_ToolBarFeatures_fromScriptValue(const Q
     else if (var.userType() == qMetaTypeId<QStyleOptionToolBar::ToolBarFeature>())
         out = qvariant_cast<QStyleOptionToolBar::ToolBarFeature>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyleOptionToolBar_ToolBarFeatures(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyleOptionToolBar::ToolBarFeatures result = 0;
+    QStyleOptionToolBar::ToolBarFeatures result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyleOptionToolBar::ToolBarFeatures>(context->argument(0).toInt32());
+        result = QStyleOptionToolBar::ToolBarFeatures::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

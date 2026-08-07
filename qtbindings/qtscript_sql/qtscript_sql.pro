@@ -3,6 +3,7 @@ include(../qtbindingsbase.pri)
 QT -= gui
 QT += sql
 SOURCES += plugin.cpp
-HEADERS += plugin.h
+HEADERS += plugin.h \
+           include/qsql.h
 INCLUDEPATH += ./include/
 include($$GENERATEDCPP/com_trolltech_qt_sql/com_trolltech_qt_sql.pri)

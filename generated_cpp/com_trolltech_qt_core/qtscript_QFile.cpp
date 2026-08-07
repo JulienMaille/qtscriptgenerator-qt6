@@ -42,6 +42,7 @@ static const char * const qtscript_QFile_function_names[] = {
     , "rename"
     , "setFileName"
     , "symLinkTarget"
+    , "write"
     , "toString"
 };
 
@@ -52,7 +53,7 @@ static const char * const qtscript_QFile_function_signatures[] = {
     , "QByteArray localFileName"
     , "String fileName"
     , "String fileName"
-    , "String oldname, String newName"
+    , "String oldName, String newName"
     , "String filename"
     , "String fileName"
     , "String fileName"
@@ -71,6 +72,7 @@ static const char * const qtscript_QFile_function_signatures[] = {
     , "String newName"
     , "String name"
     , ""
+    , "QByteArray data\nchar data"
 ""
 };
 
@@ -100,6 +102,7 @@ static const int qtscript_QFile_function_lengths[] = {
     , 1
     , 1
     , 0
+    , 1
     , 0
 };
 
@@ -120,6 +123,7 @@ Q_DECLARE_METATYPE(QFlags<QIODevice::OpenModeFlag>)
 Q_DECLARE_METATYPE(QFlags<QFileDevice::FileHandleFlag>)
 Q_DECLARE_METATYPE(QFlags<QFileDevice::Permission>)
 Q_DECLARE_METATYPE(QFileDevice*)
+Q_DECLARE_METATYPE(const char*)
 
 //
 // QFile
@@ -200,7 +204,7 @@ static QScriptValue qtscript_QFile_prototype_call(QScriptContext *context, QScri
 
     case 5:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->readLink();
+        QString _q_result = _q_self->symLinkTarget();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -235,7 +239,21 @@ static QScriptValue qtscript_QFile_prototype_call(QScriptContext *context, QScri
     }
     break;
 
-    case 10: {
+    case 10:
+    if (context->argumentCount() == 1) {
+        if ((qMetaTypeId<QByteArray>() == context->argument(0).toVariant().userType())) {
+            QByteArray _q_arg0 = qscriptvalue_cast<QByteArray>(context->argument(0));
+            qint64 _q_result = _q_self->write(_q_arg0);
+            return qScriptValueFromValue(context->engine(), _q_result);
+        } else if (qscriptvalue_cast<const char*>(context->argument(0))) {
+            const char* _q_arg0 = qscriptvalue_cast<const char*>(context->argument(0));
+            qint64 _q_result = _q_self->write(_q_arg0);
+            return qScriptValueFromValue(context->engine(), _q_result);
+        }
+    }
+    break;
+
+    case 11: {
     QString result = QString::fromLatin1("QFile");
     return QScriptValue(context->engine(), result);
     }
@@ -340,7 +358,7 @@ static QScriptValue qtscript_QFile_static_call(QScriptContext *context, QScriptE
     case 7:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
-        QString _q_result = QFile::readLink(_q_arg0);
+        QString _q_result = QFile::symLinkTarget(_q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -411,7 +429,7 @@ QScriptValue qtscript_create_QFile_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QFile*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QFile*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QFileDevice*>()));
-    for (int i = 0; i < 11; ++i) {
+    for (int i = 0; i < 12; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QFile_prototype_call, qtscript_QFile_function_lengths[i+13]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QFile_function_names[i+13]),

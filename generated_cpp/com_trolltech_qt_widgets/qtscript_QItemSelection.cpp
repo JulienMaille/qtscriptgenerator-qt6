@@ -189,7 +189,6 @@ Q_DECLARE_METATYPE(QItemSelection*)
 Q_DECLARE_METATYPE(QList<QItemSelectionRange >)
 //Q_DECLARE_METATYPE(QList<QModelIndex >)
 Q_DECLARE_METATYPE(QFlags<QItemSelectionModel::SelectionFlag>)
-Q_DECLARE_METATYPE(QVector<QItemSelectionRange >)
 
 //
 // QItemSelection
@@ -276,7 +275,7 @@ static QScriptValue qtscript_QItemSelection_prototype_call(QScriptContext *conte
 
     case 6:
     if (context->argumentCount() == 0) {
-        _q_self->detachShared();
+        // Qt 6 containers detach automatically on mutation.
         return context->engine()->undefinedValue();
     }
     break;
@@ -411,7 +410,7 @@ static QScriptValue qtscript_QItemSelection_prototype_call(QScriptContext *conte
     if (context->argumentCount() == 1) {
         QList<QItemSelectionRange> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -521,7 +520,7 @@ static QScriptValue qtscript_QItemSelection_prototype_call(QScriptContext *conte
     case 35:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setSharable(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -551,7 +550,7 @@ static QScriptValue qtscript_QItemSelection_prototype_call(QScriptContext *conte
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
         int _q_arg1 = context->argument(1).toInt32();
-        _q_self->swap(_q_arg0, _q_arg1);
+        _q_self->swapItemsAt(_q_arg0, _q_arg1);
         return context->engine()->undefinedValue();
     }
     break;

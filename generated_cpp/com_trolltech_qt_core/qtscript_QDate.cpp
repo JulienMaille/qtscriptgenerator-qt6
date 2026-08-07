@@ -7,8 +7,41 @@
 #include <__package_shared.h>
 
 #include <qdatetime.h>
+#include <qlocale.h>
 #include <QVariant>
 #include <qdatetime.h>
+
+// Preserve the generated QDate value prototype. Qt 6's QtScript port has a
+// built-in JavaScript-Date conversion that is not suitable for this binding's
+// QDate methods and can hang when returned temporaries are finalized.
+static QScriptValue qtscript_QDate_value(QScriptEngine *engine,
+                                         const QDate &value)
+{
+    return engine->newVariant(qVariantFromValue(value));
+}
+
+enum QtBindingsQDateMonthNameType {
+    QtBindingsDateFormat,
+    QtBindingsStandaloneFormat
+};
+
+static QString qtbindings_qdate_dayName(int day, QtBindingsQDateMonthNameType type,
+                                        QLocale::FormatType format)
+{
+    const QLocale locale;
+    return type == QtBindingsStandaloneFormat
+        ? locale.standaloneDayName(day, format)
+        : locale.dayName(day, format);
+}
+
+static QString qtbindings_qdate_monthName(int month, QtBindingsQDateMonthNameType type,
+                                          QLocale::FormatType format)
+{
+    const QLocale locale;
+    return type == QtBindingsStandaloneFormat
+        ? locale.standaloneMonthName(month, format)
+        : locale.monthName(month, format);
+}
 
 static const char * const qtscript_QDate_function_names[] = {
     "QDate"
@@ -127,7 +160,7 @@ static QScriptValue qtscript_QDate_throw_ambiguity_error_helper(
 }
 
 Q_DECLARE_METATYPE(QDate*)
-Q_DECLARE_METATYPE(QDate::MonthNameType)
+Q_DECLARE_METATYPE(QtBindingsQDateMonthNameType)
 Q_DECLARE_METATYPE(int*)
 Q_DECLARE_METATYPE(Qt::DateFormat)
 
@@ -146,12 +179,12 @@ static QScriptValue qtscript_create_enum_class_helper(
 }
 
 //
-// QDate::MonthNameType
+// QtBindingsQDateMonthNameType
 //
 
-static const QDate::MonthNameType qtscript_QDate_MonthNameType_values[] = {
-    QDate::DateFormat
-    , QDate::StandaloneFormat
+static const QtBindingsQDateMonthNameType qtscript_QDate_MonthNameType_values[] = {
+    QtBindingsDateFormat
+    , QtBindingsStandaloneFormat
 };
 
 static const char * const qtscript_QDate_MonthNameType_keys[] = {
@@ -159,41 +192,41 @@ static const char * const qtscript_QDate_MonthNameType_keys[] = {
     , "StandaloneFormat"
 };
 
-static QString qtscript_QDate_MonthNameType_toStringHelper(QDate::MonthNameType value)
+static QString qtscript_QDate_MonthNameType_toStringHelper(QtBindingsQDateMonthNameType value)
 {
-    if ((value >= QDate::DateFormat) && (value <= QDate::StandaloneFormat))
-        return qtscript_QDate_MonthNameType_keys[static_cast<int>(value)-static_cast<int>(QDate::DateFormat)];
+    if ((value >= QtBindingsDateFormat) && (value <= QtBindingsStandaloneFormat))
+        return qtscript_QDate_MonthNameType_keys[static_cast<int>(value)-static_cast<int>(QtBindingsDateFormat)];
     return QString();
 }
 
-static QScriptValue qtscript_QDate_MonthNameType_toScriptValue(QScriptEngine *engine, const QDate::MonthNameType &value)
+static QScriptValue qtscript_QDate_MonthNameType_toScriptValue(QScriptEngine *engine, const QtBindingsQDateMonthNameType &value)
 {
     QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QDate"));
     return clazz.property(qtscript_QDate_MonthNameType_toStringHelper(value));
 }
 
-static void qtscript_QDate_MonthNameType_fromScriptValue(const QScriptValue &value, QDate::MonthNameType &out)
+static void qtscript_QDate_MonthNameType_fromScriptValue(const QScriptValue &value, QtBindingsQDateMonthNameType &out)
 {
-    out = qvariant_cast<QDate::MonthNameType>(value.toVariant());
+    out = qvariant_cast<QtBindingsQDateMonthNameType>(value.toVariant());
 }
 
 static QScriptValue qtscript_construct_QDate_MonthNameType(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    if ((arg >= QDate::DateFormat) && (arg <= QDate::StandaloneFormat))
-        return qScriptValueFromValue(engine,  static_cast<QDate::MonthNameType>(arg));
+    if ((arg >= QtBindingsDateFormat) && (arg <= QtBindingsStandaloneFormat))
+        return qScriptValueFromValue(engine,  static_cast<QtBindingsQDateMonthNameType>(arg));
     return context->throwError(QString::fromLatin1("MonthNameType(): invalid enum value (%0)").arg(arg));
 }
 
 static QScriptValue qtscript_QDate_MonthNameType_valueOf(QScriptContext *context, QScriptEngine *engine)
 {
-    QDate::MonthNameType value = qscriptvalue_cast<QDate::MonthNameType>(context->thisObject());
+    QtBindingsQDateMonthNameType value = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->thisObject());
     return QScriptValue(engine, static_cast<int>(value));
 }
 
 static QScriptValue qtscript_QDate_MonthNameType_toString(QScriptContext *context, QScriptEngine *engine)
 {
-    QDate::MonthNameType value = qscriptvalue_cast<QDate::MonthNameType>(context->thisObject());
+    QtBindingsQDateMonthNameType value = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->thisObject());
     return QScriptValue(engine, qtscript_QDate_MonthNameType_toStringHelper(value));
 }
 
@@ -202,7 +235,7 @@ static QScriptValue qtscript_create_QDate_MonthNameType_class(QScriptEngine *eng
     QScriptValue ctor = qtscript_create_enum_class_helper(
         engine, qtscript_construct_QDate_MonthNameType,
         qtscript_QDate_MonthNameType_valueOf, qtscript_QDate_MonthNameType_toString);
-    qScriptRegisterMetaType<QDate::MonthNameType>(engine, qtscript_QDate_MonthNameType_toScriptValue,
+    qScriptRegisterMetaType<QtBindingsQDateMonthNameType>(engine, qtscript_QDate_MonthNameType_toScriptValue,
         qtscript_QDate_MonthNameType_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
     for (int i = 0; i < 2; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QDate_MonthNameType_keys[i]),
@@ -242,7 +275,7 @@ static QScriptValue qtscript_QDate_prototype_call(QScriptContext *context, QScri
     if (context->argumentCount() == 1) {
         qint64 _q_arg0 = qscriptvalue_cast<qint64>(context->argument(0));
         QDate _q_result = _q_self->addDays(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     break;
 
@@ -250,7 +283,7 @@ static QScriptValue qtscript_QDate_prototype_call(QScriptContext *context, QScri
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         QDate _q_result = _q_self->addMonths(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     break;
 
@@ -258,7 +291,7 @@ static QScriptValue qtscript_QDate_prototype_call(QScriptContext *context, QScri
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         QDate _q_result = _q_self->addYears(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     break;
 
@@ -339,7 +372,7 @@ static QScriptValue qtscript_QDate_prototype_call(QScriptContext *context, QScri
     case 13:
     if (context->argumentCount() == 1) {
         QDate _q_arg0 = qscriptvalue_cast<QDate>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -347,7 +380,7 @@ static QScriptValue qtscript_QDate_prototype_call(QScriptContext *context, QScri
     case 14:
     if (context->argumentCount() == 1) {
         QDate _q_arg0 = qscriptvalue_cast<QDate>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        bool _q_result = (*_q_self < _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -441,7 +474,7 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     case 1:
     if (context->argumentCount() == 0) {
         QDate _q_result = QDate::currentDate();
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     break;
 
@@ -449,7 +482,7 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     if (context->argumentCount() == 1) {
         qint64 _q_arg0 = qscriptvalue_cast<qint64>(context->argument(0));
         QDate _q_result = QDate::fromJulianDay(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     break;
 
@@ -457,7 +490,7 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         QDate _q_result = QDate::fromString(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return qtscript_QDate_value(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         if (context->argument(0).isString()
@@ -465,13 +498,13 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
             QString _q_arg0 = context->argument(0).toString();
             Qt::DateFormat _q_arg1 = qscriptvalue_cast<Qt::DateFormat>(context->argument(1));
             QDate _q_result = QDate::fromString(_q_arg0, _q_arg1);
-            return qScriptValueFromValue(context->engine(), _q_result);
+            return qtscript_QDate_value(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && context->argument(1).isString()) {
             QString _q_arg0 = context->argument(0).toString();
             QString _q_arg1 = context->argument(1).toString();
             QDate _q_result = QDate::fromString(_q_arg0, _q_arg1);
-            return qScriptValueFromValue(context->engine(), _q_result);
+            return qtscript_QDate_value(context->engine(), _q_result);
         }
     }
     break;
@@ -497,13 +530,13 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     case 6:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        QString _q_result = QDate::longDayName(_q_arg0);
+        QString _q_result = qtbindings_qdate_dayName(_q_arg0, QtBindingsDateFormat, QLocale::LongFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
-        QDate::MonthNameType _q_arg1 = qscriptvalue_cast<QDate::MonthNameType>(context->argument(1));
-        QString _q_result = QDate::longDayName(_q_arg0, _q_arg1);
+        QtBindingsQDateMonthNameType _q_arg1 = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->argument(1));
+        QString _q_result = qtbindings_qdate_dayName(_q_arg0, _q_arg1, QLocale::LongFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -511,13 +544,13 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     case 7:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        QString _q_result = QDate::longMonthName(_q_arg0);
+        QString _q_result = qtbindings_qdate_monthName(_q_arg0, QtBindingsDateFormat, QLocale::LongFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
-        QDate::MonthNameType _q_arg1 = qscriptvalue_cast<QDate::MonthNameType>(context->argument(1));
-        QString _q_result = QDate::longMonthName(_q_arg0, _q_arg1);
+        QtBindingsQDateMonthNameType _q_arg1 = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->argument(1));
+        QString _q_result = qtbindings_qdate_monthName(_q_arg0, _q_arg1, QLocale::LongFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -525,13 +558,13 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     case 8:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        QString _q_result = QDate::shortDayName(_q_arg0);
+        QString _q_result = qtbindings_qdate_dayName(_q_arg0, QtBindingsDateFormat, QLocale::ShortFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
-        QDate::MonthNameType _q_arg1 = qscriptvalue_cast<QDate::MonthNameType>(context->argument(1));
-        QString _q_result = QDate::shortDayName(_q_arg0, _q_arg1);
+        QtBindingsQDateMonthNameType _q_arg1 = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->argument(1));
+        QString _q_result = qtbindings_qdate_dayName(_q_arg0, _q_arg1, QLocale::ShortFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -539,13 +572,13 @@ static QScriptValue qtscript_QDate_static_call(QScriptContext *context, QScriptE
     case 9:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        QString _q_result = QDate::shortMonthName(_q_arg0);
+        QString _q_result = qtbindings_qdate_monthName(_q_arg0, QtBindingsDateFormat, QLocale::ShortFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
-        QDate::MonthNameType _q_arg1 = qscriptvalue_cast<QDate::MonthNameType>(context->argument(1));
-        QString _q_result = QDate::shortMonthName(_q_arg0, _q_arg1);
+        QtBindingsQDateMonthNameType _q_arg1 = qscriptvalue_cast<QtBindingsQDateMonthNameType>(context->argument(1));
+        QString _q_result = qtbindings_qdate_monthName(_q_arg0, _q_arg1, QLocale::ShortFormat);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

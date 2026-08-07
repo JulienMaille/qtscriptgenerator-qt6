@@ -45,7 +45,7 @@ static const char * const qtscript_QInputDialog_function_names[] = {
     "QInputDialog"
     // static
     , "getDouble"
-    , "getInt_private"
+    , "getInteger"
     , "getItem"
     , "getMultiLineText"
     , "getText"
@@ -342,14 +342,14 @@ static void qtscript_QInputDialog_InputDialogOptions_fromScriptValue(const QScri
     else if (var.userType() == qMetaTypeId<QInputDialog::InputDialogOption>())
         out = qvariant_cast<QInputDialog::InputDialogOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QInputDialog_InputDialogOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QInputDialog::InputDialogOptions result = 0;
+    QInputDialog::InputDialogOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QInputDialog::InputDialogOptions>(context->argument(0).toInt32());
+        result = QInputDialog::InputDialogOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

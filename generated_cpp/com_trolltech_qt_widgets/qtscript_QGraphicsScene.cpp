@@ -418,14 +418,14 @@ static void qtscript_QGraphicsScene_SceneLayers_fromScriptValue(const QScriptVal
     else if (var.userType() == qMetaTypeId<QGraphicsScene::SceneLayer>())
         out = qvariant_cast<QGraphicsScene::SceneLayer>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QGraphicsScene_SceneLayers(QScriptContext *context, QScriptEngine *engine)
 {
-    QGraphicsScene::SceneLayers result = 0;
+    QGraphicsScene::SceneLayers result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QGraphicsScene::SceneLayers>(context->argument(0).toInt32());
+        result = QGraphicsScene::SceneLayers::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -1156,7 +1156,7 @@ static QScriptValue qtscript_QGraphicsScene_prototype_call(QScriptContext *conte
             && (qMetaTypeId<Qt::ItemSelectionMode>() == context->argument(1).toVariant().userType())) {
             QPainterPath _q_arg0 = qscriptvalue_cast<QPainterPath>(context->argument(0));
             Qt::ItemSelectionMode _q_arg1 = qscriptvalue_cast<Qt::ItemSelectionMode>(context->argument(1));
-            _q_self->setSelectionArea(_q_arg0, _q_arg1);
+            _q_self->setSelectionArea(_q_arg0, Qt::ReplaceSelection, _q_arg1);
             return context->engine()->undefinedValue();
         } else if ((qMetaTypeId<QPainterPath>() == context->argument(0).toVariant().userType())
             && (qMetaTypeId<QTransform>() == context->argument(1).toVariant().userType())) {
@@ -1170,7 +1170,7 @@ static QScriptValue qtscript_QGraphicsScene_prototype_call(QScriptContext *conte
         QPainterPath _q_arg0 = qscriptvalue_cast<QPainterPath>(context->argument(0));
         Qt::ItemSelectionMode _q_arg1 = qscriptvalue_cast<Qt::ItemSelectionMode>(context->argument(1));
         QTransform _q_arg2 = qscriptvalue_cast<QTransform>(context->argument(2));
-        _q_self->setSelectionArea(_q_arg0, _q_arg1, _q_arg2);
+        _q_self->setSelectionArea(_q_arg0, Qt::ReplaceSelection, _q_arg1, _q_arg2);
         return context->engine()->undefinedValue();
     }
     break;

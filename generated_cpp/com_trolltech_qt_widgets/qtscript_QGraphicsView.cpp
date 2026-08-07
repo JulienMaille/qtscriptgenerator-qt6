@@ -29,7 +29,6 @@
 #include <qlist.h>
 #include <qlocale.h>
 #include <qmargins.h>
-#include <qmatrix.h>
 #include <qobject.h>
 #include <qpaintdevice.h>
 #include <qpaintengine.h>
@@ -106,7 +105,7 @@ static const char * const qtscript_QGraphicsView_function_signatures[] = {
     , ""
     , "qreal sx, qreal sy"
     , ""
-    , "QMatrix matrix, bool combine"
+    , "QTransform matrix, bool combine"
     , "OptimizationFlag flag, bool enabled"
     , "RenderHint hint, bool enabled"
     , "QGraphicsScene scene"
@@ -379,14 +378,14 @@ static void qtscript_QGraphicsView_CacheMode_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<QGraphicsView::CacheModeFlag>())
         out = qvariant_cast<QGraphicsView::CacheModeFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QGraphicsView_CacheMode(QScriptContext *context, QScriptEngine *engine)
 {
-    QGraphicsView::CacheMode result = 0;
+    QGraphicsView::CacheMode result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QGraphicsView::CacheMode>(context->argument(0).toInt32());
+        result = QGraphicsView::CacheMode::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -597,22 +596,20 @@ static QScriptValue qtscript_create_QGraphicsView_DragMode_class(QScriptEngine *
 //
 
 static const QGraphicsView::OptimizationFlag qtscript_QGraphicsView_OptimizationFlag_values[] = {
-    QGraphicsView::DontClipPainter
-    , QGraphicsView::DontSavePainterState
+    QGraphicsView::DontSavePainterState
     , QGraphicsView::DontAdjustForAntialiasing
     , QGraphicsView::IndirectPainting
 };
 
 static const char * const qtscript_QGraphicsView_OptimizationFlag_keys[] = {
-    "DontClipPainter"
-    , "DontSavePainterState"
+    "DontSavePainterState"
     , "DontAdjustForAntialiasing"
     , "IndirectPainting"
 };
 
 static QString qtscript_QGraphicsView_OptimizationFlag_toStringHelper(QGraphicsView::OptimizationFlag value)
 {
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         if (qtscript_QGraphicsView_OptimizationFlag_values[i] == value)
             return QString::fromLatin1(qtscript_QGraphicsView_OptimizationFlag_keys[i]);
     }
@@ -633,7 +630,7 @@ static void qtscript_QGraphicsView_OptimizationFlag_fromScriptValue(const QScrip
 static QScriptValue qtscript_construct_QGraphicsView_OptimizationFlag(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         if (qtscript_QGraphicsView_OptimizationFlag_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QGraphicsView::OptimizationFlag>(arg));
     }
@@ -659,7 +656,7 @@ static QScriptValue qtscript_create_QGraphicsView_OptimizationFlag_class(QScript
         qtscript_QGraphicsView_OptimizationFlag_valueOf, qtscript_QGraphicsView_OptimizationFlag_toString);
     qScriptRegisterMetaType<QGraphicsView::OptimizationFlag>(engine, qtscript_QGraphicsView_OptimizationFlag_toScriptValue,
         qtscript_QGraphicsView_OptimizationFlag_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QGraphicsView_OptimizationFlag_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QGraphicsView_OptimizationFlag_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -684,14 +681,14 @@ static void qtscript_QGraphicsView_OptimizationFlags_fromScriptValue(const QScri
     else if (var.userType() == qMetaTypeId<QGraphicsView::OptimizationFlag>())
         out = qvariant_cast<QGraphicsView::OptimizationFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QGraphicsView_OptimizationFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QGraphicsView::OptimizationFlags result = 0;
+    QGraphicsView::OptimizationFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QGraphicsView::OptimizationFlags>(context->argument(0).toInt32());
+        result = QGraphicsView::OptimizationFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -715,7 +712,7 @@ static QScriptValue qtscript_QGraphicsView_OptimizationFlags_toString(QScriptCon
 {
     QGraphicsView::OptimizationFlags value = qscriptvalue_cast<QGraphicsView::OptimizationFlags>(context->thisObject());
     QString result;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         if ((value & qtscript_QGraphicsView_OptimizationFlag_values[i]) == qtscript_QGraphicsView_OptimizationFlag_values[i]) {
             if (!result.isEmpty())
                 result.append(QString::fromLatin1(","));
@@ -1075,7 +1072,7 @@ static QScriptValue qtscript_QGraphicsView_prototype_call(QScriptContext *contex
 
     case 8:
     if (context->argumentCount() == 0) {
-        QMatrix _q_result = _q_self->matrix();
+        QTransform _q_result = _q_self->transform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -1118,7 +1115,7 @@ static QScriptValue qtscript_QGraphicsView_prototype_call(QScriptContext *contex
 
     case 11:
     if (context->argumentCount() == 0) {
-        _q_self->resetMatrix();
+        _q_self->resetTransform();
         return context->engine()->undefinedValue();
     }
     break;
@@ -1163,14 +1160,14 @@ static QScriptValue qtscript_QGraphicsView_prototype_call(QScriptContext *contex
 
     case 17:
     if (context->argumentCount() == 1) {
-        QMatrix _q_arg0 = qscriptvalue_cast<QMatrix>(context->argument(0));
-        _q_self->setMatrix(_q_arg0);
+        QTransform _q_arg0 = qscriptvalue_cast<QTransform>(context->argument(0));
+        _q_self->setTransform(_q_arg0);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 2) {
-        QMatrix _q_arg0 = qscriptvalue_cast<QMatrix>(context->argument(0));
+        QTransform _q_arg0 = qscriptvalue_cast<QTransform>(context->argument(0));
         bool _q_arg1 = context->argument(1).toBoolean();
-        _q_self->setMatrix(_q_arg0, _q_arg1);
+        _q_self->setTransform(_q_arg0, _q_arg1);
         return context->engine()->undefinedValue();
     }
     break;

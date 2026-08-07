@@ -26,8 +26,23 @@
 #include <qregion.h>
 #include <qsize.h>
 #include <qtransform.h>
+#include <QWidget>
+#include <QGuiApplication>
+#include <QScreen>
 
 #include "qtscriptshell_QPixmap.h"
+
+static QPixmap qtscriptGrabWidget(QObject *object, const QRect &rect = QRect(QPoint(0, 0), QSize(-1, -1)))
+{
+    QWidget *widget = qobject_cast<QWidget *>(object);
+    return widget ? widget->grab(rect) : QPixmap();
+}
+
+static QPixmap qtscriptGrabWindow(WId window, int x = 0, int y = 0, int width = -1, int height = -1)
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    return screen ? screen->grabWindow(window, x, y, width, height) : QPixmap();
+}
 
 static const char * const qtscript_QPixmap_function_names[] = {
     "QPixmap"
@@ -275,15 +290,18 @@ static QScriptValue qtscript_QPixmap_prototype_call(QScriptContext *context, QSc
     if (context->argumentCount() == 2) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
         QPoint _q_arg1 = qscriptvalue_cast<QPoint>(context->argument(1));
-        _q_self->fill(_q_arg0, _q_arg1);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        return context->throwError(QString::fromLatin1("QPixmap.fill(paintDevice, offset) was removed in Qt 6"));
     }
     if (context->argumentCount() == 3) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
-        _q_self->fill(_q_arg0, _q_arg1, _q_arg2);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        Q_UNUSED(_q_arg2);
+        return context->throwError(QString::fromLatin1("QPixmap.fill(paintDevice, x, y) was removed in Qt 6"));
     }
     break;
 
@@ -755,7 +773,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
     case 4:
     if (context->argumentCount() == 1) {
         QObject* _q_arg0 = context->argument(0).toQObject();
-        QPixmap _q_result = QPixmap::grabWidget(_q_arg0);
+        QPixmap _q_result = qtscriptGrabWidget(_q_arg0);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
@@ -763,13 +781,13 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
             && (qMetaTypeId<QRect>() == context->argument(1).toVariant().userType())) {
             QObject* _q_arg0 = context->argument(0).toQObject();
             QRect _q_arg1 = qscriptvalue_cast<QRect>(context->argument(1));
-            QPixmap _q_result = QPixmap::grabWidget(_q_arg0, _q_arg1);
+            QPixmap _q_result = qtscriptGrabWidget(_q_arg0, _q_arg1);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isQObject()
             && context->argument(1).isNumber()) {
             QObject* _q_arg0 = context->argument(0).toQObject();
             int _q_arg1 = context->argument(1).toInt32();
-            QPixmap _q_result = QPixmap::grabWidget(_q_arg0, _q_arg1);
+            QPixmap _q_result = qtscriptGrabWidget(_q_arg0, QRect(_q_arg1, 0, -1, -1));
             return qScriptValueFromValue(context->engine(), _q_result);
         }
     }
@@ -777,7 +795,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
         QObject* _q_arg0 = context->argument(0).toQObject();
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
-        QPixmap _q_result = QPixmap::grabWidget(_q_arg0, _q_arg1, _q_arg2);
+        QPixmap _q_result = qtscriptGrabWidget(_q_arg0, QRect(_q_arg1, _q_arg2, -1, -1));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 4) {
@@ -785,7 +803,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
-        QPixmap _q_result = QPixmap::grabWidget(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+        QPixmap _q_result = qtscriptGrabWidget(_q_arg0, QRect(_q_arg1, _q_arg2, _q_arg3, -1));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 5) {
@@ -794,7 +812,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
         int _q_arg4 = context->argument(4).toInt32();
-        QPixmap _q_result = QPixmap::grabWidget(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        QPixmap _q_result = qtscriptGrabWidget(_q_arg0, QRect(_q_arg1, _q_arg2, _q_arg3, _q_arg4));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -802,20 +820,20 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
     case 5:
     if (context->argumentCount() == 1) {
         WId _q_arg0 = qscriptvalue_cast<WId>(context->argument(0));
-        QPixmap _q_result = QPixmap::grabWindow(_q_arg0);
+        QPixmap _q_result = qtscriptGrabWindow(_q_arg0);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 2) {
         WId _q_arg0 = qscriptvalue_cast<WId>(context->argument(0));
         int _q_arg1 = context->argument(1).toInt32();
-        QPixmap _q_result = QPixmap::grabWindow(_q_arg0, _q_arg1);
+        QPixmap _q_result = qtscriptGrabWindow(_q_arg0, _q_arg1);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 3) {
         WId _q_arg0 = qscriptvalue_cast<WId>(context->argument(0));
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
-        QPixmap _q_result = QPixmap::grabWindow(_q_arg0, _q_arg1, _q_arg2);
+        QPixmap _q_result = qtscriptGrabWindow(_q_arg0, _q_arg1, _q_arg2);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 4) {
@@ -823,7 +841,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
-        QPixmap _q_result = QPixmap::grabWindow(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+        QPixmap _q_result = qtscriptGrabWindow(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 5) {
@@ -832,7 +850,7 @@ static QScriptValue qtscript_QPixmap_static_call(QScriptContext *context, QScrip
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
         int _q_arg4 = context->argument(4).toInt32();
-        QPixmap _q_result = QPixmap::grabWindow(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        QPixmap _q_result = qtscriptGrabWindow(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

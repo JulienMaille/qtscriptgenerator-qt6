@@ -205,7 +205,7 @@ static QScriptValue qtscript_QFontMetrics_prototype_call(QScriptContext *context
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         int _q_arg1 = context->argument(1).toInt32();
-        int _q_result = _q_self->charWidth(_q_arg0, _q_arg1);
+        int _q_result = _q_self->horizontalAdvance(_q_arg0.mid(_q_arg1, 1));
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -368,26 +368,28 @@ static QScriptValue qtscript_QFontMetrics_prototype_call(QScriptContext *context
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QChar>() == context->argument(0).toVariant().userType())) {
             QChar _q_arg0 = qscriptvalue_cast<QChar>(context->argument(0));
-            int _q_result = _q_self->width(_q_arg0);
+            int _q_result = _q_self->horizontalAdvance(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            int _q_result = _q_self->width(_q_arg0);
+            int _q_result = _q_self->horizontalAdvance(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         }
     }
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         int _q_arg1 = context->argument(1).toInt32();
-        int _q_result = _q_self->width(_q_arg0, _q_arg1);
+        int _q_result = _q_self->horizontalAdvance(_q_arg0, _q_arg1);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 3) {
         QString _q_arg0 = context->argument(0).toString();
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
-        int _q_result = _q_self->width(_q_arg0, _q_arg1, _q_arg2);
-        return QScriptValue(context->engine(), _q_result);
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        Q_UNUSED(_q_arg2);
+        return context->throwError(QString::fromLatin1("QFontMetrics.width(text, len, flags) was removed in Qt 6"));
     }
     break;
 

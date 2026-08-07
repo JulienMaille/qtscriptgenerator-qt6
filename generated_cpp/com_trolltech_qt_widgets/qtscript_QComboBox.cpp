@@ -84,6 +84,10 @@ static const char * const qtscript_QComboBox_function_names[] = {
     , "sizeHint"
     , "validator"
     , "view"
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    , "labelDrawingMode"
+    , "setLabelDrawingMode"
+#endif
     , "toString"
 };
 
@@ -123,6 +127,10 @@ static const char * const qtscript_QComboBox_function_signatures[] = {
     , ""
     , ""
     , ""
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    , ""
+    , "LabelDrawingMode mode"
+#endif
 ""
 };
 
@@ -162,6 +170,10 @@ static const int qtscript_QComboBox_function_lengths[] = {
     , 0
     , 0
     , 0
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    , 0
+    , 1
+#endif
     , 0
 };
 
@@ -185,6 +197,9 @@ Q_DECLARE_METATYPE(QComboBox*)
 Q_DECLARE_METATYPE(QtScriptShell_QComboBox*)
 Q_DECLARE_METATYPE(QComboBox::InsertPolicy)
 Q_DECLARE_METATYPE(QComboBox::SizeAdjustPolicy)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+Q_DECLARE_METATYPE(QComboBox::LabelDrawingMode)
+#endif
 Q_DECLARE_METATYPE(QCompleter*)
 Q_DECLARE_METATYPE(QFlags<Qt::MatchFlag>)
 Q_DECLARE_METATYPE(QAbstractItemDelegate*)
@@ -298,14 +313,12 @@ static QScriptValue qtscript_create_QComboBox_InsertPolicy_class(QScriptEngine *
 static const QComboBox::SizeAdjustPolicy qtscript_QComboBox_SizeAdjustPolicy_values[] = {
     QComboBox::AdjustToContents
     , QComboBox::AdjustToContentsOnFirstShow
-    , QComboBox::AdjustToMinimumContentsLength
     , QComboBox::AdjustToMinimumContentsLengthWithIcon
 };
 
 static const char * const qtscript_QComboBox_SizeAdjustPolicy_keys[] = {
     "AdjustToContents"
     , "AdjustToContentsOnFirstShow"
-    , "AdjustToMinimumContentsLength"
     , "AdjustToMinimumContentsLengthWithIcon"
 };
 
@@ -360,13 +373,90 @@ static QScriptValue qtscript_create_QComboBox_SizeAdjustPolicy_class(QScriptEngi
         qtscript_QComboBox_SizeAdjustPolicy_valueOf, qtscript_QComboBox_SizeAdjustPolicy_toString);
     qScriptRegisterMetaType<QComboBox::SizeAdjustPolicy>(engine, qtscript_QComboBox_SizeAdjustPolicy_toScriptValue,
         qtscript_QComboBox_SizeAdjustPolicy_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 3; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QComboBox_SizeAdjustPolicy_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QComboBox_SizeAdjustPolicy_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
     }
     return ctor;
 }
+
+//
+// QComboBox::LabelDrawingMode (Qt 6.9)
+//
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+static QString qtscript_QComboBox_LabelDrawingMode_toStringHelper(QComboBox::LabelDrawingMode value)
+{
+    const QMetaObject *meta = qtscript_QComboBox_metaObject();
+    const int idx = meta->indexOfEnumerator("LabelDrawingMode");
+    Q_ASSERT(idx != -1);
+    return QString::fromLatin1(meta->enumerator(idx).valueToKey(static_cast<int>(value)));
+}
+
+static QScriptValue qtscript_QComboBox_LabelDrawingMode_toScriptValue(
+    QScriptEngine *engine, const QComboBox::LabelDrawingMode &value)
+{
+    QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QComboBox"));
+    return clazz.property(qtscript_QComboBox_LabelDrawingMode_toStringHelper(value));
+}
+
+static void qtscript_QComboBox_LabelDrawingMode_fromScriptValue(
+    const QScriptValue &value, QComboBox::LabelDrawingMode &out)
+{
+    const QVariant variant = value.toVariant();
+    out = variant.metaType() == QMetaType::fromType<QComboBox::LabelDrawingMode>()
+        ? variant.value<QComboBox::LabelDrawingMode>()
+        : static_cast<QComboBox::LabelDrawingMode>(value.toInt32());
+}
+
+static QScriptValue qtscript_construct_QComboBox_LabelDrawingMode(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    const int arg = context->argument(0).toInt32();
+    if (arg == static_cast<int>(QComboBox::LabelDrawingMode::UseStyle)
+        || arg == static_cast<int>(QComboBox::LabelDrawingMode::UseDelegate)) {
+        return qScriptValueFromValue(engine, static_cast<QComboBox::LabelDrawingMode>(arg));
+    }
+    return context->throwError(QString::fromLatin1("LabelDrawingMode(): invalid enum value (%0)").arg(arg));
+}
+
+static QScriptValue qtscript_QComboBox_LabelDrawingMode_valueOf(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    const QComboBox::LabelDrawingMode value =
+        qscriptvalue_cast<QComboBox::LabelDrawingMode>(context->thisObject());
+    return QScriptValue(engine, static_cast<int>(value));
+}
+
+static QScriptValue qtscript_QComboBox_LabelDrawingMode_toString(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    const QComboBox::LabelDrawingMode value =
+        qscriptvalue_cast<QComboBox::LabelDrawingMode>(context->thisObject());
+    return QScriptValue(engine, qtscript_QComboBox_LabelDrawingMode_toStringHelper(value));
+}
+
+static QScriptValue qtscript_create_QComboBox_LabelDrawingMode_class(
+    QScriptEngine *engine, QScriptValue &clazz)
+{
+    QScriptValue ctor = qtscript_create_enum_class_helper(
+        engine, qtscript_construct_QComboBox_LabelDrawingMode,
+        qtscript_QComboBox_LabelDrawingMode_valueOf,
+        qtscript_QComboBox_LabelDrawingMode_toString);
+    qScriptRegisterMetaType<QComboBox::LabelDrawingMode>(
+        engine, qtscript_QComboBox_LabelDrawingMode_toScriptValue,
+        qtscript_QComboBox_LabelDrawingMode_fromScriptValue,
+        ctor.property(QString::fromLatin1("prototype")));
+    clazz.setProperty(QString::fromLatin1("UseStyle"),
+        engine->newVariant(qVariantFromValue(QComboBox::LabelDrawingMode::UseStyle)),
+        QScriptValue::ReadOnly | QScriptValue::Undeletable);
+    clazz.setProperty(QString::fromLatin1("UseDelegate"),
+        engine->newVariant(qVariantFromValue(QComboBox::LabelDrawingMode::UseDelegate)),
+        QScriptValue::ReadOnly | QScriptValue::Undeletable);
+    return ctor;
+}
+#endif
 
 //
 // QComboBox
@@ -727,7 +817,29 @@ static QScriptValue qtscript_QComboBox_prototype_call(QScriptContext *context, Q
     }
     break;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    case 32:
+    if (context->argumentCount() == 0) {
+        const QComboBox::LabelDrawingMode result = _q_self->labelDrawingMode();
+        return qScriptValueFromValue(context->engine(), result);
+    }
+    break;
+
+    case 33:
+    if (context->argumentCount() == 1) {
+        const QComboBox::LabelDrawingMode mode =
+            qscriptvalue_cast<QComboBox::LabelDrawingMode>(context->argument(0));
+        _q_self->setLabelDrawingMode(mode);
+        return context->engine()->undefinedValue();
+    }
+    break;
+#endif
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    case 34: {
+#else
     case 32: {
+#endif
     QString result = QString::fromLatin1("QComboBox");
     return QScriptValue(context->engine(), result);
     }
@@ -787,7 +899,11 @@ QScriptValue qtscript_create_QComboBox_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QComboBox*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QComboBox*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QWidget*>()));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    for (int i = 0; i < 35; ++i) {
+#else
     for (int i = 0; i < 33; ++i) {
+#endif
         QScriptValue fun = engine->newFunction(qtscript_QComboBox_prototype_call, qtscript_QComboBox_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QComboBox_function_names[i+1]),
@@ -804,5 +920,9 @@ QScriptValue qtscript_create_QComboBox_class(QScriptEngine *engine)
         qtscript_create_QComboBox_InsertPolicy_class(engine, ctor));
     ctor.setProperty(QString::fromLatin1("SizeAdjustPolicy"),
         qtscript_create_QComboBox_SizeAdjustPolicy_class(engine, ctor));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    ctor.setProperty(QString::fromLatin1("LabelDrawingMode"),
+        qtscript_create_QComboBox_LabelDrawingMode_class(engine, ctor));
+#endif
     return ctor;
 }

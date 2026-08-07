@@ -209,7 +209,6 @@ Q_DECLARE_METATYPE(QXmlStreamNamespaceDeclaration)
 Q_DECLARE_METATYPE(QVector<QXmlStreamNamespaceDeclaration >)
 Q_DECLARE_METATYPE(QXmlStreamAttributes)
 Q_DECLARE_METATYPE(QIODevice*)
-Q_DECLARE_METATYPE(QStringRef)
 Q_DECLARE_METATYPE(QXmlStreamEntityDeclaration)
 Q_DECLARE_METATYPE(QVector<QXmlStreamEntityDeclaration >)
 Q_DECLARE_METATYPE(QXmlStreamEntityResolver*)
@@ -558,7 +557,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 9:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->documentEncoding();
+        QStringView _q_result = _q_self->documentEncoding();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -569,7 +568,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 10:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->documentVersion();
+        QStringView _q_result = _q_self->documentVersion();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -580,7 +579,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 11:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->dtdName();
+        QStringView _q_result = _q_self->dtdName();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -591,7 +590,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 12:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->dtdPublicId();
+        QStringView _q_result = _q_self->dtdPublicId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -602,7 +601,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 13:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->dtdSystemId();
+        QStringView _q_result = _q_self->dtdSystemId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -739,7 +738,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 32:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->name();
+        QStringView _q_result = _q_self->name();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -764,7 +763,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 35:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->namespaceUri();
+        QStringView _q_result = _q_self->namespaceUri();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -782,7 +781,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 37:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->prefix();
+        QStringView _q_result = _q_self->prefix();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -793,7 +792,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 38:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->processingInstructionData();
+        QStringView _q_result = _q_self->processingInstructionData();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -804,7 +803,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 39:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->processingInstructionTarget();
+        QStringView _q_result = _q_self->processingInstructionTarget();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -815,7 +814,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 40:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->qualifiedName();
+        QStringView _q_result = _q_self->qualifiedName();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -895,7 +894,7 @@ static QScriptValue qtscript_QXmlStreamReader_prototype_call(QScriptContext *con
 
     case 49:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->text();
+        QStringView _q_result = _q_self->text();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();

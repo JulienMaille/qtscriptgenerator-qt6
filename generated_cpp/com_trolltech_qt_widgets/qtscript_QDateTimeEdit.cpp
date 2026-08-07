@@ -270,14 +270,14 @@ static void qtscript_QDateTimeEdit_Sections_fromScriptValue(const QScriptValue &
     else if (var.userType() == qMetaTypeId<QDateTimeEdit::Section>())
         out = qvariant_cast<QDateTimeEdit::Section>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QDateTimeEdit_Sections(QScriptContext *context, QScriptEngine *engine)
 {
-    QDateTimeEdit::Sections result = 0;
+    QDateTimeEdit::Sections result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QDateTimeEdit::Sections>(context->argument(0).toInt32());
+        result = QDateTimeEdit::Sections::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

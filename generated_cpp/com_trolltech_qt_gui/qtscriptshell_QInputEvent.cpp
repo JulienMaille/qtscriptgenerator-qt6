@@ -8,7 +8,7 @@
 
 
 QtScriptShell_QInputEvent::QtScriptShell_QInputEvent(QEvent::Type  type, Qt::KeyboardModifiers  modifiers)
-    : QInputEvent(type, modifiers) {}
+    : QInputEvent(type, QInputDevice::primaryKeyboard(), modifiers) {}
 
 QtScriptShell_QInputEvent::~QtScriptShell_QInputEvent() {}
 

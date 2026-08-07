@@ -189,8 +189,7 @@ static QScriptValue qtscript_QFontInfo_prototype_call(QScriptContext *context, Q
 
     case 9:
     if (context->argumentCount() == 0) {
-        bool _q_result = _q_self->rawMode();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QFontInfo.rawMode() was removed in Qt 6"));
     }
     break;
 

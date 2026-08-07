@@ -175,14 +175,14 @@ static void qtscript_QGraphicsBlurEffect_BlurHints_fromScriptValue(const QScript
     else if (var.userType() == qMetaTypeId<QGraphicsBlurEffect::BlurHint>())
         out = qvariant_cast<QGraphicsBlurEffect::BlurHint>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QGraphicsBlurEffect_BlurHints(QScriptContext *context, QScriptEngine *engine)
 {
-    QGraphicsBlurEffect::BlurHints result = 0;
+    QGraphicsBlurEffect::BlurHints result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QGraphicsBlurEffect::BlurHints>(context->argument(0).toInt32());
+        result = QGraphicsBlurEffect::BlurHints::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

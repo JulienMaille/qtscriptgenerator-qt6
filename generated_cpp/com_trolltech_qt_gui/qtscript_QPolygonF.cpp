@@ -199,7 +199,6 @@ static QScriptValue qtscript_QPolygonF_throw_ambiguity_error_helper(
 Q_DECLARE_METATYPE(QPolygonF*)
 Q_DECLARE_METATYPE(Qt::FillRule)
 Q_DECLARE_METATYPE(QVector<QPointF >)
-Q_DECLARE_METATYPE(QList<QPointF >)
 
 //
 // QPolygonF
@@ -527,7 +526,7 @@ static QScriptValue qtscript_QPolygonF_prototype_call(QScriptContext *context, Q
     case 34:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setSharable(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

@@ -9,7 +9,7 @@
 class QtScriptShell_QLayoutItem : public QLayoutItem
 {
 public:
-    QtScriptShell_QLayoutItem(Qt::Alignment  alignment = 0);
+    QtScriptShell_QLayoutItem(Qt::Alignment  alignment = {});
     ~QtScriptShell_QLayoutItem();
 
     QSizePolicy::ControlTypes  controlTypes() const;

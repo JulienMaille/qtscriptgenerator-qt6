@@ -231,7 +231,9 @@ static QScriptValue qtscript_QSplitter_prototype_call(QScriptContext *context, Q
     case 8:
     if (context->argumentCount() == 1) {
         QTextStream* _q_arg0 = qscriptvalue_cast<QTextStream*>(context->argument(0));
-        operator>>(*_q_arg0, *_q_self);
+        QString _q_line = _q_arg0->readLine().simplified();
+        _q_line.remove(QLatin1Char(' '));
+        _q_self->restoreState(_q_line.toUpper().toLatin1());
         return context->engine()->undefinedValue();
     }
     break;
@@ -303,7 +305,7 @@ static QScriptValue qtscript_QSplitter_prototype_call(QScriptContext *context, Q
     case 17:
     if (context->argumentCount() == 1) {
         QTextStream* _q_arg0 = qscriptvalue_cast<QTextStream*>(context->argument(0));
-        operator<<(*_q_arg0, *_q_self);
+        *_q_arg0 << _q_self->saveState() << Qt::endl;
         return context->engine()->undefinedValue();
     }
     break;

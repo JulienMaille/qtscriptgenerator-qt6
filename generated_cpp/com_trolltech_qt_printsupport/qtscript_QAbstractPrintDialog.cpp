@@ -7,6 +7,7 @@
 #include <__package_shared.h>
 
 #include <qabstractprintdialog.h>
+#include <qprintdialog.h>
 #include <QVariant>
 #include <qabstractprintdialog.h>
 #include <qaction.h>
@@ -161,13 +162,13 @@ static QScriptValue qtscript_create_flags_class_helper(
 //
 
 static const QAbstractPrintDialog::PrintDialogOption qtscript_QAbstractPrintDialog_PrintDialogOption_values[] = {
-    QAbstractPrintDialog::None
+    static_cast<QAbstractPrintDialog::PrintDialogOption>(0)
     , QAbstractPrintDialog::PrintToFile
     , QAbstractPrintDialog::PrintSelection
     , QAbstractPrintDialog::PrintPageRange
     , QAbstractPrintDialog::PrintShowPageSize
     , QAbstractPrintDialog::PrintCollateCopies
-    , QAbstractPrintDialog::DontUseSheet
+    , static_cast<QAbstractPrintDialog::PrintDialogOption>(0x0020)
     , QAbstractPrintDialog::PrintCurrentPage
 };
 
@@ -256,14 +257,14 @@ static void qtscript_QAbstractPrintDialog_PrintDialogOptions_fromScriptValue(con
     else if (var.userType() == qMetaTypeId<QAbstractPrintDialog::PrintDialogOption>())
         out = qvariant_cast<QAbstractPrintDialog::PrintDialogOption>(var);
     else
-        out = 0;
+        out = QAbstractPrintDialog::PrintDialogOptions::fromInt(0);
 }
 
 static QScriptValue qtscript_construct_QAbstractPrintDialog_PrintDialogOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QAbstractPrintDialog::PrintDialogOptions result = 0;
+    QAbstractPrintDialog::PrintDialogOptions result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QAbstractPrintDialog::PrintDialogOptions>(context->argument(0).toInt32());
+        result = QAbstractPrintDialog::PrintDialogOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -415,14 +416,20 @@ static QScriptValue qtscript_QAbstractPrintDialog_prototype_call(QScriptContext 
     case 0:
     if (context->argumentCount() == 1) {
         QAbstractPrintDialog::PrintDialogOption _q_arg0 = qscriptvalue_cast<QAbstractPrintDialog::PrintDialogOption>(context->argument(0));
-        _q_self->addEnabledOption(_q_arg0);
+        QPrintDialog *_q_dialog = qobject_cast<QPrintDialog *>(_q_self);
+        if (!_q_dialog)
+            return context->throwError(QString::fromLatin1("addEnabledOption() is only available for QPrintDialog in Qt 6"));
+        _q_dialog->setOption(_q_arg0, true);
         return context->engine()->undefinedValue();
     }
     break;
 
     case 1:
     if (context->argumentCount() == 0) {
-        QFlags<QAbstractPrintDialog::PrintDialogOption> _q_result = _q_self->enabledOptions();
+        QPrintDialog *_q_dialog = qobject_cast<QPrintDialog *>(_q_self);
+        if (!_q_dialog)
+            return context->throwError(QString::fromLatin1("enabledOptions() is only available for QPrintDialog in Qt 6"));
+        QFlags<QAbstractPrintDialog::PrintDialogOption> _q_result = _q_dialog->options();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -437,7 +444,10 @@ static QScriptValue qtscript_QAbstractPrintDialog_prototype_call(QScriptContext 
     case 3:
     if (context->argumentCount() == 1) {
         QAbstractPrintDialog::PrintDialogOption _q_arg0 = qscriptvalue_cast<QAbstractPrintDialog::PrintDialogOption>(context->argument(0));
-        bool _q_result = _q_self->isOptionEnabled(_q_arg0);
+        QPrintDialog *_q_dialog = qobject_cast<QPrintDialog *>(_q_self);
+        if (!_q_dialog)
+            return context->throwError(QString::fromLatin1("isOptionEnabled() is only available for QPrintDialog in Qt 6"));
+        bool _q_result = _q_dialog->testOption(_q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -473,7 +483,10 @@ static QScriptValue qtscript_QAbstractPrintDialog_prototype_call(QScriptContext 
     case 8:
     if (context->argumentCount() == 1) {
         QFlags<QAbstractPrintDialog::PrintDialogOption> _q_arg0 = qscriptvalue_cast<QFlags<QAbstractPrintDialog::PrintDialogOption> >(context->argument(0));
-        _q_self->setEnabledOptions(_q_arg0);
+        QPrintDialog *_q_dialog = qobject_cast<QPrintDialog *>(_q_self);
+        if (!_q_dialog)
+            return context->throwError(QString::fromLatin1("setEnabledOptions() is only available for QPrintDialog in Qt 6"));
+        _q_dialog->setOptions(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

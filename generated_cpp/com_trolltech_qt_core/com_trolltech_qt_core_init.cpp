@@ -7,9 +7,7 @@ QScriptValue qtscript_create_QTextCodec_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBoundaryFinder_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QModelIndex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QLibraryInfo_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QBasicTimer_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QUuid_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QLocale_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDateTime_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QByteArray_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRegExp_class(QScriptEngine *engine);
@@ -33,7 +31,7 @@ QScriptValue qtscript_create_QEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QReadWriteLock_class(QScriptEngine *engine);
 QScriptValue qtscript_create_Global_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextStream_class(QScriptEngine *engine);
-//QScriptValue qtscript_create_QDirIterator_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QDirIterator_class(QScriptEngine *engine);
 //QScriptValue qtscript_create_QFutureWatcher_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDir_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QIODevice_class(QScriptEngine *engine);
@@ -62,15 +60,11 @@ QScriptValue qtscript_create_QSystemSemaphore_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRunnable_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QCryptographicHash_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSizeF_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QAbstractTransition_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractItemModel_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTimerEvent_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QAbstractState_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QStateMachine_WrappedEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTemporaryFile_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractAnimation_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSettings_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QMutex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDynamicPropertyChangeEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTranslator_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QChildEvent_class(QScriptEngine *engine);
@@ -78,27 +72,20 @@ QScriptValue qtscript_create_QMimeData_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTimer_class(QScriptEngine *engine);
 //QScriptValue qtscript_create_QSocketNotifier_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTimeLine_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QStateMachine_SignalEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QThreadPool_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QCoreApplication_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QEventLoop_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QFileSystemWatcher_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSignalMapper_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QHistoryState_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QSignalTransition_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QEventTransition_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPauseAnimation_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractTableModel_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAnimationGroup_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QVariantAnimation_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractListModel_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QProcess_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QFinalState_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QState_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QBuffer_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPropertyAnimation_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QParallelAnimationGroup_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QStateMachine_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSequentialAnimationGroup_class(QScriptEngine *engine);
 
 static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
@@ -108,9 +95,7 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QTextBoundaryFinder"
     , "QModelIndex"
     , "QLibraryInfo"
-    , "QBasicTimer"
     , "QUuid"
-    , "QLocale"
     , "QDateTime"
     , "QByteArray"
     , "QRegExp"
@@ -134,9 +119,10 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QReadWriteLock"
     , "Global"
     , "QTextStream"
-    //, "QDirIterator"
+    , "QDirIterator"
     //, "QFutureWatcher"
     , "QDir"
+    , "QFileDevice"
     , "QFile"
     //, "QFutureIterator"
     , "QMargins"
@@ -161,15 +147,11 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QRunnable"
     , "QCryptographicHash"
     , "QSizeF"
-    , "QAbstractTransition"
     , "QAbstractItemModel"
     , "QTimerEvent"
-    , "QAbstractState"
-    , "QStateMachine_WrappedEvent"
     , "QTemporaryFile"
     , "QAbstractAnimation"
     , "QSettings"
-    , "QMutex"
     , "QDynamicPropertyChangeEvent"
     , "QTranslator"
     , "QChildEvent"
@@ -178,27 +160,20 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QTimer"
     //, "QSocketNotifier"
     , "QTimeLine"
-    , "QStateMachine_SignalEvent"
     , "QThreadPool"
     , "QCoreApplication"
     , "QEventLoop"
     , "QFileSystemWatcher"
     , "QSignalMapper"
-    , "QHistoryState"
-    , "QSignalTransition"
-    , "QEventTransition"
     , "QPauseAnimation"
     , "QAbstractTableModel"
     , "QAnimationGroup"
     , "QVariantAnimation"
     , "QAbstractListModel"
     , "QProcess"
-    , "QFinalState"
-    , "QState"
     , "QBuffer"
     , "QPropertyAnimation"
     , "QParallelAnimationGroup"
-    , "QStateMachine"
     , "QSequentialAnimationGroup"
 };
 
@@ -210,9 +185,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QTextBoundaryFinder_class
     , qtscript_create_QModelIndex_class
     , qtscript_create_QLibraryInfo_class
-    , qtscript_create_QBasicTimer_class
     , qtscript_create_QUuid_class
-    , qtscript_create_QLocale_class
     , qtscript_create_QDateTime_class
     , qtscript_create_QByteArray_class
     , qtscript_create_QRegExp_class
@@ -236,9 +209,10 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QReadWriteLock_class
     , qtscript_create_Global_class
     , qtscript_create_QTextStream_class
-    //, qtscript_create_QDirIterator_class
+    , qtscript_create_QDirIterator_class
     //, qtscript_create_QFutureWatcher_class
     , qtscript_create_QDir_class
+    , qtscript_create_QFileDevice_class
     , qtscript_create_QFile_class
     //, qtscript_create_QFutureIterator_class
     , qtscript_create_QMargins_class
@@ -263,15 +237,11 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QRunnable_class
     , qtscript_create_QCryptographicHash_class
     , qtscript_create_QSizeF_class
-    , qtscript_create_QAbstractTransition_class
     , qtscript_create_QAbstractItemModel_class
     , qtscript_create_QTimerEvent_class
-    , qtscript_create_QAbstractState_class
-    , qtscript_create_QStateMachine_WrappedEvent_class
     , qtscript_create_QTemporaryFile_class
     , qtscript_create_QAbstractAnimation_class
     , qtscript_create_QSettings_class
-    , qtscript_create_QMutex_class
     , qtscript_create_QDynamicPropertyChangeEvent_class
     , qtscript_create_QTranslator_class
     , qtscript_create_QChildEvent_class
@@ -280,34 +250,27 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QTimer_class
     //, qtscript_create_QSocketNotifier_class
     , qtscript_create_QTimeLine_class
-    , qtscript_create_QStateMachine_SignalEvent_class
     , qtscript_create_QThreadPool_class
     , qtscript_create_QCoreApplication_class
     , qtscript_create_QEventLoop_class
     , qtscript_create_QFileSystemWatcher_class
     , qtscript_create_QSignalMapper_class
-    , qtscript_create_QHistoryState_class
-    , qtscript_create_QSignalTransition_class
-    , qtscript_create_QEventTransition_class
     , qtscript_create_QPauseAnimation_class
     , qtscript_create_QAbstractTableModel_class
     , qtscript_create_QAnimationGroup_class
     , qtscript_create_QVariantAnimation_class
     , qtscript_create_QAbstractListModel_class
     , qtscript_create_QProcess_class
-    , qtscript_create_QFinalState_class
-    , qtscript_create_QState_class
     , qtscript_create_QBuffer_class
     , qtscript_create_QPropertyAnimation_class
     , qtscript_create_QParallelAnimationGroup_class
-    , qtscript_create_QStateMachine_class
     , qtscript_create_QSequentialAnimationGroup_class
 };
 
 void qtscript_initialize_com_trolltech_qt_core_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 88; ++i) {
+    for (int i = 0; i < 76; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_core_class_names[i],
             qtscript_com_trolltech_qt_core_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

@@ -248,7 +248,7 @@ void QtScriptShell_QPrintDialog::dropEvent(QDropEvent*  arg__1)
     }
 }
 
-void QtScriptShell_QPrintDialog::enterEvent(QEvent*  arg__1)
+void QtScriptShell_QPrintDialog::enterEvent(QEnterEvent*  arg__1)
 {
     QScriptValue _q_function = __qtscript_self.property("enterEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)
@@ -551,7 +551,7 @@ void QtScriptShell_QPrintDialog::moveEvent(QMoveEvent*  arg__1)
     }
 }
 
-bool  QtScriptShell_QPrintDialog::nativeEvent(const QByteArray&  eventType, void*  message, long*  result)
+bool  QtScriptShell_QPrintDialog::nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result)
 {
     QScriptValue _q_function = __qtscript_self.property("nativeEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)

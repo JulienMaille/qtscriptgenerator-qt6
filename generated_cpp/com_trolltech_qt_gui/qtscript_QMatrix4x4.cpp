@@ -516,7 +516,7 @@ static QScriptValue qtscript_QMatrix4x4_prototype_call(QScriptContext *context, 
 
     case 30:
     if (context->argumentCount() == 0) {
-        QMatrix _q_result = _q_self->toAffine();
+        QMatrix _q_result = _q_self->toTransform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

@@ -3,6 +3,7 @@
 #include <QtScript/QScriptValue>
 #include <QtCore/QStringList>
 #include <QtCore/QDebug>
+#include <QtScript/QRegExp>
 #include <qmetaobject.h>
 #include <__package_shared.h>
 
@@ -205,6 +206,68 @@ Q_DECLARE_METATYPE(QSsl::SslProtocol)
 Q_DECLARE_METATYPE(QSsl::KeyAlgorithm)
 Q_DECLARE_METATYPE(QTcpSocket*)
 
+static QSslCertificate::PatternSyntax qtscript_QSslSocket_patternSyntax(
+    QRegExp::PatternSyntax syntax)
+{
+    switch (syntax) {
+    case QRegExp::Wildcard:
+    case QRegExp::WildcardUnix:
+        return QSslCertificate::PatternSyntax::Wildcard;
+    case QRegExp::FixedString:
+        return QSslCertificate::PatternSyntax::FixedString;
+    default:
+        return QSslCertificate::PatternSyntax::RegularExpression;
+    }
+}
+
+static void qtscript_QSslSocket_addCaCertificates(
+    QSslSocket *socket, const QList<QSslCertificate> &additional)
+{
+    QSslConfiguration configuration = socket->sslConfiguration();
+    QList<QSslCertificate> certificates = configuration.caCertificates();
+    certificates.append(additional);
+    configuration.setCaCertificates(certificates);
+    socket->setSslConfiguration(configuration);
+}
+
+static bool qtscript_QSslSocket_addCaCertificates(
+    QSslSocket *socket, const QString &path, QSsl::EncodingFormat format,
+    QRegExp::PatternSyntax syntax = QRegExp::FixedString)
+{
+    const QList<QSslCertificate> certificates = QSslCertificate::fromPath(
+        path, format, qtscript_QSslSocket_patternSyntax(syntax));
+    qtscript_QSslSocket_addCaCertificates(socket, certificates);
+    return !certificates.isEmpty();
+}
+
+static void qtscript_QSslSocket_setDefaultCaCertificates(
+    const QList<QSslCertificate> &certificates)
+{
+    QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
+    configuration.setCaCertificates(certificates);
+    QSslConfiguration::setDefaultConfiguration(configuration);
+}
+
+static void qtscript_QSslSocket_addDefaultCaCertificates(
+    const QList<QSslCertificate> &additional)
+{
+    QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
+    QList<QSslCertificate> certificates = configuration.caCertificates();
+    certificates.append(additional);
+    configuration.setCaCertificates(certificates);
+    QSslConfiguration::setDefaultConfiguration(configuration);
+}
+
+static bool qtscript_QSslSocket_addDefaultCaCertificates(
+    const QString &path, QSsl::EncodingFormat format,
+    QRegExp::PatternSyntax syntax = QRegExp::FixedString)
+{
+    const QList<QSslCertificate> certificates = QSslCertificate::fromPath(
+        path, format, qtscript_QSslSocket_patternSyntax(syntax));
+    qtscript_QSslSocket_addDefaultCaCertificates(certificates);
+    return !certificates.isEmpty();
+}
+
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
     QScriptEngine::FunctionSignature construct,
@@ -388,7 +451,8 @@ static QScriptValue qtscript_QSslSocket_prototype_call(QScriptContext *context, 
     case 0:
     if (context->argumentCount() == 1) {
         QSslCertificate _q_arg0 = qscriptvalue_cast<QSslCertificate>(context->argument(0));
-        _q_self->addCaCertificate(_q_arg0);
+        qtscript_QSslSocket_addCaCertificates(
+            _q_self, QList<QSslCertificate>() << _q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -398,39 +462,42 @@ static QScriptValue qtscript_QSslSocket_prototype_call(QScriptContext *context, 
         if (context->argument(0).isArray()) {
             QList<QSslCertificate> _q_arg0;
             qScriptValueToSequence(context->argument(0), _q_arg0);
-            _q_self->addCaCertificates(_q_arg0);
+            qtscript_QSslSocket_addCaCertificates(_q_self, _q_arg0);
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            bool _q_result = _q_self->addCaCertificates(_q_arg0);
+            bool _q_result = qtscript_QSslSocket_addCaCertificates(
+                _q_self, _q_arg0, QSsl::Pem);
             return QScriptValue(context->engine(), _q_result);
         }
     }
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         QSsl::EncodingFormat _q_arg1 = qscriptvalue_cast<QSsl::EncodingFormat>(context->argument(1));
-        bool _q_result = _q_self->addCaCertificates(_q_arg0, _q_arg1);
+        bool _q_result = qtscript_QSslSocket_addCaCertificates(
+            _q_self, _q_arg0, _q_arg1);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 3) {
         QString _q_arg0 = context->argument(0).toString();
         QSsl::EncodingFormat _q_arg1 = qscriptvalue_cast<QSsl::EncodingFormat>(context->argument(1));
         QRegExp::PatternSyntax _q_arg2 = qscriptvalue_cast<QRegExp::PatternSyntax>(context->argument(2));
-        bool _q_result = _q_self->addCaCertificates(_q_arg0, _q_arg1, _q_arg2);
+        bool _q_result = qtscript_QSslSocket_addCaCertificates(
+            _q_self, _q_arg0, _q_arg1, _q_arg2);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 2:
     if (context->argumentCount() == 0) {
-        QList<QSslCertificate > _q_result = _q_self->caCertificates();
+        QList<QSslCertificate > _q_result = _q_self->sslConfiguration().caCertificates();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
 
     case 3:
     if (context->argumentCount() == 0) {
-        QList<QSslCipher > _q_result = _q_self->ciphers();
+        QList<QSslCipher > _q_result = _q_self->sslConfiguration().ciphers();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
@@ -606,7 +673,9 @@ static QScriptValue qtscript_QSslSocket_prototype_call(QScriptContext *context, 
     if (context->argumentCount() == 1) {
         QList<QSslCertificate> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        _q_self->setCaCertificates(_q_arg0);
+        QSslConfiguration configuration = _q_self->sslConfiguration();
+        configuration.setCaCertificates(_q_arg0);
+        _q_self->setSslConfiguration(configuration);
         return context->engine()->undefinedValue();
     }
     break;
@@ -616,11 +685,15 @@ static QScriptValue qtscript_QSslSocket_prototype_call(QScriptContext *context, 
         if (context->argument(0).isArray()) {
             QList<QSslCipher> _q_arg0;
             qScriptValueToSequence(context->argument(0), _q_arg0);
-            _q_self->setCiphers(_q_arg0);
+            QSslConfiguration configuration = _q_self->sslConfiguration();
+            configuration.setCiphers(_q_arg0);
+            _q_self->setSslConfiguration(configuration);
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            _q_self->setCiphers(_q_arg0);
+            QSslConfiguration configuration = _q_self->sslConfiguration();
+            configuration.setCiphers(_q_arg0);
+            _q_self->setSslConfiguration(configuration);
             return context->engine()->undefinedValue();
         }
     }
@@ -739,7 +812,7 @@ static QScriptValue qtscript_QSslSocket_prototype_call(QScriptContext *context, 
 
     case 31:
     if (context->argumentCount() == 0) {
-        QList<QSslError > _q_result = _q_self->sslErrors();
+        QList<QSslError > _q_result = _q_self->sslHandshakeErrors();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
@@ -796,7 +869,8 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
     case 1:
     if (context->argumentCount() == 1) {
         QSslCertificate _q_arg0 = qscriptvalue_cast<QSslCertificate>(context->argument(0));
-        QSslSocket::addDefaultCaCertificate(_q_arg0);
+        qtscript_QSslSocket_addDefaultCaCertificates(
+            QList<QSslCertificate>() << _q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -806,39 +880,44 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
         if (context->argument(0).isArray()) {
             QList<QSslCertificate> _q_arg0;
             qScriptValueToSequence(context->argument(0), _q_arg0);
-            QSslSocket::addDefaultCaCertificates(_q_arg0);
+            qtscript_QSslSocket_addDefaultCaCertificates(_q_arg0);
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            bool _q_result = QSslSocket::addDefaultCaCertificates(_q_arg0);
+            bool _q_result = qtscript_QSslSocket_addDefaultCaCertificates(
+                _q_arg0, QSsl::Pem);
             return QScriptValue(context->engine(), _q_result);
         }
     }
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         QSsl::EncodingFormat _q_arg1 = qscriptvalue_cast<QSsl::EncodingFormat>(context->argument(1));
-        bool _q_result = QSslSocket::addDefaultCaCertificates(_q_arg0, _q_arg1);
+        bool _q_result = qtscript_QSslSocket_addDefaultCaCertificates(
+            _q_arg0, _q_arg1);
         return QScriptValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 3) {
         QString _q_arg0 = context->argument(0).toString();
         QSsl::EncodingFormat _q_arg1 = qscriptvalue_cast<QSsl::EncodingFormat>(context->argument(1));
         QRegExp::PatternSyntax _q_arg2 = qscriptvalue_cast<QRegExp::PatternSyntax>(context->argument(2));
-        bool _q_result = QSslSocket::addDefaultCaCertificates(_q_arg0, _q_arg1, _q_arg2);
+        bool _q_result = qtscript_QSslSocket_addDefaultCaCertificates(
+            _q_arg0, _q_arg1, _q_arg2);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 3:
     if (context->argumentCount() == 0) {
-        QList<QSslCertificate > _q_result = QSslSocket::defaultCaCertificates();
+        QList<QSslCertificate > _q_result =
+            QSslConfiguration::defaultConfiguration().caCertificates();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
 
     case 4:
     if (context->argumentCount() == 0) {
-        QList<QSslCipher > _q_result = QSslSocket::defaultCiphers();
+        QList<QSslCipher > _q_result =
+            QSslConfiguration::defaultConfiguration().ciphers();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
@@ -847,7 +926,7 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
     if (context->argumentCount() == 1) {
         QList<QSslCertificate> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        QSslSocket::setDefaultCaCertificates(_q_arg0);
+        qtscript_QSslSocket_setDefaultCaCertificates(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -856,7 +935,9 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
     if (context->argumentCount() == 1) {
         QList<QSslCipher> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        QSslSocket::setDefaultCiphers(_q_arg0);
+        QSslConfiguration configuration = QSslConfiguration::defaultConfiguration();
+        configuration.setCiphers(_q_arg0);
+        QSslConfiguration::setDefaultConfiguration(configuration);
         return context->engine()->undefinedValue();
     }
     break;
@@ -877,7 +958,7 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
 
     case 9:
     if (context->argumentCount() == 0) {
-        QList<QSslCipher > _q_result = QSslSocket::supportedCiphers();
+        QList<QSslCipher > _q_result = QSslConfiguration::supportedCiphers();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
@@ -891,7 +972,7 @@ static QScriptValue qtscript_QSslSocket_static_call(QScriptContext *context, QSc
 
     case 11:
     if (context->argumentCount() == 0) {
-        QList<QSslCertificate > _q_result = QSslSocket::systemCaCertificates();
+        QList<QSslCertificate > _q_result = QSslConfiguration::systemCaCertificates();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;

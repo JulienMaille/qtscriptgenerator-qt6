@@ -204,7 +204,6 @@ static const QPaintEngine::Type qtscript_QPaintEngine_Type_values[] = {
     , QPaintEngine::CoreGraphics
     , QPaintEngine::MacPrinter
     , QPaintEngine::QWindowSystem
-    , QPaintEngine::PostScript
     , QPaintEngine::OpenGL
     , QPaintEngine::Picture
     , QPaintEngine::SVG
@@ -227,7 +226,6 @@ static const char * const qtscript_QPaintEngine_Type_keys[] = {
     , "CoreGraphics"
     , "MacPrinter"
     , "QWindowSystem"
-    , "PostScript"
     , "OpenGL"
     , "Picture"
     , "SVG"
@@ -245,7 +243,7 @@ static const char * const qtscript_QPaintEngine_Type_keys[] = {
 
 static QString qtscript_QPaintEngine_Type_toStringHelper(QPaintEngine::Type value)
 {
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 19; ++i) {
         if (qtscript_QPaintEngine_Type_values[i] == value)
             return QString::fromLatin1(qtscript_QPaintEngine_Type_keys[i]);
     }
@@ -266,7 +264,7 @@ static void qtscript_QPaintEngine_Type_fromScriptValue(const QScriptValue &value
 static QScriptValue qtscript_construct_QPaintEngine_Type(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 19; ++i) {
         if (qtscript_QPaintEngine_Type_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QPaintEngine::Type>(arg));
     }
@@ -292,7 +290,7 @@ static QScriptValue qtscript_create_QPaintEngine_Type_class(QScriptEngine *engin
         qtscript_QPaintEngine_Type_valueOf, qtscript_QPaintEngine_Type_toString);
     qScriptRegisterMetaType<QPaintEngine::Type>(engine, qtscript_QPaintEngine_Type_toScriptValue,
         qtscript_QPaintEngine_Type_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 20; ++i) {
+    for (int i = 0; i < 19; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QPaintEngine_Type_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QPaintEngine_Type_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -495,14 +493,14 @@ static void qtscript_QPaintEngine_PaintEngineFeatures_fromScriptValue(const QScr
     else if (var.userType() == qMetaTypeId<QPaintEngine::PaintEngineFeature>())
         out = qvariant_cast<QPaintEngine::PaintEngineFeature>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QPaintEngine_PaintEngineFeatures(QScriptContext *context, QScriptEngine *engine)
 {
-    QPaintEngine::PaintEngineFeatures result = 0;
+    QPaintEngine::PaintEngineFeatures result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QPaintEngine::PaintEngineFeatures>(context->argument(0).toInt32());
+        result = QPaintEngine::PaintEngineFeatures::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -666,14 +664,14 @@ static void qtscript_QPaintEngine_DirtyFlags_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<QPaintEngine::DirtyFlag>())
         out = qvariant_cast<QPaintEngine::DirtyFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QPaintEngine_DirtyFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QPaintEngine::DirtyFlags result = 0;
+    QPaintEngine::DirtyFlags result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QPaintEngine::DirtyFlags>(context->argument(0).toInt32());
+        result = QPaintEngine::DirtyFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

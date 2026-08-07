@@ -1,23 +1,17 @@
-include( ../../../../shared.pri )
 TEMPLATE = subdirs
 SUBDIRS = qtscript_core \
           qtscript_gui \
+          qtscript_network \
+          qtscript_sql \
           qtscript_widgets \
           qtscript_printsupport \
-          qtscript_network \
-          qtscript_opengl \
-          qtscript_sql \
           qtscript_uitools \
-          qtscript_xml \
-          qtscript_xmlpatterns
+          qs_eval
 
-!r_mobile {
-    SUBDIRS += \
-          qtscript_webkit \
-          qtscript_webkitwidgets
-}
-
-#          qs_eval
-
-#          qtscript_multimedia \
-#      qtscript_svg \
+qtscript_gui.depends = qtscript_core
+qtscript_network.depends = qtscript_core
+qtscript_sql.depends = qtscript_core
+qtscript_widgets.depends = qtscript_core
+qtscript_printsupport.depends = qtscript_core qtscript_gui qtscript_widgets
+qtscript_uitools.depends = qtscript_core qtscript_widgets
+qs_eval.depends = qtscript_core qtscript_gui qtscript_network qtscript_sql qtscript_widgets qtscript_printsupport qtscript_uitools

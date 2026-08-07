@@ -13,7 +13,6 @@
 #include <qfont.h>
 #include <qimage.h>
 #include <qline.h>
-#include <qmatrix.h>
 #include <qpaintdevice.h>
 #include <qpaintengine.h>
 #include <qpainterpath.h>

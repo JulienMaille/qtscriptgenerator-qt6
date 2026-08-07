@@ -30,6 +30,12 @@ static const char * const qtscript_QGraphicsSceneWheelEvent_function_names[] = {
     , "setPos"
     , "setScenePos"
     , "setScreenPos"
+    , "phase"
+    , "pixelDelta"
+    , "isInverted"
+    , "setPhase"
+    , "setPixelDelta"
+    , "setInverted"
     , "toString"
 };
 
@@ -51,6 +57,12 @@ static const char * const qtscript_QGraphicsSceneWheelEvent_function_signatures[
     , "QPointF pos"
     , "QPointF pos"
     , "QPoint pos"
+    , ""
+    , ""
+    , ""
+    , "ScrollPhase phase"
+    , "QPoint delta"
+    , "bool inverted"
 ""
 };
 
@@ -73,6 +85,12 @@ static const int qtscript_QGraphicsSceneWheelEvent_function_lengths[] = {
     , 1
     , 1
     , 0
+    , 0
+    , 0
+    , 1
+    , 1
+    , 1
+    , 0
 };
 
 static QScriptValue qtscript_QGraphicsSceneWheelEvent_throw_ambiguity_error_helper(
@@ -90,6 +108,7 @@ Q_DECLARE_METATYPE(QGraphicsSceneWheelEvent*)
 Q_DECLARE_METATYPE(QFlags<Qt::MouseButton>)
 Q_DECLARE_METATYPE(QFlags<Qt::KeyboardModifier>)
 Q_DECLARE_METATYPE(Qt::Orientation)
+Q_DECLARE_METATYPE(Qt::ScrollPhase)
 Q_DECLARE_METATYPE(QEvent::Type)
 Q_DECLARE_METATYPE(QGraphicsSceneEvent*)
 
@@ -224,7 +243,43 @@ static QScriptValue qtscript_QGraphicsSceneWheelEvent_prototype_call(QScriptCont
     }
     break;
 
-    case 14: {
+    case 14:
+    if (context->argumentCount() == 0)
+        return qScriptValueFromValue(context->engine(), _q_self->phase());
+    break;
+
+    case 15:
+    if (context->argumentCount() == 0)
+        return qScriptValueFromValue(context->engine(), _q_self->pixelDelta());
+    break;
+
+    case 16:
+    if (context->argumentCount() == 0)
+        return QScriptValue(context->engine(), _q_self->isInverted());
+    break;
+
+    case 17:
+    if (context->argumentCount() == 1) {
+        _q_self->setPhase(qscriptvalue_cast<Qt::ScrollPhase>(context->argument(0)));
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 18:
+    if (context->argumentCount() == 1) {
+        _q_self->setPixelDelta(qscriptvalue_cast<QPoint>(context->argument(0)));
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 19:
+    if (context->argumentCount() == 1) {
+        _q_self->setInverted(context->argument(0).toBoolean());
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 20: {
     QString result = QString::fromLatin1("QGraphicsSceneWheelEvent");
     return QScriptValue(context->engine(), result);
     }
@@ -272,7 +327,7 @@ QScriptValue qtscript_create_QGraphicsSceneWheelEvent_class(QScriptEngine *engin
     engine->setDefaultPrototype(qMetaTypeId<QGraphicsSceneWheelEvent*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QGraphicsSceneWheelEvent*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QGraphicsSceneEvent*>()));
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 21; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QGraphicsSceneWheelEvent_prototype_call, qtscript_QGraphicsSceneWheelEvent_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QGraphicsSceneWheelEvent_function_names[i+1]),

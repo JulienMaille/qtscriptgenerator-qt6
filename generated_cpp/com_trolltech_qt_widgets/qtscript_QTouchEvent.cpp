@@ -98,7 +98,7 @@ static QScriptValue qtscript_QTouchEvent_prototype_call(QScriptContext *context,
     case 0:
     if (context->argumentCount() == 1) {
         QObject* _q_arg0 = context->argument(0).toQObject();
-        _q_self->setTarget(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -106,7 +106,7 @@ static QScriptValue qtscript_QTouchEvent_prototype_call(QScriptContext *context,
     case 1:
     if (context->argumentCount() == 1) {
         QFlags<Qt::TouchPointState> _q_arg0 = qscriptvalue_cast<QFlags<Qt::TouchPointState> >(context->argument(0));
-        _q_self->setTouchPointStates(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -115,7 +115,7 @@ static QScriptValue qtscript_QTouchEvent_prototype_call(QScriptContext *context,
     if (context->argumentCount() == 1) {
         QList<QTouchEvent::TouchPoint> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        _q_self->setTouchPoints(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -129,7 +129,8 @@ static QScriptValue qtscript_QTouchEvent_prototype_call(QScriptContext *context,
 
     case 4:
     if (context->argumentCount() == 0) {
-        QFlags<Qt::TouchPointState> _q_result = _q_self->touchPointStates();
+        QFlags<Qt::TouchPointState> _q_result = QFlags<Qt::TouchPointState>::fromInt(
+            _q_self->touchPointStates().toInt());
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

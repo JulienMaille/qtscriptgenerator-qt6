@@ -173,7 +173,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
 
     case 2:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = _q_self->codec();
+        QTextCodec* _q_result = QTextCodec::codecForName("UTF-8");
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -212,15 +212,15 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     if (context->argumentCount() == 1) {
         if (qscriptvalue_cast<QTextCodec*>(context->argument(0))) {
             QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-            _q_self->setCodec(_q_arg0);
+            if (_q_arg0->mibEnum() != 106)
+                return context->throwError(QScriptContext::TypeError,
+                    QString::fromLatin1("QXmlStreamWriter.setCodec(): Qt 6 supports UTF-8 only"));
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()) {
-
-              // TEMPLATE - core.convert_string_arg_to_char* - START
-          QByteArray tmp__q_arg0 = context->argument(0).toString().toLatin1();
-          const char * _q_arg0 = tmp__q_arg0.constData();
-    // TEMPLATE - core.convert_string_arg_to_char* - END
-                        _q_self->setCodec(_q_arg0);
+            QTextCodec* _q_arg0 = QTextCodec::codecForName(context->argument(0).toString().toLatin1());
+            if (!_q_arg0 || (_q_arg0->mibEnum() != 106))
+                return context->throwError(QScriptContext::TypeError,
+                    QString::fromLatin1("QXmlStreamWriter.setCodec(): Qt 6 supports UTF-8 only"));
             return context->engine()->undefinedValue();
         }
     }

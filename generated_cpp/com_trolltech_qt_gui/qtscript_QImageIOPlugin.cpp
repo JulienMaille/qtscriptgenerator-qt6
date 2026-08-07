@@ -183,14 +183,14 @@ static void qtscript_QImageIOPlugin_Capabilities_fromScriptValue(const QScriptVa
     else if (var.userType() == qMetaTypeId<QImageIOPlugin::Capability>())
         out = qvariant_cast<QImageIOPlugin::Capability>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QImageIOPlugin_Capabilities(QScriptContext *context, QScriptEngine *engine)
 {
-    QImageIOPlugin::Capabilities result = 0;
+    QImageIOPlugin::Capabilities result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QImageIOPlugin::Capabilities>(context->argument(0).toInt32());
+        result = QImageIOPlugin::Capabilities::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

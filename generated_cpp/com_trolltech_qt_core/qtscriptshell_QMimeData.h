@@ -18,7 +18,7 @@ public:
     bool  eventFilter(QObject*  arg__1, QEvent*  arg__2);
     QStringList  formats() const;
     bool  hasFormat(const QString&  mimetype) const;
-    QVariant  retrieveData(const QString&  mimetype, QVariant::Type  preferredType) const;
+    QVariant  retrieveData(const QString&  mimetype, QMetaType  preferredType) const;
     void timerEvent(QTimerEvent*  arg__1);
 
     QScriptValue __qtscript_self;

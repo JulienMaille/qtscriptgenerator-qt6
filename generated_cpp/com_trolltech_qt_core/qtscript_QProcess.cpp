@@ -776,7 +776,8 @@ static QScriptValue qtscript_QProcess_prototype_call(QScriptContext *context, QS
             && (qMetaTypeId<QFlags<QIODevice::OpenModeFlag> >() == context->argument(1).toVariant().userType())) {
             QString _q_arg0 = context->argument(0).toString();
             QFlags<QIODevice::OpenModeFlag> _q_arg1 = qscriptvalue_cast<QFlags<QIODevice::OpenModeFlag> >(context->argument(1));
-            _q_self->start(_q_arg0, _q_arg1);
+            _q_self->setProgram(_q_arg0);
+            _q_self->start(_q_arg1);
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()
             && context->argument(1).isArray()) {

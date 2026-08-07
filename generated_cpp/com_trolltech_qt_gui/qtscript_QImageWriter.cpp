@@ -272,8 +272,7 @@ static QScriptValue qtscript_QImageWriter_prototype_call(QScriptContext *context
 
     case 7:
     if (context->argumentCount() == 0) {
-        float _q_result = _q_self->gamma();
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QImageWriter.gamma() was removed in Qt 6"));
     }
     break;
 
@@ -319,8 +318,8 @@ static QScriptValue qtscript_QImageWriter_prototype_call(QScriptContext *context
     case 13:
     if (context->argumentCount() == 1) {
         float _q_arg0 = qscriptvalue_cast<float>(context->argument(0));
-        _q_self->setGamma(_q_arg0);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        return context->throwError(QString::fromLatin1("QImageWriter.setGamma() was removed in Qt 6"));
     }
     break;
 

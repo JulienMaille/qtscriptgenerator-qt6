@@ -247,14 +247,14 @@ static void qtscript_QStyleOptionButton_ButtonFeatures_fromScriptValue(const QSc
     else if (var.userType() == qMetaTypeId<QStyleOptionButton::ButtonFeature>())
         out = qvariant_cast<QStyleOptionButton::ButtonFeature>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyleOptionButton_ButtonFeatures(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyleOptionButton::ButtonFeatures result = 0;
+    QStyleOptionButton::ButtonFeatures result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyleOptionButton::ButtonFeatures>(context->argument(0).toInt32());
+        result = QStyleOptionButton::ButtonFeatures::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

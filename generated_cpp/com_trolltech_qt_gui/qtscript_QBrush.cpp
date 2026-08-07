@@ -151,7 +151,7 @@ static QScriptValue qtscript_QBrush_prototype_call(QScriptContext *context, QScr
 
     case 3:
     if (context->argumentCount() == 0) {
-        const QMatrix& _q_result = _q_self->matrix();
+        QMatrix _q_result = _q_self->transform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -181,7 +181,7 @@ static QScriptValue qtscript_QBrush_prototype_call(QScriptContext *context, QScr
     case 6:
     if (context->argumentCount() == 1) {
         QMatrix _q_arg0 = qscriptvalue_cast<QMatrix>(context->argument(0));
-        _q_self->setMatrix(_q_arg0);
+        _q_self->setTransform(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

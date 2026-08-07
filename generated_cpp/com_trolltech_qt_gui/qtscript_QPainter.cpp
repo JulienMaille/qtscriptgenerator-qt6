@@ -427,18 +427,18 @@ static const QPainter::RenderHint qtscript_QPainter_RenderHint_values[] = {
     QPainter::Antialiasing
     , QPainter::TextAntialiasing
     , QPainter::SmoothPixmapTransform
-    , QPainter::HighQualityAntialiasing
-    , QPainter::NonCosmeticDefaultPen
-    , QPainter::Qt4CompatiblePainting
+    , QPainter::VerticalSubpixelPositioning
+    , QPainter::LosslessImageRendering
+    , QPainter::NonCosmeticBrushPatterns
 };
 
 static const char * const qtscript_QPainter_RenderHint_keys[] = {
     "Antialiasing"
     , "TextAntialiasing"
     , "SmoothPixmapTransform"
-    , "HighQualityAntialiasing"
-    , "NonCosmeticDefaultPen"
-    , "Qt4CompatiblePainting"
+    , "VerticalSubpixelPositioning"
+    , "LosslessImageRendering"
+    , "NonCosmeticBrushPatterns"
 };
 
 static QString qtscript_QPainter_RenderHint_toStringHelper(QPainter::RenderHint value)
@@ -515,14 +515,14 @@ static void qtscript_QPainter_RenderHints_fromScriptValue(const QScriptValue &va
     else if (var.userType() == qMetaTypeId<QPainter::RenderHint>())
         out = qvariant_cast<QPainter::RenderHint>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QPainter_RenderHints(QScriptContext *context, QScriptEngine *engine)
 {
-    QPainter::RenderHints result = 0;
+    QPainter::RenderHints result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QPainter::RenderHints>(context->argument(0).toInt32());
+        result = QPainter::RenderHints::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -923,7 +923,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
 
     case 10:
     if (context->argumentCount() == 0) {
-        QMatrix _q_result = _q_self->combinedMatrix();
+        QMatrix _q_result = _q_self->combinedTransform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -951,7 +951,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
 
     case 14:
     if (context->argumentCount() == 0) {
-        const QMatrix& _q_result = _q_self->deviceMatrix();
+        QMatrix _q_result = _q_self->deviceTransform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -1609,11 +1609,11 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QRect>() == context->argument(0).toVariant().userType())) {
             QRect _q_arg0 = qscriptvalue_cast<QRect>(context->argument(0));
-            _q_self->drawRoundRect(_q_arg0);
+            _q_self->drawRoundedRect(_q_arg0, 25, 25, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         } else if ((qMetaTypeId<QRectF>() == context->argument(0).toVariant().userType())) {
             QRectF _q_arg0 = qscriptvalue_cast<QRectF>(context->argument(0));
-            _q_self->drawRoundRect(_q_arg0);
+            _q_self->drawRoundedRect(_q_arg0, 25, 25, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         }
     }
@@ -1622,13 +1622,13 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
             && context->argument(1).isNumber()) {
             QRect _q_arg0 = qscriptvalue_cast<QRect>(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
-            _q_self->drawRoundRect(_q_arg0, _q_arg1);
+            _q_self->drawRoundedRect(_q_arg0, _q_arg1, 25, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         } else if ((qMetaTypeId<QRectF>() == context->argument(0).toVariant().userType())
             && context->argument(1).isNumber()) {
             QRectF _q_arg0 = qscriptvalue_cast<QRectF>(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
-            _q_self->drawRoundRect(_q_arg0, _q_arg1);
+            _q_self->drawRoundedRect(_q_arg0, _q_arg1, 25, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         }
     }
@@ -1639,7 +1639,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
             QRect _q_arg0 = qscriptvalue_cast<QRect>(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
             int _q_arg2 = context->argument(2).toInt32();
-            _q_self->drawRoundRect(_q_arg0, _q_arg1, _q_arg2);
+            _q_self->drawRoundedRect(_q_arg0, _q_arg1, _q_arg2, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         } else if ((qMetaTypeId<QRectF>() == context->argument(0).toVariant().userType())
             && context->argument(1).isNumber()
@@ -1647,7 +1647,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
             QRectF _q_arg0 = qscriptvalue_cast<QRectF>(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
             int _q_arg2 = context->argument(2).toInt32();
-            _q_self->drawRoundRect(_q_arg0, _q_arg1, _q_arg2);
+            _q_self->drawRoundedRect(_q_arg0, _q_arg1, _q_arg2, Qt::RelativeSize);
             return context->engine()->undefinedValue();
         }
     }
@@ -1656,7 +1656,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
-        _q_self->drawRoundRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+        _q_self->drawRoundedRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, 25, 25, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 5) {
@@ -1665,7 +1665,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
         int _q_arg2 = context->argument(2).toInt32();
         int _q_arg3 = context->argument(3).toInt32();
         int _q_arg4 = context->argument(4).toInt32();
-        _q_self->drawRoundRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        _q_self->drawRoundedRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, 25, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 6) {
@@ -1675,7 +1675,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
         int _q_arg3 = context->argument(3).toInt32();
         int _q_arg4 = context->argument(4).toInt32();
         int _q_arg5 = context->argument(5).toInt32();
-        _q_self->drawRoundRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5);
+        _q_self->drawRoundedRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     break;
@@ -2082,8 +2082,8 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
     case 49:
     if (context->argumentCount() == 1) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
-        _q_self->initFrom(_q_arg0);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        return context->throwError(QString::fromLatin1("QPainter.initFrom() was removed in Qt 6"));
     }
     break;
 
@@ -2131,7 +2131,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
 
     case 56:
     if (context->argumentCount() == 0) {
-        _q_self->resetMatrix();
+        _q_self->resetTransform();
         return context->engine()->undefinedValue();
     }
     break;
@@ -2441,13 +2441,13 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
     case 81:
     if (context->argumentCount() == 1) {
         QMatrix _q_arg0 = qscriptvalue_cast<QMatrix>(context->argument(0));
-        _q_self->setWorldMatrix(_q_arg0);
+        _q_self->setWorldTransform(_q_arg0);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 2) {
         QMatrix _q_arg0 = qscriptvalue_cast<QMatrix>(context->argument(0));
         bool _q_arg1 = context->argument(1).toBoolean();
-        _q_self->setWorldMatrix(_q_arg0, _q_arg1);
+        _q_self->setWorldTransform(_q_arg0, _q_arg1);
         return context->engine()->undefinedValue();
     }
     break;
@@ -2550,7 +2550,7 @@ static QScriptValue qtscript_QPainter_prototype_call(QScriptContext *context, QS
 
     case 92:
     if (context->argumentCount() == 0) {
-        const QMatrix& _q_result = _q_self->worldMatrix();
+        QMatrix _q_result = _q_self->worldTransform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -2603,16 +2603,17 @@ static QScriptValue qtscript_QPainter_static_call(QScriptContext *context, QScri
     if (context->argumentCount() == 2) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
         QPoint* _q_arg1 = qscriptvalue_cast<QPoint*>(context->argument(1));
-        QPaintDevice* _q_result = QPainter::redirected(_q_arg0, _q_arg1);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        return context->throwError(QString::fromLatin1("QPainter.redirected() was removed in Qt 6"));
     }
     break;
 
     case 2:
     if (context->argumentCount() == 1) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
-        QPainter::restoreRedirected(_q_arg0);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        return context->throwError(QString::fromLatin1("QPainter.restoreRedirected() was removed in Qt 6"));
     }
     break;
 
@@ -2620,15 +2621,18 @@ static QScriptValue qtscript_QPainter_static_call(QScriptContext *context, QScri
     if (context->argumentCount() == 2) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
         QPaintDevice* _q_arg1 = qscriptvalue_cast<QPaintDevice*>(context->argument(1));
-        QPainter::setRedirected(_q_arg0, _q_arg1);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        return context->throwError(QString::fromLatin1("QPainter.setRedirected() was removed in Qt 6"));
     }
     if (context->argumentCount() == 3) {
         const QPaintDevice* _q_arg0 = qscriptvalue_cast<const QPaintDevice*>(context->argument(0));
         QPaintDevice* _q_arg1 = qscriptvalue_cast<QPaintDevice*>(context->argument(1));
         QPoint _q_arg2 = qscriptvalue_cast<QPoint>(context->argument(2));
-        QPainter::setRedirected(_q_arg0, _q_arg1, _q_arg2);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        Q_UNUSED(_q_arg1);
+        Q_UNUSED(_q_arg2);
+        return context->throwError(QString::fromLatin1("QPainter.setRedirected() was removed in Qt 6"));
     }
     break;
 

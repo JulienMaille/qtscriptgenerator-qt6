@@ -653,14 +653,14 @@ static void qtscript_QGraphicsItem_GraphicsItemFlags_fromScriptValue(const QScri
     else if (var.userType() == qMetaTypeId<QGraphicsItem::GraphicsItemFlag>())
         out = qvariant_cast<QGraphicsItem::GraphicsItemFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QGraphicsItem_GraphicsItemFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QGraphicsItem::GraphicsItemFlags result = 0;
+    QGraphicsItem::GraphicsItemFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QGraphicsItem::GraphicsItemFlags>(context->argument(0).toInt32());
+        result = QGraphicsItem::GraphicsItemFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -718,7 +718,6 @@ static QScriptValue qtscript_create_QGraphicsItem_GraphicsItemFlags_class(QScrip
 
 static const QGraphicsItem::GraphicsItemChange qtscript_QGraphicsItem_GraphicsItemChange_values[] = {
     QGraphicsItem::ItemPositionChange
-    , QGraphicsItem::ItemMatrixChange
     , QGraphicsItem::ItemVisibleChange
     , QGraphicsItem::ItemEnabledChange
     , QGraphicsItem::ItemSelectedChange
@@ -755,7 +754,6 @@ static const QGraphicsItem::GraphicsItemChange qtscript_QGraphicsItem_GraphicsIt
 
 static const char * const qtscript_QGraphicsItem_GraphicsItemChange_keys[] = {
     "ItemPositionChange"
-    , "ItemMatrixChange"
     , "ItemVisibleChange"
     , "ItemEnabledChange"
     , "ItemSelectedChange"
@@ -792,8 +790,10 @@ static const char * const qtscript_QGraphicsItem_GraphicsItemChange_keys[] = {
 
 static QString qtscript_QGraphicsItem_GraphicsItemChange_toStringHelper(QGraphicsItem::GraphicsItemChange value)
 {
-    if ((value >= QGraphicsItem::ItemPositionChange) && (value <= QGraphicsItem::ItemTransformOriginPointHasChanged))
-        return qtscript_QGraphicsItem_GraphicsItemChange_keys[static_cast<int>(value)-static_cast<int>(QGraphicsItem::ItemPositionChange)];
+    for (int i = 0; i < 33; ++i) {
+        if (qtscript_QGraphicsItem_GraphicsItemChange_values[i] == value)
+            return QString::fromLatin1(qtscript_QGraphicsItem_GraphicsItemChange_keys[i]);
+    }
     return QString();
 }
 
@@ -811,8 +811,10 @@ static void qtscript_QGraphicsItem_GraphicsItemChange_fromScriptValue(const QScr
 static QScriptValue qtscript_construct_QGraphicsItem_GraphicsItemChange(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    if ((arg >= QGraphicsItem::ItemPositionChange) && (arg <= QGraphicsItem::ItemTransformOriginPointHasChanged))
-        return qScriptValueFromValue(engine,  static_cast<QGraphicsItem::GraphicsItemChange>(arg));
+    for (int i = 0; i < 33; ++i) {
+        if (qtscript_QGraphicsItem_GraphicsItemChange_values[i] == arg)
+            return qScriptValueFromValue(engine, static_cast<QGraphicsItem::GraphicsItemChange>(arg));
+    }
     return context->throwError(QString::fromLatin1("GraphicsItemChange(): invalid enum value (%0)").arg(arg));
 }
 
@@ -835,7 +837,7 @@ static QScriptValue qtscript_create_QGraphicsItem_GraphicsItemChange_class(QScri
         qtscript_QGraphicsItem_GraphicsItemChange_valueOf, qtscript_QGraphicsItem_GraphicsItemChange_toString);
     qScriptRegisterMetaType<QGraphicsItem::GraphicsItemChange>(engine, qtscript_QGraphicsItem_GraphicsItemChange_toScriptValue,
         qtscript_QGraphicsItem_GraphicsItemChange_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 34; ++i) {
+    for (int i = 0; i < 33; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QGraphicsItem_GraphicsItemChange_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QGraphicsItem_GraphicsItemChange_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);

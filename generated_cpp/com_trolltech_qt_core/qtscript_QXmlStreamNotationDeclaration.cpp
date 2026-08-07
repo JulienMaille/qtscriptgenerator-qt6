@@ -56,7 +56,6 @@ static QScriptValue qtscript_QXmlStreamNotationDeclaration_throw_ambiguity_error
 
 Q_DECLARE_METATYPE(QXmlStreamNotationDeclaration)
 Q_DECLARE_METATYPE(QXmlStreamNotationDeclaration*)
-Q_DECLARE_METATYPE(QStringRef)
 
 //
 // QXmlStreamNotationDeclaration
@@ -86,7 +85,7 @@ static QScriptValue qtscript_QXmlStreamNotationDeclaration_prototype_call(QScrip
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->name();
+        QStringView _q_result = _q_self->name();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -98,14 +97,14 @@ static QScriptValue qtscript_QXmlStreamNotationDeclaration_prototype_call(QScrip
     case 1:
     if (context->argumentCount() == 1) {
         QXmlStreamNotationDeclaration _q_arg0 = qscriptvalue_cast<QXmlStreamNotationDeclaration>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 2:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->publicId();
+        QStringView _q_result = _q_self->publicId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -116,7 +115,7 @@ static QScriptValue qtscript_QXmlStreamNotationDeclaration_prototype_call(QScrip
 
     case 3:
     if (context->argumentCount() == 0) {
-        QStringRef _q_result = _q_self->systemId();
+        QStringView _q_result = _q_self->systemId();
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();

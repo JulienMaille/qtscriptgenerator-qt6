@@ -420,7 +420,7 @@ static QScriptValue qtscript_QRegExp_prototype_call(QScriptContext *context, QSc
     case 12:
     if (context->argumentCount() == 1) {
         QRegExp _q_arg0 = context->argument(0).toRegExp();
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

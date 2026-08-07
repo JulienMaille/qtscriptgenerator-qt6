@@ -204,11 +204,11 @@ static QScriptValue qtscript_QTemporaryFile_static_call(QScriptContext *context,
         if (qscriptvalue_cast<QFile*>(context->argument(0))) {
 
             QFile & _q_arg0 = *qscriptvalue_cast<QFile*>(context->argument(0));
-                    QTemporaryFile* _q_result = QTemporaryFile::createLocalFile(_q_arg0);
+                    QTemporaryFile* _q_result = QTemporaryFile::createNativeFile(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            QTemporaryFile* _q_result = QTemporaryFile::createLocalFile(_q_arg0);
+            QTemporaryFile* _q_result = QTemporaryFile::createNativeFile(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         }
     }

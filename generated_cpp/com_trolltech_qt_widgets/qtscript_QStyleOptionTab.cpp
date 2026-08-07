@@ -174,14 +174,14 @@ static void qtscript_QStyleOptionTab_CornerWidgets_fromScriptValue(const QScript
     else if (var.userType() == qMetaTypeId<QStyleOptionTab::CornerWidget>())
         out = qvariant_cast<QStyleOptionTab::CornerWidget>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyleOptionTab_CornerWidgets(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyleOptionTab::CornerWidgets result = 0;
+    QStyleOptionTab::CornerWidgets result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyleOptionTab::CornerWidgets>(context->argument(0).toInt32());
+        result = QStyleOptionTab::CornerWidgets::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

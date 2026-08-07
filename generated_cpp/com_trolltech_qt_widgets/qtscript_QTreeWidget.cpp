@@ -330,7 +330,7 @@ static QScriptValue qtscript_QTreeWidget_prototype_call(QScriptContext *context,
     case 12:
     if (context->argumentCount() == 1) {
         const QTreeWidgetItem* _q_arg0 = qscriptvalue_cast<const QTreeWidgetItem*>(context->argument(0));
-        bool _q_result = _q_self->isFirstItemColumnSpanned(_q_arg0);
+        bool _q_result = _q_arg0 && _q_arg0->isFirstColumnSpanned();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -429,7 +429,8 @@ static QScriptValue qtscript_QTreeWidget_prototype_call(QScriptContext *context,
     if (context->argumentCount() == 2) {
         const QTreeWidgetItem* _q_arg0 = qscriptvalue_cast<const QTreeWidgetItem*>(context->argument(0));
         bool _q_arg1 = context->argument(1).toBoolean();
-        _q_self->setFirstItemColumnSpanned(_q_arg0, _q_arg1);
+        if (_q_arg0)
+            const_cast<QTreeWidgetItem*>(_q_arg0)->setFirstColumnSpanned(_q_arg1);
         return context->engine()->undefinedValue();
     }
     break;

@@ -233,14 +233,14 @@ static QScriptValue qtscript_QBitArray_prototype_call(QScriptContext *context, Q
     case 9:
     if (context->argumentCount() == 1) {
         QBitArray _q_arg0 = qscriptvalue_cast<QBitArray>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 10:
     if (context->argumentCount() == 0) {
-        QBitArray _q_result = _q_self->operator~();
+        QBitArray _q_result = ~(*_q_self);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

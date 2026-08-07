@@ -113,7 +113,6 @@ static QScriptValue qtscript_QNetworkAccessManager_throw_ambiguity_error_helper(
 
 Q_DECLARE_METATYPE(QNetworkAccessManager*)
 Q_DECLARE_METATYPE(QtScriptShell_QNetworkAccessManager*)
-Q_DECLARE_METATYPE(QNetworkAccessManager::NetworkAccessibility)
 Q_DECLARE_METATYPE(QNetworkAccessManager::Operation)
 Q_DECLARE_METATYPE(QAbstractNetworkCache*)
 Q_DECLARE_METATYPE(QNetworkCookieJar*)
@@ -133,75 +132,6 @@ static QScriptValue qtscript_create_enum_class_helper(
     proto.setProperty(QString::fromLatin1("toString"),
         engine->newFunction(toString), QScriptValue::SkipInEnumeration);
     return engine->newFunction(construct, proto, 1);
-}
-
-//
-// QNetworkAccessManager::NetworkAccessibility
-//
-
-static const QNetworkAccessManager::NetworkAccessibility qtscript_QNetworkAccessManager_NetworkAccessibility_values[] = {
-    QNetworkAccessManager::UnknownAccessibility
-    , QNetworkAccessManager::NotAccessible
-    , QNetworkAccessManager::Accessible
-};
-
-static const char * const qtscript_QNetworkAccessManager_NetworkAccessibility_keys[] = {
-    "UnknownAccessibility"
-    , "NotAccessible"
-    , "Accessible"
-};
-
-static QString qtscript_QNetworkAccessManager_NetworkAccessibility_toStringHelper(QNetworkAccessManager::NetworkAccessibility value)
-{
-    if ((value >= QNetworkAccessManager::UnknownAccessibility) && (value <= QNetworkAccessManager::Accessible))
-        return qtscript_QNetworkAccessManager_NetworkAccessibility_keys[static_cast<int>(value)-static_cast<int>(QNetworkAccessManager::UnknownAccessibility)];
-    return QString();
-}
-
-static QScriptValue qtscript_QNetworkAccessManager_NetworkAccessibility_toScriptValue(QScriptEngine *engine, const QNetworkAccessManager::NetworkAccessibility &value)
-{
-    QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QNetworkAccessManager"));
-    return clazz.property(qtscript_QNetworkAccessManager_NetworkAccessibility_toStringHelper(value));
-}
-
-static void qtscript_QNetworkAccessManager_NetworkAccessibility_fromScriptValue(const QScriptValue &value, QNetworkAccessManager::NetworkAccessibility &out)
-{
-    out = qvariant_cast<QNetworkAccessManager::NetworkAccessibility>(value.toVariant());
-}
-
-static QScriptValue qtscript_construct_QNetworkAccessManager_NetworkAccessibility(QScriptContext *context, QScriptEngine *engine)
-{
-    int arg = context->argument(0).toInt32();
-    if ((arg >= QNetworkAccessManager::UnknownAccessibility) && (arg <= QNetworkAccessManager::Accessible))
-        return qScriptValueFromValue(engine,  static_cast<QNetworkAccessManager::NetworkAccessibility>(arg));
-    return context->throwError(QString::fromLatin1("NetworkAccessibility(): invalid enum value (%0)").arg(arg));
-}
-
-static QScriptValue qtscript_QNetworkAccessManager_NetworkAccessibility_valueOf(QScriptContext *context, QScriptEngine *engine)
-{
-    QNetworkAccessManager::NetworkAccessibility value = qscriptvalue_cast<QNetworkAccessManager::NetworkAccessibility>(context->thisObject());
-    return QScriptValue(engine, static_cast<int>(value));
-}
-
-static QScriptValue qtscript_QNetworkAccessManager_NetworkAccessibility_toString(QScriptContext *context, QScriptEngine *engine)
-{
-    QNetworkAccessManager::NetworkAccessibility value = qscriptvalue_cast<QNetworkAccessManager::NetworkAccessibility>(context->thisObject());
-    return QScriptValue(engine, qtscript_QNetworkAccessManager_NetworkAccessibility_toStringHelper(value));
-}
-
-static QScriptValue qtscript_create_QNetworkAccessManager_NetworkAccessibility_class(QScriptEngine *engine, QScriptValue &clazz)
-{
-    QScriptValue ctor = qtscript_create_enum_class_helper(
-        engine, qtscript_construct_QNetworkAccessManager_NetworkAccessibility,
-        qtscript_QNetworkAccessManager_NetworkAccessibility_valueOf, qtscript_QNetworkAccessManager_NetworkAccessibility_toString);
-    qScriptRegisterMetaType<QNetworkAccessManager::NetworkAccessibility>(engine, qtscript_QNetworkAccessManager_NetworkAccessibility_toScriptValue,
-        qtscript_QNetworkAccessManager_NetworkAccessibility_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 3; ++i) {
-        clazz.setProperty(QString::fromLatin1(qtscript_QNetworkAccessManager_NetworkAccessibility_keys[i]),
-            engine->newVariant(qVariantFromValue(qtscript_QNetworkAccessManager_NetworkAccessibility_values[i])),
-            QScriptValue::ReadOnly | QScriptValue::Undeletable);
-    }
-    return ctor;
 }
 
 //
@@ -565,8 +495,6 @@ QScriptValue qtscript_create_QNetworkAccessManager_class(QScriptEngine *engine)
     QScriptValue ctor = engine->newFunction(qtscript_QNetworkAccessManager_static_call, proto, qtscript_QNetworkAccessManager_function_lengths[0]);
     ctor.setData(QScriptValue(engine, uint(0xBABE0000 + 0)));
 
-    ctor.setProperty(QString::fromLatin1("NetworkAccessibility"),
-        qtscript_create_QNetworkAccessManager_NetworkAccessibility_class(engine, ctor));
     ctor.setProperty(QString::fromLatin1("Operation"),
         qtscript_create_QNetworkAccessManager_Operation_class(engine, ctor));
     return ctor;

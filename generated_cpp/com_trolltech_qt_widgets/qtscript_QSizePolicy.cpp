@@ -414,14 +414,14 @@ static void qtscript_QSizePolicy_ControlTypes_fromScriptValue(const QScriptValue
     else if (var.userType() == qMetaTypeId<QSizePolicy::ControlType>())
         out = qvariant_cast<QSizePolicy::ControlType>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QSizePolicy_ControlTypes(QScriptContext *context, QScriptEngine *engine)
 {
-    QSizePolicy::ControlTypes result = 0;
+    QSizePolicy::ControlTypes result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QSizePolicy::ControlTypes>(context->argument(0).toInt32());
+        result = QSizePolicy::ControlTypes::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -544,7 +544,7 @@ static QScriptValue qtscript_QSizePolicy_prototype_call(QScriptContext *context,
     case 6:
     if (context->argumentCount() == 1) {
         QSizePolicy _q_arg0 = qscriptvalue_cast<QSizePolicy>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

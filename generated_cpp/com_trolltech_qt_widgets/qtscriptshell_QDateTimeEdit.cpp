@@ -56,7 +56,7 @@ Q_DECLARE_METATYPE(QKeyEvent*)
 Q_DECLARE_METATYPE(QPaintDevice::PaintDeviceMetric)
 Q_DECLARE_METATYPE(QMouseEvent*)
 Q_DECLARE_METATYPE(QMoveEvent*)
-Q_DECLARE_METATYPE(long*)
+Q_DECLARE_METATYPE(qintptr*)
 Q_DECLARE_METATYPE(QPaintEngine*)
 Q_DECLARE_METATYPE(QPaintEvent*)
 Q_DECLARE_METATYPE(QPoint*)
@@ -82,7 +82,7 @@ QtScriptShell_QDateTimeEdit::QtScriptShell_QDateTimeEdit(const QTime&  t, QWidge
     : QDateTimeEdit(t, parent) {}
 
 QtScriptShell_QDateTimeEdit::QtScriptShell_QDateTimeEdit(const QVariant&  val, QVariant::Type  parserType, QWidget*  parent)
-    : QDateTimeEdit(val, parserType, parent) {}
+    : QDateTimeEdit(val, static_cast<QMetaType::Type>(parserType), parent) {}
 
 QtScriptShell_QDateTimeEdit::~QtScriptShell_QDateTimeEdit() {}
 
@@ -262,7 +262,7 @@ void QtScriptShell_QDateTimeEdit::dropEvent(QDropEvent*  arg__1)
     }
 }
 
-void QtScriptShell_QDateTimeEdit::enterEvent(QEvent*  arg__1)
+void QtScriptShell_QDateTimeEdit::enterEvent(QEnterEvent*  arg__1)
 {
     QScriptValue _q_function = __qtscript_self.property("enterEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)
@@ -568,7 +568,7 @@ void QtScriptShell_QDateTimeEdit::moveEvent(QMoveEvent*  arg__1)
     }
 }
 
-bool  QtScriptShell_QDateTimeEdit::nativeEvent(const QByteArray&  eventType, void*  message, long*  result)
+bool  QtScriptShell_QDateTimeEdit::nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result)
 {
     QScriptValue _q_function = __qtscript_self.property("nativeEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)

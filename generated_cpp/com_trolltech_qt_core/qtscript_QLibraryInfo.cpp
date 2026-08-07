@@ -94,7 +94,7 @@ static const QLibraryInfo::LibraryLocation qtscript_QLibraryInfo_LibraryLocation
     , QLibraryInfo::LibraryExecutablesPath
     , QLibraryInfo::BinariesPath
     , QLibraryInfo::PluginsPath
-    , QLibraryInfo::ImportsPath
+    , QLibraryInfo::QmlImportsPath
     , QLibraryInfo::Qml2ImportsPath
     , QLibraryInfo::ArchDataPath
     , QLibraryInfo::DataPath
@@ -238,8 +238,8 @@ static QScriptValue qtscript_QLibraryInfo_static_call(QScriptContext *context, Q
 
     case 2:
     if (context->argumentCount() == 0) {
-        QDate _q_result = QLibraryInfo::buildDate();
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return context->throwError(QScriptContext::TypeError,
+            QString::fromLatin1("QLibraryInfo.buildDate() is not available in Qt 6"));
     }
     break;
 
@@ -252,22 +252,22 @@ static QScriptValue qtscript_QLibraryInfo_static_call(QScriptContext *context, Q
 
     case 4:
     if (context->argumentCount() == 0) {
-        QString _q_result = QLibraryInfo::licensedProducts();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QScriptContext::TypeError,
+            QString::fromLatin1("QLibraryInfo.licensedProducts() is not available in Qt 6"));
     }
     break;
 
     case 5:
     if (context->argumentCount() == 0) {
-        QString _q_result = QLibraryInfo::licensee();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QScriptContext::TypeError,
+            QString::fromLatin1("QLibraryInfo.licensee() is not available in Qt 6"));
     }
     break;
 
     case 6:
     if (context->argumentCount() == 1) {
         QLibraryInfo::LibraryLocation _q_arg0 = qscriptvalue_cast<QLibraryInfo::LibraryLocation>(context->argument(0));
-        QString _q_result = QLibraryInfo::location(_q_arg0);
+        QString _q_result = QLibraryInfo::path(_q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

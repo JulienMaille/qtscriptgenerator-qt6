@@ -226,17 +226,6 @@ bool  QtScriptShell_QProcess::seek(qint64  pos)
     }
 }
 
-void QtScriptShell_QProcess::setupChildProcess()
-{
-    QScriptValue _q_function = __qtscript_self.property("setupChildProcess");
-    if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)
-        || (__qtscript_self.propertyFlags("setupChildProcess") & QScriptValue::QObjectMember)) {
-        QProcess::setupChildProcess();
-    } else {
-        _q_function.call(__qtscript_self);
-    }
-}
-
 qint64  QtScriptShell_QProcess::size() const
 {
     QScriptValue _q_function = __qtscript_self.property("size");

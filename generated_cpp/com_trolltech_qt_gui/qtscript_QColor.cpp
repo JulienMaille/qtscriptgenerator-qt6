@@ -274,7 +274,7 @@ static QScriptValue qtscript_QColor_throw_ambiguity_error_helper(
 Q_DECLARE_METATYPE(QColor*)
 Q_DECLARE_METATYPE(QColor::Spec)
 Q_DECLARE_METATYPE(int*)
-Q_DECLARE_METATYPE(qreal*)
+Q_DECLARE_METATYPE(float*)
 Q_DECLARE_METATYPE(Qt::GlobalColor)
 
 static QScriptValue qtscript_create_enum_class_helper(
@@ -486,17 +486,17 @@ static QScriptValue qtscript_QColor_prototype_call(QScriptContext *context, QScr
 
     case 11:
     if (context->argumentCount() == 3) {
-        qreal* _q_arg0 = qscriptvalue_cast<qreal*>(context->argument(0));
-        qreal* _q_arg1 = qscriptvalue_cast<qreal*>(context->argument(1));
-        qreal* _q_arg2 = qscriptvalue_cast<qreal*>(context->argument(2));
+        float* _q_arg0 = qscriptvalue_cast<float*>(context->argument(0));
+        float* _q_arg1 = qscriptvalue_cast<float*>(context->argument(1));
+        float* _q_arg2 = qscriptvalue_cast<float*>(context->argument(2));
         _q_self->getHslF(_q_arg0, _q_arg1, _q_arg2);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 4) {
-        qreal* _q_arg0 = qscriptvalue_cast<qreal*>(context->argument(0));
-        qreal* _q_arg1 = qscriptvalue_cast<qreal*>(context->argument(1));
-        qreal* _q_arg2 = qscriptvalue_cast<qreal*>(context->argument(2));
-        qreal* _q_arg3 = qscriptvalue_cast<qreal*>(context->argument(3));
+        float* _q_arg0 = qscriptvalue_cast<float*>(context->argument(0));
+        float* _q_arg1 = qscriptvalue_cast<float*>(context->argument(1));
+        float* _q_arg2 = qscriptvalue_cast<float*>(context->argument(2));
+        float* _q_arg3 = qscriptvalue_cast<float*>(context->argument(3));
         _q_self->getHslF(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
         return context->engine()->undefinedValue();
     }

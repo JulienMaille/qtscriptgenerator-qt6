@@ -330,7 +330,7 @@ static QScriptValue qtscript_QMatrix_prototype_call(QScriptContext *context, QSc
         qreal _q_arg3 = qscriptvalue_cast<qreal>(context->argument(3));
         qreal _q_arg4 = qscriptvalue_cast<qreal>(context->argument(4));
         qreal _q_arg5 = qscriptvalue_cast<qreal>(context->argument(5));
-        _q_self->setMatrix(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5);
+        *_q_self = QTransform(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5);
         return context->engine()->undefinedValue();
     }
     break;

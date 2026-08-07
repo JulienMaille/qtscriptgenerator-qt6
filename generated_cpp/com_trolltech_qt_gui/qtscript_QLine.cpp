@@ -143,7 +143,7 @@ static QScriptValue qtscript_QLine_prototype_call(QScriptContext *context, QScri
     case 3:
     if (context->argumentCount() == 1) {
         QLine _q_arg0 = qscriptvalue_cast<QLine>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

@@ -242,14 +242,14 @@ static void qtscript_QColorDialog_ColorDialogOptions_fromScriptValue(const QScri
     else if (var.userType() == qMetaTypeId<QColorDialog::ColorDialogOption>())
         out = qvariant_cast<QColorDialog::ColorDialogOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QColorDialog_ColorDialogOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QColorDialog::ColorDialogOptions result = 0;
+    QColorDialog::ColorDialogOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QColorDialog::ColorDialogOptions>(context->argument(0).toInt32());
+        result = QColorDialog::ColorDialogOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

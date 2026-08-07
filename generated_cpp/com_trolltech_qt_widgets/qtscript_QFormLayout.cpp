@@ -38,6 +38,8 @@ static const char * const qtscript_QFormLayout_function_names[] = {
     , "setSpacing"
     , "setWidget"
     , "spacing"
+    , "isRowVisible"
+    , "setRowVisible"
     , "toString"
 };
 
@@ -58,6 +60,8 @@ static const char * const qtscript_QFormLayout_function_signatures[] = {
     , "int arg__1"
     , "int row, ItemRole role, QWidget widget"
     , ""
+    , "int row\nQLayout layout\nQWidget widget"
+    , "int row, bool visible\nQLayout layout, bool visible\nQWidget widget, bool visible"
 ""
 };
 
@@ -78,6 +82,8 @@ static const int qtscript_QFormLayout_function_lengths[] = {
     , 1
     , 3
     , 0
+    , 1
+    , 2
     , 0
 };
 
@@ -572,7 +578,36 @@ static QScriptValue qtscript_QFormLayout_prototype_call(QScriptContext *context,
     }
     break;
 
-    case 13: {
+    case 13:
+    if (context->argumentCount() == 1) {
+        if (context->argument(0).isNumber())
+            return QScriptValue(context->engine(), _q_self->isRowVisible(context->argument(0).toInt32()));
+        if (QLayout *layout = qscriptvalue_cast<QLayout *>(context->argument(0)))
+            return QScriptValue(context->engine(), _q_self->isRowVisible(layout));
+        if (QWidget *widget = qscriptvalue_cast<QWidget *>(context->argument(0)))
+            return QScriptValue(context->engine(), _q_self->isRowVisible(widget));
+    }
+    break;
+
+    case 14:
+    if (context->argumentCount() == 2) {
+        const bool visible = context->argument(1).toBoolean();
+        if (context->argument(0).isNumber()) {
+            _q_self->setRowVisible(context->argument(0).toInt32(), visible);
+            return context->engine()->undefinedValue();
+        }
+        if (QLayout *layout = qscriptvalue_cast<QLayout *>(context->argument(0))) {
+            _q_self->setRowVisible(layout, visible);
+            return context->engine()->undefinedValue();
+        }
+        if (QWidget *widget = qscriptvalue_cast<QWidget *>(context->argument(0))) {
+            _q_self->setRowVisible(widget, visible);
+            return context->engine()->undefinedValue();
+        }
+    }
+    break;
+
+    case 15: {
     QString result = QString::fromLatin1("QFormLayout");
     return QScriptValue(context->engine(), result);
     }
@@ -632,7 +667,7 @@ QScriptValue qtscript_create_QFormLayout_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QFormLayout*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QFormLayout*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QLayout*>()));
-    for (int i = 0; i < 14; ++i) {
+    for (int i = 0; i < 16; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QFormLayout_prototype_call, qtscript_QFormLayout_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QFormLayout_function_names[i+1]),

@@ -270,14 +270,14 @@ static void qtscript_QIODevice_OpenMode_fromScriptValue(const QScriptValue &valu
     else if (var.userType() == qMetaTypeId<QIODevice::OpenModeFlag>())
         out = qvariant_cast<QIODevice::OpenModeFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QIODevice_OpenMode(QScriptContext *context, QScriptEngine *engine)
 {
-    QIODevice::OpenMode result = 0;
+    QIODevice::OpenMode result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QIODevice::OpenMode>(context->argument(0).toInt32());
+        result = QIODevice::OpenMode::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

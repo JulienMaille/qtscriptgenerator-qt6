@@ -554,8 +554,7 @@ static QScriptValue qtscript_QPalette_prototype_call(QScriptContext *context, QS
 
     case 21:
     if (context->argumentCount() == 0) {
-        uint _q_result = _q_self->resolve();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QPalette.resolve() was removed in Qt 6"));
     }
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QPalette>() == context->argument(0).toVariant().userType())) {
@@ -563,9 +562,7 @@ static QScriptValue qtscript_QPalette_prototype_call(QScriptContext *context, QS
             QPalette _q_result = _q_self->resolve(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isNumber()) {
-            uint _q_arg0 = context->argument(0).toUInt32();
-            _q_self->resolve(_q_arg0);
-            return context->engine()->undefinedValue();
+            return context->throwError(QString::fromLatin1("QPalette.resolve(uint) was removed in Qt 6"));
         }
     }
     break;

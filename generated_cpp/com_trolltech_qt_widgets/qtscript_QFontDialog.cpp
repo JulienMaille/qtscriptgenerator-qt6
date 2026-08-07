@@ -233,14 +233,14 @@ static void qtscript_QFontDialog_FontDialogOptions_fromScriptValue(const QScript
     else if (var.userType() == qMetaTypeId<QFontDialog::FontDialogOption>())
         out = qvariant_cast<QFontDialog::FontDialogOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QFontDialog_FontDialogOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QFontDialog::FontDialogOptions result = 0;
+    QFontDialog::FontDialogOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QFontDialog::FontDialogOptions>(context->argument(0).toInt32());
+        result = QFontDialog::FontDialogOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

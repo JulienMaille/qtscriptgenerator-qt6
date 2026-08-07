@@ -9,7 +9,7 @@
 class QtScriptShell_QWizard : public QWizard
 {
 public:
-    QtScriptShell_QWizard(QWidget*  parent = 0, Qt::WindowFlags  flags = 0);
+    QtScriptShell_QWizard(QWidget*  parent = 0, Qt::WindowFlags  flags = {});
     ~QtScriptShell_QWizard();
 
     void accept();
@@ -26,7 +26,7 @@ public:
     void dragLeaveEvent(QDragLeaveEvent*  arg__1);
     void dragMoveEvent(QDragMoveEvent*  arg__1);
     void dropEvent(QDropEvent*  arg__1);
-    void enterEvent(QEvent*  arg__1);
+    void enterEvent(QEnterEvent*  arg__1);
     bool  event(QEvent*  event);
     bool  eventFilter(QObject*  arg__1, QEvent*  arg__2);
     int  exec();
@@ -49,7 +49,7 @@ public:
     void mousePressEvent(QMouseEvent*  arg__1);
     void mouseReleaseEvent(QMouseEvent*  arg__1);
     void moveEvent(QMoveEvent*  arg__1);
-    bool  nativeEvent(const QByteArray&  eventType, void*  message, long*  result);
+    bool  nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result);
     int  nextId() const;
     void open();
     QPaintEngine*  paintEngine() const;

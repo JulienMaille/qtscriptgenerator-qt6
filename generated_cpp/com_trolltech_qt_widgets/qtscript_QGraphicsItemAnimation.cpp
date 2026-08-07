@@ -135,9 +135,9 @@ struct QMetaTypeId< QPair<qreal,QPointF > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QPair<qreal,QPointF > >("QPair<qreal,QPointF >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QPair<qreal,QPointF > >("QPair<qreal,QPointF >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -147,9 +147,9 @@ struct QMetaTypeId< QList<QPair<qreal,QPointF > > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QList<QPair<qreal,QPointF > > >("QList<QPair<qreal,QPointF > >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QList<QPair<qreal,QPointF > > >("QList<QPair<qreal,QPointF > >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -159,9 +159,9 @@ struct QMetaTypeId< QPair<qreal,qreal > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QPair<qreal,qreal > >("QPair<qreal,qreal >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QPair<qreal,qreal > >("QPair<qreal,qreal >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -171,9 +171,9 @@ struct QMetaTypeId< QList<QPair<qreal,qreal > > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QList<QPair<qreal,qreal > > >("QList<QPair<qreal,qreal > >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QList<QPair<qreal,qreal > > >("QList<QPair<qreal,qreal > >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 Q_DECLARE_METATYPE(QTimeLine*)

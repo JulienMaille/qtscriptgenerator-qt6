@@ -641,7 +641,7 @@ static QScriptValue qtscript_QStandardItem_prototype_call(QScriptContext *contex
 
     case 28:
     if (context->argumentCount() == 0) {
-        bool _q_result = _q_self->isTristate();
+        bool _q_result = _q_self->isAutoTristate();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -909,7 +909,7 @@ static QScriptValue qtscript_QStandardItem_prototype_call(QScriptContext *contex
     case 60:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setTristate(_q_arg0);
+        _q_self->setAutoTristate(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

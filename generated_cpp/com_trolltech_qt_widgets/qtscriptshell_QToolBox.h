@@ -9,7 +9,7 @@
 class QtScriptShell_QToolBox : public QToolBox
 {
 public:
-    QtScriptShell_QToolBox(QWidget*  parent = 0, Qt::WindowFlags  f = 0);
+    QtScriptShell_QToolBox(QWidget*  parent = 0, Qt::WindowFlags  f = {});
     ~QtScriptShell_QToolBox();
 
     void actionEvent(QActionEvent*  arg__1);
@@ -23,7 +23,7 @@ public:
     void dragLeaveEvent(QDragLeaveEvent*  arg__1);
     void dragMoveEvent(QDragMoveEvent*  arg__1);
     void dropEvent(QDropEvent*  arg__1);
-    void enterEvent(QEvent*  arg__1);
+    void enterEvent(QEnterEvent*  arg__1);
     bool  event(QEvent*  e);
     bool  eventFilter(QObject*  arg__1, QEvent*  arg__2);
     void focusInEvent(QFocusEvent*  arg__1);
@@ -47,7 +47,7 @@ public:
     void mousePressEvent(QMouseEvent*  arg__1);
     void mouseReleaseEvent(QMouseEvent*  arg__1);
     void moveEvent(QMoveEvent*  arg__1);
-    bool  nativeEvent(const QByteArray&  eventType, void*  message, long*  result);
+    bool  nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result);
     QPaintEngine*  paintEngine() const;
     void paintEvent(QPaintEvent*  arg__1);
     QPaintDevice*  redirected(QPoint*  offset) const;

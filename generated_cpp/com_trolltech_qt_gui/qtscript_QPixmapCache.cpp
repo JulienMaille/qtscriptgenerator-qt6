@@ -154,7 +154,7 @@ static QScriptValue qtscript_QPixmapCache_static_call(QScriptContext *context, Q
             && (qMetaTypeId<QPixmap>() == context->argument(1).toVariant().userType())) {
             QString _q_arg0 = context->argument(0).toString();
             QPixmap _q_arg1 = qscriptvalue_cast<QPixmap>(context->argument(1));
-            bool _q_result = QPixmapCache::find(_q_arg0, _q_arg1);
+            bool _q_result = QPixmapCache::find(_q_arg0, &_q_arg1);
             return QScriptValue(context->engine(), _q_result);
         }
     }

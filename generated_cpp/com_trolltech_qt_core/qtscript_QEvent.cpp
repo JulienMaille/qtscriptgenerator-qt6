@@ -235,7 +235,6 @@ static const QEvent::Type qtscript_QEvent_Type_values[] = {
     , QEvent::UngrabMouse
     , QEvent::GrabKeyboard
     , QEvent::UngrabKeyboard
-    , QEvent::MacGLClearDrawable
     , QEvent::StateMachineSignal
     , QEvent::StateMachineWrapped
     , QEvent::TouchBegin
@@ -403,7 +402,6 @@ static const char * const qtscript_QEvent_Type_keys[] = {
     , "UngrabMouse"
     , "GrabKeyboard"
     , "UngrabKeyboard"
-    , "MacGLClearDrawable"
     , "StateMachineSignal"
     , "StateMachineWrapped"
     , "TouchBegin"
@@ -482,7 +480,7 @@ static QScriptValue qtscript_create_QEvent_Type_class(QScriptEngine *engine, QSc
         qtscript_QEvent_Type_valueOf, qtscript_QEvent_Type_toString);
     qScriptRegisterMetaType<QEvent::Type>(engine, qtscript_QEvent_Type_toScriptValue,
         qtscript_QEvent_Type_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 165; ++i) {
+    for (int i = 0; i < 164; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QEvent_Type_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QEvent_Type_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);

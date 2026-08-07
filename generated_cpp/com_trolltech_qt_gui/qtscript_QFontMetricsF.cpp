@@ -344,11 +344,11 @@ static QScriptValue qtscript_QFontMetricsF_prototype_call(QScriptContext *contex
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QChar>() == context->argument(0).toVariant().userType())) {
             QChar _q_arg0 = qscriptvalue_cast<QChar>(context->argument(0));
-            qreal _q_result = _q_self->width(_q_arg0);
+            qreal _q_result = _q_self->horizontalAdvance(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
-            qreal _q_result = _q_self->width(_q_arg0);
+            qreal _q_result = _q_self->horizontalAdvance(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         }
     }

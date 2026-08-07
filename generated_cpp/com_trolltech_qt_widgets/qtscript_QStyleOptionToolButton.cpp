@@ -245,14 +245,14 @@ static void qtscript_QStyleOptionToolButton_ToolButtonFeatures_fromScriptValue(c
     else if (var.userType() == qMetaTypeId<QStyleOptionToolButton::ToolButtonFeature>())
         out = qvariant_cast<QStyleOptionToolButton::ToolButtonFeature>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyleOptionToolButton_ToolButtonFeatures(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyleOptionToolButton::ToolButtonFeatures result = 0;
+    QStyleOptionToolButton::ToolButtonFeatures result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyleOptionToolButton::ToolButtonFeatures>(context->argument(0).toInt32());
+        result = QStyleOptionToolButton::ToolButtonFeatures::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

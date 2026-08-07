@@ -37,7 +37,6 @@ QScriptValue qtscript_create_QStyle_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsLineItem_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QUndoGroup_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QGraphicsItemAnimation_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsSceneEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStyleOptionFrame_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsPixmapItem_class(QScriptEngine *engine);
@@ -70,7 +69,6 @@ QScriptValue qtscript_create_QStyleOptionViewItem_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractItemDelegate_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QButtonGroup_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsTransform_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QPictureFormatPlugin_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStyleOptionToolBar_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QCompleter_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStyleOptionTabBarBase_class(QScriptEngine *engine);
@@ -82,6 +80,7 @@ QScriptValue qtscript_create_QGraphicsSimpleTextItem_class(QScriptEngine *engine
 QScriptValue qtscript_create_QFrame_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStackedLayout_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPanGesture_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QPinchGesture_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsSceneWheelEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStyleOptionComboBox_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsTextItem_class(QScriptEngine *engine);
@@ -140,7 +139,6 @@ QScriptValue qtscript_create_QGraphicsDropShadowEffect_class(QScriptEngine *engi
 QScriptValue qtscript_create_QDialog_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDockWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsSceneDragDropEvent_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QDesktopWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QToolBar_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsSceneMouseEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGridLayout_class(QScriptEngine *engine);
@@ -149,9 +147,7 @@ QScriptValue qtscript_create_QProgressDialog_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSplitter_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QFontDialog_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QToolButton_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QMouseEventTransition_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QFontComboBox_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QApplication_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QHBoxLayout_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QGraphicsProxyWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QVBoxLayout_class(QScriptEngine *engine);
@@ -171,7 +167,6 @@ QScriptValue qtscript_create_QErrorMessage_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QToolBox_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QLCDNumber_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QAbstractScrollArea_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QKeyEventTransition_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QInputDialog_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QColorDialog_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSlider_class(QScriptEngine *engine);
@@ -196,6 +191,8 @@ QScriptValue qtscript_create_QTreeWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTableWidget_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QUndoView_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QListWidget_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QKeySequenceEdit_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QRhiWidget_class(QScriptEngine *engine);
 
 static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     "QPlainTextDocumentLayout"
@@ -234,7 +231,6 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QGraphicsLineItem"
     , "QWidget"
     , "QUndoGroup"
-    , "QGraphicsItemAnimation"
     , "QGraphicsSceneEvent"
     , "QStyleOptionFrame"
     , "QGraphicsPixmapItem"
@@ -267,7 +263,6 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QAbstractItemDelegate"
     , "QButtonGroup"
     , "QGraphicsTransform"
-    , "QPictureFormatPlugin"
     , "QStyleOptionToolBar"
     , "QCompleter"
     , "QStyleOptionTabBarBase"
@@ -279,6 +274,7 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QFrame"
     , "QStackedLayout"
     , "QPanGesture"
+    , "QPinchGesture"
     , "QGraphicsSceneWheelEvent"
     , "QStyleOptionComboBox"
     , "QGraphicsTextItem"
@@ -337,7 +333,6 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QDialog"
     , "QDockWidget"
     , "QGraphicsSceneDragDropEvent"
-    , "QDesktopWidget"
     , "QToolBar"
     , "QGraphicsSceneMouseEvent"
     , "QGridLayout"
@@ -346,9 +341,7 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QSplitter"
     , "QFontDialog"
     , "QToolButton"
-    , "QMouseEventTransition"
     , "QFontComboBox"
-    , "QApplication"
     , "QHBoxLayout"
     , "QGraphicsProxyWidget"
     , "QVBoxLayout"
@@ -368,7 +361,6 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QToolBox"
     , "QLCDNumber"
     , "QAbstractScrollArea"
-    , "QKeyEventTransition"
     , "QInputDialog"
     , "QColorDialog"
     , "QSlider"
@@ -393,6 +385,8 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QTableWidget"
     , "QUndoView"
     , "QListWidget"
+    , "QKeySequenceEdit"
+    , "QRhiWidget"
 };
 
 typedef QScriptValue (*QtBindingCreator)(QScriptEngine *engine);
@@ -433,7 +427,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QGraphicsLineItem_class
     , qtscript_create_QWidget_class
     , qtscript_create_QUndoGroup_class
-    , qtscript_create_QGraphicsItemAnimation_class
     , qtscript_create_QGraphicsSceneEvent_class
     , qtscript_create_QStyleOptionFrame_class
     , qtscript_create_QGraphicsPixmapItem_class
@@ -466,7 +459,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QAbstractItemDelegate_class
     , qtscript_create_QButtonGroup_class
     , qtscript_create_QGraphicsTransform_class
-    , qtscript_create_QPictureFormatPlugin_class
     , qtscript_create_QStyleOptionToolBar_class
     , qtscript_create_QCompleter_class
     , qtscript_create_QStyleOptionTabBarBase_class
@@ -478,6 +470,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QFrame_class
     , qtscript_create_QStackedLayout_class
     , qtscript_create_QPanGesture_class
+    , qtscript_create_QPinchGesture_class
     , qtscript_create_QGraphicsSceneWheelEvent_class
     , qtscript_create_QStyleOptionComboBox_class
     , qtscript_create_QGraphicsTextItem_class
@@ -536,7 +529,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QDialog_class
     , qtscript_create_QDockWidget_class
     , qtscript_create_QGraphicsSceneDragDropEvent_class
-    , qtscript_create_QDesktopWidget_class
     , qtscript_create_QToolBar_class
     , qtscript_create_QGraphicsSceneMouseEvent_class
     , qtscript_create_QGridLayout_class
@@ -545,9 +537,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QSplitter_class
     , qtscript_create_QFontDialog_class
     , qtscript_create_QToolButton_class
-    , qtscript_create_QMouseEventTransition_class
     , qtscript_create_QFontComboBox_class
-    , qtscript_create_QApplication_class
     , qtscript_create_QHBoxLayout_class
     , qtscript_create_QGraphicsProxyWidget_class
     , qtscript_create_QVBoxLayout_class
@@ -567,7 +557,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QToolBox_class
     , qtscript_create_QLCDNumber_class
     , qtscript_create_QAbstractScrollArea_class
-    , qtscript_create_QKeyEventTransition_class
     , qtscript_create_QInputDialog_class
     , qtscript_create_QColorDialog_class
     , qtscript_create_QSlider_class
@@ -592,12 +581,14 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QTableWidget_class
     , qtscript_create_QUndoView_class
     , qtscript_create_QListWidget_class
+    , qtscript_create_QKeySequenceEdit_class
+    , qtscript_create_QRhiWidget_class
 };
 
 void qtscript_initialize_com_trolltech_qt_widgets_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 195; ++i) {
+    for (int i = 0; i < 192; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_widgets_class_names[i],
             qtscript_com_trolltech_qt_widgets_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

@@ -154,7 +154,8 @@ static QScriptValue qtscript_QPicture_prototype_call(QScriptContext *context, QS
           QByteArray tmp__q_arg1 = context->argument(1).toString().toLatin1();
           const char * _q_arg1 = tmp__q_arg1.constData();
     // TEMPLATE - core.convert_string_arg_to_char* - END
-                    bool _q_result = _q_self->load(_q_arg0, _q_arg1);
+                    Q_UNUSED(_q_arg1);
+                    bool _q_result = _q_self->load(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && context->argument(1).isString()) {
@@ -164,7 +165,8 @@ static QScriptValue qtscript_QPicture_prototype_call(QScriptContext *context, QS
           QByteArray tmp__q_arg1 = context->argument(1).toString().toLatin1();
           const char * _q_arg1 = tmp__q_arg1.constData();
     // TEMPLATE - core.convert_string_arg_to_char* - END
-                    bool _q_result = _q_self->load(_q_arg0, _q_arg1);
+                    Q_UNUSED(_q_arg1);
+                    bool _q_result = _q_self->load(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         }
     }
@@ -199,7 +201,8 @@ static QScriptValue qtscript_QPicture_prototype_call(QScriptContext *context, QS
           QByteArray tmp__q_arg1 = context->argument(1).toString().toLatin1();
           const char * _q_arg1 = tmp__q_arg1.constData();
     // TEMPLATE - core.convert_string_arg_to_char* - END
-                    bool _q_result = _q_self->save(_q_arg0, _q_arg1);
+                    Q_UNUSED(_q_arg1);
+                    bool _q_result = _q_self->save(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && context->argument(1).isString()) {
@@ -209,7 +212,8 @@ static QScriptValue qtscript_QPicture_prototype_call(QScriptContext *context, QS
           QByteArray tmp__q_arg1 = context->argument(1).toString().toLatin1();
           const char * _q_arg1 = tmp__q_arg1.constData();
     // TEMPLATE - core.convert_string_arg_to_char* - END
-                    bool _q_result = _q_self->save(_q_arg0, _q_arg1);
+                    Q_UNUSED(_q_arg1);
+                    bool _q_result = _q_self->save(_q_arg0);
             return QScriptValue(context->engine(), _q_result);
         }
     }

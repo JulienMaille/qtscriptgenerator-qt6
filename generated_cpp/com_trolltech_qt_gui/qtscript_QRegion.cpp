@@ -310,7 +310,8 @@ static QScriptValue qtscript_QRegion_prototype_call(QScriptContext *context, QSc
 
     case 10:
     if (context->argumentCount() == 0) {
-        QVector<QRect > _q_result = _q_self->rects();
+        const auto _q_rects = _q_self->rects();
+        QVector<QRect > _q_result(_q_rects.begin(), _q_rects.end());
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;

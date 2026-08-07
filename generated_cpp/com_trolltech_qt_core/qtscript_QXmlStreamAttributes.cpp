@@ -161,9 +161,7 @@ static QScriptValue qtscript_QXmlStreamAttributes_throw_ambiguity_error_helper(
 Q_DECLARE_METATYPE(QXmlStreamAttributes)
 Q_DECLARE_METATYPE(QXmlStreamAttributes*)
 Q_DECLARE_METATYPE(QXmlStreamAttribute)
-Q_DECLARE_METATYPE(QVector<QXmlStreamAttribute >)
 Q_DECLARE_METATYPE(QList<QXmlStreamAttribute >)
-Q_DECLARE_METATYPE(QStringRef)
 
 //
 // QXmlStreamAttributes
@@ -380,7 +378,7 @@ static QScriptValue qtscript_QXmlStreamAttributes_prototype_call(QScriptContext 
     if (context->argumentCount() == 1) {
         QVector<QXmlStreamAttribute> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -457,7 +455,7 @@ static QScriptValue qtscript_QXmlStreamAttributes_prototype_call(QScriptContext 
     case 27:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setSharable(_q_arg0);
+        Q_UNUSED(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -525,7 +523,7 @@ static QScriptValue qtscript_QXmlStreamAttributes_prototype_call(QScriptContext 
     case 36:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
-        QStringRef _q_result = _q_self->value(_q_arg0);
+        QStringView _q_result = _q_self->value(_q_arg0);
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();
@@ -535,7 +533,7 @@ static QScriptValue qtscript_QXmlStreamAttributes_prototype_call(QScriptContext 
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         QString _q_arg1 = context->argument(1).toString();
-        QStringRef _q_result = _q_self->value(_q_arg0, _q_arg1);
+        QStringView _q_result = _q_self->value(_q_arg0, _q_arg1);
         
             // TEMPLATE - core.convert_stringref_to_string - START
             QString _q_convertedResult = _q_result.toString();

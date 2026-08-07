@@ -473,14 +473,14 @@ static void qtscript_QStyle_SubControls_fromScriptValue(const QScriptValue &valu
     else if (var.userType() == qMetaTypeId<QStyle::SubControl>())
         out = qvariant_cast<QStyle::SubControl>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyle_SubControls(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyle::SubControls result = 0;
+    QStyle::SubControls result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyle::SubControls>(context->argument(0).toInt32());
+        result = QStyle::SubControls::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -659,7 +659,6 @@ static const QStyle::PrimitiveElement qtscript_QStyle_PrimitiveElement_values[] 
     , QStyle::PE_FrameGroupBox
     , QStyle::PE_FrameLineEdit
     , QStyle::PE_FrameMenu
-    , QStyle::PE_FrameStatusBar
     , QStyle::PE_FrameTabWidget
     , QStyle::PE_FrameWindow
     , QStyle::PE_FrameButtonBevel
@@ -677,7 +676,6 @@ static const QStyle::PrimitiveElement qtscript_QStyle_PrimitiveElement_values[] 
     , QStyle::PE_IndicatorArrowUp
     , QStyle::PE_IndicatorBranch
     , QStyle::PE_IndicatorButtonDropDown
-    , QStyle::PE_IndicatorViewItemCheck
     , QStyle::PE_IndicatorCheckBox
     , QStyle::PE_IndicatorDockWidgetResizeHandle
     , QStyle::PE_IndicatorHeaderArrow
@@ -712,7 +710,6 @@ static const char * const qtscript_QStyle_PrimitiveElement_keys[] = {
     , "PE_FrameGroupBox"
     , "PE_FrameLineEdit"
     , "PE_FrameMenu"
-    , "PE_FrameStatusBar"
     , "PE_FrameTabWidget"
     , "PE_FrameWindow"
     , "PE_FrameButtonBevel"
@@ -730,7 +727,6 @@ static const char * const qtscript_QStyle_PrimitiveElement_keys[] = {
     , "PE_IndicatorArrowUp"
     , "PE_IndicatorBranch"
     , "PE_IndicatorButtonDropDown"
-    , "PE_IndicatorViewItemCheck"
     , "PE_IndicatorCheckBox"
     , "PE_IndicatorDockWidgetResizeHandle"
     , "PE_IndicatorHeaderArrow"
@@ -759,7 +755,7 @@ static const char * const qtscript_QStyle_PrimitiveElement_keys[] = {
 
 static QString qtscript_QStyle_PrimitiveElement_toStringHelper(QStyle::PrimitiveElement value)
 {
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < 48; ++i) {
         if (qtscript_QStyle_PrimitiveElement_values[i] == value)
             return QString::fromLatin1(qtscript_QStyle_PrimitiveElement_keys[i]);
     }
@@ -780,7 +776,7 @@ static void qtscript_QStyle_PrimitiveElement_fromScriptValue(const QScriptValue 
 static QScriptValue qtscript_construct_QStyle_PrimitiveElement(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < 48; ++i) {
         if (qtscript_QStyle_PrimitiveElement_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QStyle::PrimitiveElement>(arg));
     }
@@ -806,7 +802,7 @@ static QScriptValue qtscript_create_QStyle_PrimitiveElement_class(QScriptEngine 
         qtscript_QStyle_PrimitiveElement_valueOf, qtscript_QStyle_PrimitiveElement_toString);
     qScriptRegisterMetaType<QStyle::PrimitiveElement>(engine, qtscript_QStyle_PrimitiveElement_toScriptValue,
         qtscript_QStyle_PrimitiveElement_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 50; ++i) {
+    for (int i = 0; i < 48; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QStyle_PrimitiveElement_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QStyle_PrimitiveElement_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -879,9 +875,6 @@ static const QStyle::PixelMetric qtscript_QStyle_PixelMetric_values[] = {
     , QStyle::PM_ToolBarSeparatorExtent
     , QStyle::PM_ToolBarExtensionExtent
     , QStyle::PM_SpinBoxSliderHeight
-    , QStyle::PM_DefaultTopLevelMargin
-    , QStyle::PM_DefaultChildMargin
-    , QStyle::PM_DefaultLayoutSpacing
     , QStyle::PM_ToolBarIconSize
     , QStyle::PM_ListViewIconSize
     , QStyle::PM_IconViewIconSize
@@ -911,6 +904,8 @@ static const QStyle::PixelMetric qtscript_QStyle_PixelMetric_values[] = {
     , QStyle::PM_ScrollView_ScrollBarSpacing
     , QStyle::PM_ScrollView_ScrollBarOverlap
     , QStyle::PM_SubMenuOverlap
+    , QStyle::PM_LineEditIconSize
+    , QStyle::PM_LineEditIconMargin
 };
 
 static const char * const qtscript_QStyle_PixelMetric_keys[] = {
@@ -974,9 +969,6 @@ static const char * const qtscript_QStyle_PixelMetric_keys[] = {
     , "PM_ToolBarSeparatorExtent"
     , "PM_ToolBarExtensionExtent"
     , "PM_SpinBoxSliderHeight"
-    , "PM_DefaultTopLevelMargin"
-    , "PM_DefaultChildMargin"
-    , "PM_DefaultLayoutSpacing"
     , "PM_ToolBarIconSize"
     , "PM_ListViewIconSize"
     , "PM_IconViewIconSize"
@@ -1006,11 +998,13 @@ static const char * const qtscript_QStyle_PixelMetric_keys[] = {
     , "PM_ScrollView_ScrollBarSpacing"
     , "PM_ScrollView_ScrollBarOverlap"
     , "PM_SubMenuOverlap"
+    , "PM_LineEditIconSize"
+    , "PM_LineEditIconMargin"
 };
 
 static QString qtscript_QStyle_PixelMetric_toStringHelper(QStyle::PixelMetric value)
 {
-    for (int i = 0; i < 92; ++i) {
+    for (int i = 0; i < 91; ++i) {
         if (qtscript_QStyle_PixelMetric_values[i] == value)
             return QString::fromLatin1(qtscript_QStyle_PixelMetric_keys[i]);
     }
@@ -1031,7 +1025,7 @@ static void qtscript_QStyle_PixelMetric_fromScriptValue(const QScriptValue &valu
 static QScriptValue qtscript_construct_QStyle_PixelMetric(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 92; ++i) {
+    for (int i = 0; i < 91; ++i) {
         if (qtscript_QStyle_PixelMetric_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QStyle::PixelMetric>(arg));
     }
@@ -1057,7 +1051,7 @@ static QScriptValue qtscript_create_QStyle_PixelMetric_class(QScriptEngine *engi
         qtscript_QStyle_PixelMetric_valueOf, qtscript_QStyle_PixelMetric_toString);
     qScriptRegisterMetaType<QStyle::PixelMetric>(engine, qtscript_QStyle_PixelMetric_toScriptValue,
         qtscript_QStyle_PixelMetric_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 92; ++i) {
+    for (int i = 0; i < 91; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QStyle_PixelMetric_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QStyle_PixelMetric_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -1143,7 +1137,6 @@ static const QStyle::StyleHint qtscript_QStyle_StyleHint_values[] = {
     , QStyle::SH_ComboBox_PopupFrameStyle
     , QStyle::SH_MessageBox_TextInteractionFlags
     , QStyle::SH_DialogButtonBox_ButtonsHaveIcons
-    , QStyle::SH_SpellCheckUnderlineStyle
     , QStyle::SH_MessageBox_CenterButtons
     , QStyle::SH_Menu_SelectionWrap
     , QStyle::SH_ItemView_MovementWithoutUpdatingSelection
@@ -1174,6 +1167,8 @@ static const QStyle::StyleHint qtscript_QStyle_StyleHint_values[] = {
     , QStyle::SH_ToolTip_FallAsleepDelay
     , QStyle::SH_Widget_Animate
     , QStyle::SH_Splitter_OpaqueResize
+    , QStyle::SH_Table_AlwaysDrawLeftTopGridLines
+    , QStyle::SH_SpinBox_SelectOnStep
 };
 
 static const char * const qtscript_QStyle_StyleHint_keys[] = {
@@ -1250,7 +1245,6 @@ static const char * const qtscript_QStyle_StyleHint_keys[] = {
     , "SH_ComboBox_PopupFrameStyle"
     , "SH_MessageBox_TextInteractionFlags"
     , "SH_DialogButtonBox_ButtonsHaveIcons"
-    , "SH_SpellCheckUnderlineStyle"
     , "SH_MessageBox_CenterButtons"
     , "SH_Menu_SelectionWrap"
     , "SH_ItemView_MovementWithoutUpdatingSelection"
@@ -1281,11 +1275,13 @@ static const char * const qtscript_QStyle_StyleHint_keys[] = {
     , "SH_ToolTip_FallAsleepDelay"
     , "SH_Widget_Animate"
     , "SH_Splitter_OpaqueResize"
+    , "SH_Table_AlwaysDrawLeftTopGridLines"
+    , "SH_SpinBox_SelectOnStep"
 };
 
 static QString qtscript_QStyle_StyleHint_toStringHelper(QStyle::StyleHint value)
 {
-    for (int i = 0; i < 104; ++i) {
+    for (int i = 0; i < 105; ++i) {
         if (qtscript_QStyle_StyleHint_values[i] == value)
             return QString::fromLatin1(qtscript_QStyle_StyleHint_keys[i]);
     }
@@ -1306,7 +1302,7 @@ static void qtscript_QStyle_StyleHint_fromScriptValue(const QScriptValue &value,
 static QScriptValue qtscript_construct_QStyle_StyleHint(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 104; ++i) {
+    for (int i = 0; i < 105; ++i) {
         if (qtscript_QStyle_StyleHint_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QStyle::StyleHint>(arg));
     }
@@ -1332,7 +1328,7 @@ static QScriptValue qtscript_create_QStyle_StyleHint_class(QScriptEngine *engine
         qtscript_QStyle_StyleHint_valueOf, qtscript_QStyle_StyleHint_toString);
     qScriptRegisterMetaType<QStyle::StyleHint>(engine, qtscript_QStyle_StyleHint_toScriptValue,
         qtscript_QStyle_StyleHint_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 104; ++i) {
+    for (int i = 0; i < 105; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QStyle_StyleHint_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QStyle_StyleHint_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -1691,14 +1687,14 @@ static void qtscript_QStyle_State_fromScriptValue(const QScriptValue &value, QSt
     else if (var.userType() == qMetaTypeId<QStyle::StateFlag>())
         out = qvariant_cast<QStyle::StateFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QStyle_State(QScriptContext *context, QScriptEngine *engine)
 {
-    QStyle::State result = 0;
+    QStyle::State result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QStyle::State>(context->argument(0).toInt32());
+        result = QStyle::State::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -1866,7 +1862,6 @@ static const QStyle::SubElement qtscript_QStyle_SubElement_values[] = {
     , QStyle::SE_TabWidgetTabContents
     , QStyle::SE_TabWidgetLeftCorner
     , QStyle::SE_TabWidgetRightCorner
-    , QStyle::SE_ViewItemCheckIndicator
     , QStyle::SE_TabBarTearIndicator
     , QStyle::SE_TreeViewDisclosureItem
     , QStyle::SE_LineEditContents
@@ -1878,7 +1873,6 @@ static const QStyle::SubElement qtscript_QStyle_SubElement_values[] = {
     , QStyle::SE_CheckBoxLayoutItem
     , QStyle::SE_ComboBoxLayoutItem
     , QStyle::SE_DateTimeEditLayoutItem
-    , QStyle::SE_DialogButtonBoxLayoutItem
     , QStyle::SE_LabelLayoutItem
     , QStyle::SE_ProgressBarLayoutItem
     , QStyle::SE_PushButtonLayoutItem
@@ -1924,7 +1918,6 @@ static const char * const qtscript_QStyle_SubElement_keys[] = {
     , "SE_TabWidgetTabContents"
     , "SE_TabWidgetLeftCorner"
     , "SE_TabWidgetRightCorner"
-    , "SE_ViewItemCheckIndicator"
     , "SE_TabBarTearIndicator"
     , "SE_TreeViewDisclosureItem"
     , "SE_LineEditContents"
@@ -1936,7 +1929,6 @@ static const char * const qtscript_QStyle_SubElement_keys[] = {
     , "SE_CheckBoxLayoutItem"
     , "SE_ComboBoxLayoutItem"
     , "SE_DateTimeEditLayoutItem"
-    , "SE_DialogButtonBoxLayoutItem"
     , "SE_LabelLayoutItem"
     , "SE_ProgressBarLayoutItem"
     , "SE_PushButtonLayoutItem"
@@ -1959,7 +1951,7 @@ static const char * const qtscript_QStyle_SubElement_keys[] = {
 
 static QString qtscript_QStyle_SubElement_toStringHelper(QStyle::SubElement value)
 {
-    for (int i = 0; i < 55; ++i) {
+    for (int i = 0; i < 53; ++i) {
         if (qtscript_QStyle_SubElement_values[i] == value)
             return QString::fromLatin1(qtscript_QStyle_SubElement_keys[i]);
     }
@@ -1980,7 +1972,7 @@ static void qtscript_QStyle_SubElement_fromScriptValue(const QScriptValue &value
 static QScriptValue qtscript_construct_QStyle_SubElement(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 55; ++i) {
+    for (int i = 0; i < 53; ++i) {
         if (qtscript_QStyle_SubElement_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QStyle::SubElement>(arg));
     }
@@ -2006,7 +1998,7 @@ static QScriptValue qtscript_create_QStyle_SubElement_class(QScriptEngine *engin
         qtscript_QStyle_SubElement_valueOf, qtscript_QStyle_SubElement_toString);
     qScriptRegisterMetaType<QStyle::SubElement>(engine, qtscript_QStyle_SubElement_toScriptValue,
         qtscript_QStyle_SubElement_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 55; ++i) {
+    for (int i = 0; i < 53; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QStyle_SubElement_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QStyle_SubElement_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);

@@ -546,14 +546,14 @@ static void qtscript_QWidget_RenderFlags_fromScriptValue(const QScriptValue &val
     else if (var.userType() == qMetaTypeId<QWidget::RenderFlag>())
         out = qvariant_cast<QWidget::RenderFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QWidget_RenderFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QWidget::RenderFlags result = 0;
+    QWidget::RenderFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QWidget::RenderFlags>(context->argument(0).toInt32());
+        result = QWidget::RenderFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -766,7 +766,11 @@ static QScriptValue qtscript_QWidget_prototype_call(QScriptContext *context, QSc
         int* _q_arg1 = qscriptvalue_cast<int*>(context->argument(1));
         int* _q_arg2 = qscriptvalue_cast<int*>(context->argument(2));
         int* _q_arg3 = qscriptvalue_cast<int*>(context->argument(3));
-        _q_self->getContentsMargins(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+        const QMargins _q_margins = _q_self->contentsMargins();
+        if (_q_arg0) *_q_arg0 = _q_margins.left();
+        if (_q_arg1) *_q_arg1 = _q_margins.top();
+        if (_q_arg2) *_q_arg2 = _q_margins.right();
+        if (_q_arg3) *_q_arg3 = _q_margins.bottom();
         return context->engine()->undefinedValue();
     }
     break;

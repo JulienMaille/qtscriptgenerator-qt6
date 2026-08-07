@@ -17,6 +17,17 @@
 
 #include "qtscriptshell_QTimeLine.h"
 
+// QTimeLine::CurveShape was removed in Qt 6. Keep the generated script enum
+// so existing scripts can still resolve the legacy symbolic constants.
+enum class QtBindingsQTimeLineCurveShape {
+    EaseInCurve,
+    EaseOutCurve,
+    EaseInOutCurve,
+    LinearCurve,
+    SineCurve,
+    CosineCurve
+};
+
 static const char * const qtscript_QTimeLine_function_names[] = {
     "QTimeLine"
     // static
@@ -83,7 +94,7 @@ Q_DECLARE_METATYPE(QTimeLine*)
 Q_DECLARE_METATYPE(QtScriptShell_QTimeLine*)
 Q_DECLARE_METATYPE(QTimeLine::State)
 Q_DECLARE_METATYPE(QTimeLine::Direction)
-Q_DECLARE_METATYPE(QTimeLine::CurveShape)
+Q_DECLARE_METATYPE(QtBindingsQTimeLineCurveShape)
 
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
@@ -236,16 +247,16 @@ static QScriptValue qtscript_create_QTimeLine_Direction_class(QScriptEngine *eng
 }
 
 //
-// QTimeLine::CurveShape
+// QtBindingsQTimeLineCurveShape
 //
 
-static const QTimeLine::CurveShape qtscript_QTimeLine_CurveShape_values[] = {
-    QTimeLine::EaseInCurve
-    , QTimeLine::EaseOutCurve
-    , QTimeLine::EaseInOutCurve
-    , QTimeLine::LinearCurve
-    , QTimeLine::SineCurve
-    , QTimeLine::CosineCurve
+static const QtBindingsQTimeLineCurveShape qtscript_QTimeLine_CurveShape_values[] = {
+    QtBindingsQTimeLineCurveShape::EaseInCurve
+    , QtBindingsQTimeLineCurveShape::EaseOutCurve
+    , QtBindingsQTimeLineCurveShape::EaseInOutCurve
+    , QtBindingsQTimeLineCurveShape::LinearCurve
+    , QtBindingsQTimeLineCurveShape::SineCurve
+    , QtBindingsQTimeLineCurveShape::CosineCurve
 };
 
 static const char * const qtscript_QTimeLine_CurveShape_keys[] = {
@@ -257,41 +268,42 @@ static const char * const qtscript_QTimeLine_CurveShape_keys[] = {
     , "CosineCurve"
 };
 
-static QString qtscript_QTimeLine_CurveShape_toStringHelper(QTimeLine::CurveShape value)
+static QString qtscript_QTimeLine_CurveShape_toStringHelper(QtBindingsQTimeLineCurveShape value)
 {
-    if ((value >= QTimeLine::EaseInCurve) && (value <= QTimeLine::CosineCurve))
-        return qtscript_QTimeLine_CurveShape_keys[static_cast<int>(value)-static_cast<int>(QTimeLine::EaseInCurve)];
+    if ((value >= QtBindingsQTimeLineCurveShape::EaseInCurve) && (value <= QtBindingsQTimeLineCurveShape::CosineCurve))
+        return qtscript_QTimeLine_CurveShape_keys[static_cast<int>(value)-static_cast<int>(QtBindingsQTimeLineCurveShape::EaseInCurve)];
     return QString();
 }
 
-static QScriptValue qtscript_QTimeLine_CurveShape_toScriptValue(QScriptEngine *engine, const QTimeLine::CurveShape &value)
+static QScriptValue qtscript_QTimeLine_CurveShape_toScriptValue(QScriptEngine *engine, const QtBindingsQTimeLineCurveShape &value)
 {
     QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QTimeLine"));
     return clazz.property(qtscript_QTimeLine_CurveShape_toStringHelper(value));
 }
 
-static void qtscript_QTimeLine_CurveShape_fromScriptValue(const QScriptValue &value, QTimeLine::CurveShape &out)
+static void qtscript_QTimeLine_CurveShape_fromScriptValue(const QScriptValue &value, QtBindingsQTimeLineCurveShape &out)
 {
-    out = qvariant_cast<QTimeLine::CurveShape>(value.toVariant());
+    out = qvariant_cast<QtBindingsQTimeLineCurveShape>(value.toVariant());
 }
 
 static QScriptValue qtscript_construct_QTimeLine_CurveShape(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    if ((arg >= QTimeLine::EaseInCurve) && (arg <= QTimeLine::CosineCurve))
-        return qScriptValueFromValue(engine,  static_cast<QTimeLine::CurveShape>(arg));
+    if ((arg >= static_cast<int>(QtBindingsQTimeLineCurveShape::EaseInCurve))
+            && (arg <= static_cast<int>(QtBindingsQTimeLineCurveShape::CosineCurve)))
+        return qScriptValueFromValue(engine,  static_cast<QtBindingsQTimeLineCurveShape>(arg));
     return context->throwError(QString::fromLatin1("CurveShape(): invalid enum value (%0)").arg(arg));
 }
 
 static QScriptValue qtscript_QTimeLine_CurveShape_valueOf(QScriptContext *context, QScriptEngine *engine)
 {
-    QTimeLine::CurveShape value = qscriptvalue_cast<QTimeLine::CurveShape>(context->thisObject());
+    QtBindingsQTimeLineCurveShape value = qscriptvalue_cast<QtBindingsQTimeLineCurveShape>(context->thisObject());
     return QScriptValue(engine, static_cast<int>(value));
 }
 
 static QScriptValue qtscript_QTimeLine_CurveShape_toString(QScriptContext *context, QScriptEngine *engine)
 {
-    QTimeLine::CurveShape value = qscriptvalue_cast<QTimeLine::CurveShape>(context->thisObject());
+    QtBindingsQTimeLineCurveShape value = qscriptvalue_cast<QtBindingsQTimeLineCurveShape>(context->thisObject());
     return QScriptValue(engine, qtscript_QTimeLine_CurveShape_toStringHelper(value));
 }
 
@@ -300,7 +312,7 @@ static QScriptValue qtscript_create_QTimeLine_CurveShape_class(QScriptEngine *en
     QScriptValue ctor = qtscript_create_enum_class_helper(
         engine, qtscript_construct_QTimeLine_CurveShape,
         qtscript_QTimeLine_CurveShape_valueOf, qtscript_QTimeLine_CurveShape_toString);
-    qScriptRegisterMetaType<QTimeLine::CurveShape>(engine, qtscript_QTimeLine_CurveShape_toScriptValue,
+    qScriptRegisterMetaType<QtBindingsQTimeLineCurveShape>(engine, qtscript_QTimeLine_CurveShape_toScriptValue,
         qtscript_QTimeLine_CurveShape_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
     for (int i = 0; i < 6; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QTimeLine_CurveShape_keys[i]),

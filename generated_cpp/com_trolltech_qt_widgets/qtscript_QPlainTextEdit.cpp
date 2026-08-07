@@ -37,6 +37,7 @@
 #include <qpoint.h>
 #include <qrect.h>
 #include <qregexp.h>
+#include <qregularexpression.h>
 #include <qregion.h>
 #include <qscrollbar.h>
 #include <qsize.h>
@@ -349,9 +350,9 @@ static QScriptValue qtscript_QPlainTextEdit_prototype_call(QScriptContext *conte
 
     case 9:
     if (context->argumentCount() == 1) {
-        if (context->argument(0).isRegExp()) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
-            bool _q_result = _q_self->find(_q_arg0);
+        if (qtscriptIsRegExp(context->argument(0))) {
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
+            bool _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0));
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
@@ -360,11 +361,11 @@ static QScriptValue qtscript_QPlainTextEdit_prototype_call(QScriptContext *conte
         }
     }
     if (context->argumentCount() == 2) {
-        if (context->argument(0).isRegExp()
+        if (qtscriptIsRegExp(context->argument(0))
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(1).toVariant().userType())) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             QFlags<QTextDocument::FindFlag> _q_arg1 = qscriptvalue_cast<QFlags<QTextDocument::FindFlag> >(context->argument(1));
-            bool _q_result = _q_self->find(_q_arg0, _q_arg1);
+            bool _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1);
             return QScriptValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(1).toVariant().userType())) {

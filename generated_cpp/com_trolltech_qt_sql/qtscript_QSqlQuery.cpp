@@ -58,6 +58,10 @@ static const char * const qtscript_QSqlQuery_function_names[] = {
     , "size"
     , "value"
     , "toString"
+    , "boundValueName"
+    , "boundValueNames"
+    , "isPositionalBindingEnabled"
+    , "setPositionalBindingEnabled"
 };
 
 static const char * const qtscript_QSqlQuery_function_signatures[] = {
@@ -98,7 +102,11 @@ static const char * const qtscript_QSqlQuery_function_signatures[] = {
     , "NumericalPrecisionPolicy precisionPolicy"
     , ""
     , "String name\nint i"
-""
+    , ""
+    , "int pos"
+    , ""
+    , ""
+    , "bool enable"
 };
 
 static const int qtscript_QSqlQuery_function_lengths[] = {
@@ -110,6 +118,10 @@ static const int qtscript_QSqlQuery_function_lengths[] = {
     , 3
     , 1
     , 0
+    , 1
+    , 0
+    , 0
+    , 1
     , 0
     , 0
     , 1
@@ -346,7 +358,11 @@ static QScriptValue qtscript_QSqlQuery_prototype_call(QScriptContext *context, Q
 
     case 4:
     if (context->argumentCount() == 0) {
-        QMap<QString,QVariant > _q_result = _q_self->boundValues();
+        QMap<QString,QVariant > _q_result;
+        const QVariantList values = _q_self->boundValues();
+        const QStringList names = _q_self->boundValueNames();
+        for (int i = 0; i < values.size(); ++i)
+            _q_result.insert(i < names.size() ? names.at(i) : QString::number(i), values.at(i));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -593,6 +609,30 @@ static QScriptValue qtscript_QSqlQuery_prototype_call(QScriptContext *context, Q
     return QScriptValue(context->engine(), result);
     }
 
+    case 35:
+    if (context->argumentCount() == 1) {
+        int _q_arg0 = context->argument(0).toInt32();
+        return QScriptValue(context->engine(), _q_self->boundValueName(_q_arg0));
+    }
+    break;
+
+    case 36:
+    if (context->argumentCount() == 0)
+        return qScriptValueFromValue(context->engine(), _q_self->boundValueNames());
+    break;
+
+    case 37:
+    if (context->argumentCount() == 0)
+        return QScriptValue(context->engine(), _q_self->isPositionalBindingEnabled());
+    break;
+
+    case 38:
+    if (context->argumentCount() == 1) {
+        _q_self->setPositionalBindingEnabled(context->argument(0).toBoolean());
+        return context->engine()->undefinedValue();
+    }
+    break;
+
     default:
     Q_ASSERT(false);
     }
@@ -658,7 +698,7 @@ QScriptValue qtscript_create_QSqlQuery_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QSqlQuery*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QSqlQuery*)0));
-    for (int i = 0; i < 35; ++i) {
+    for (int i = 0; i < 39; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QSqlQuery_prototype_call, qtscript_QSqlQuery_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QSqlQuery_function_names[i+1]),

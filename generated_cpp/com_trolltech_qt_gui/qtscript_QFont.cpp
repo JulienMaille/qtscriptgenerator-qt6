@@ -650,8 +650,10 @@ static const QFont::StyleStrategy qtscript_QFont_StyleStrategy_values[] = {
     , QFont::PreferQuality
     , QFont::PreferAntialias
     , QFont::NoAntialias
-    , QFont::OpenGLCompatible
-    , QFont::ForceIntegerMetrics
+    , QFont::NoSubpixelAntialias
+    , QFont::PreferNoShaping
+    , QFont::ContextFontMerging
+    , QFont::PreferTypoLineMetrics
     , QFont::NoFontMerging
 };
 
@@ -665,8 +667,10 @@ static const char * const qtscript_QFont_StyleStrategy_keys[] = {
     , "PreferQuality"
     , "PreferAntialias"
     , "NoAntialias"
-    , "OpenGLCompatible"
-    , "ForceIntegerMetrics"
+    , "NoSubpixelAntialias"
+    , "PreferNoShaping"
+    , "ContextFontMerging"
+    , "PreferTypoLineMetrics"
     , "NoFontMerging"
 };
 
@@ -721,7 +725,7 @@ static QScriptValue qtscript_create_QFont_StyleStrategy_class(QScriptEngine *eng
         qtscript_QFont_StyleStrategy_valueOf, qtscript_QFont_StyleStrategy_toString);
     qScriptRegisterMetaType<QFont::StyleStrategy>(engine, qtscript_QFont_StyleStrategy_toScriptValue,
         qtscript_QFont_StyleStrategy_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 12; ++i) {
+    for (int i = 0; i < 14; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QFont_StyleStrategy_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QFont_StyleStrategy_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -921,15 +925,13 @@ static QScriptValue qtscript_QFont_prototype_call(QScriptContext *context, QScri
 
     case 11:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->lastResortFamily();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QFont.lastResortFamily() was removed in Qt 6"));
     }
     break;
 
     case 12:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->lastResortFont();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QFont.lastResortFont() was removed in Qt 6"));
     }
     break;
 
@@ -993,34 +995,28 @@ static QScriptValue qtscript_QFont_prototype_call(QScriptContext *context, QScri
 
     case 21:
     if (context->argumentCount() == 0) {
-        bool _q_result = _q_self->rawMode();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QFont.rawMode() was removed in Qt 6"));
     }
     break;
 
     case 22:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->rawName();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QFont.rawName() was removed in Qt 6"));
     }
     break;
 
     case 23:
-    if (context->argumentCount() == 0) {
-        uint _q_result = _q_self->resolve();
-        return QScriptValue(context->engine(), _q_result);
-    }
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QFont>() == context->argument(0).toVariant().userType())) {
             QFont _q_arg0 = qscriptvalue_cast<QFont>(context->argument(0));
             QFont _q_result = _q_self->resolve(_q_arg0);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isNumber()) {
-            uint _q_arg0 = context->argument(0).toUInt32();
-            _q_self->resolve(_q_arg0);
-            return context->engine()->undefinedValue();
+            return context->throwError(QString::fromLatin1("QFont.resolve(uint) was removed in Qt 6"));
         }
     }
+    if (context->argumentCount() == 0)
+        return context->throwError(QString::fromLatin1("QFont.resolve() was removed in Qt 6"));
     break;
 
     case 24:
@@ -1114,17 +1110,13 @@ static QScriptValue qtscript_QFont_prototype_call(QScriptContext *context, QScri
 
     case 35:
     if (context->argumentCount() == 1) {
-        bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setRawMode(_q_arg0);
-        return context->engine()->undefinedValue();
+        return context->throwError(QString::fromLatin1("QFont.setRawMode() was removed in Qt 6"));
     }
     break;
 
     case 36:
     if (context->argumentCount() == 1) {
-        QString _q_arg0 = context->argument(0).toString();
-        _q_self->setRawName(_q_arg0);
-        return context->engine()->undefinedValue();
+        return context->throwError(QString::fromLatin1("QFont.setRawName() was removed in Qt 6"));
     }
     break;
 
@@ -1192,7 +1184,7 @@ static QScriptValue qtscript_QFont_prototype_call(QScriptContext *context, QScri
 
     case 44:
     if (context->argumentCount() == 1) {
-        int _q_arg0 = context->argument(0).toInt32();
+        QFont::Weight _q_arg0 = static_cast<QFont::Weight>(context->argument(0).toInt32());
         _q_self->setWeight(_q_arg0);
         return context->engine()->undefinedValue();
     }

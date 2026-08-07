@@ -225,7 +225,7 @@ static QScriptValue qtscript_QSqlError_prototype_call(QScriptContext *context, Q
 
     case 4:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->number();
+        int _q_result = _q_self->nativeErrorCode().toInt();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -241,7 +241,8 @@ static QScriptValue qtscript_QSqlError_prototype_call(QScriptContext *context, Q
     case 6:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
-        _q_self->setDatabaseText(_q_arg0);
+        *_q_self = QSqlError(_q_self->driverText(), _q_arg0, _q_self->type(),
+                            _q_self->nativeErrorCode());
         return context->engine()->undefinedValue();
     }
     break;
@@ -249,7 +250,8 @@ static QScriptValue qtscript_QSqlError_prototype_call(QScriptContext *context, Q
     case 7:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
-        _q_self->setDriverText(_q_arg0);
+        *_q_self = QSqlError(_q_arg0, _q_self->databaseText(), _q_self->type(),
+                            _q_self->nativeErrorCode());
         return context->engine()->undefinedValue();
     }
     break;
@@ -257,7 +259,8 @@ static QScriptValue qtscript_QSqlError_prototype_call(QScriptContext *context, Q
     case 8:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        _q_self->setNumber(_q_arg0);
+        *_q_self = QSqlError(_q_self->driverText(), _q_self->databaseText(),
+                            _q_self->type(), QString::number(_q_arg0));
         return context->engine()->undefinedValue();
     }
     break;
@@ -265,7 +268,8 @@ static QScriptValue qtscript_QSqlError_prototype_call(QScriptContext *context, Q
     case 9:
     if (context->argumentCount() == 1) {
         QSqlError::ErrorType _q_arg0 = qscriptvalue_cast<QSqlError::ErrorType>(context->argument(0));
-        _q_self->setType(_q_arg0);
+        *_q_self = QSqlError(_q_self->driverText(), _q_self->databaseText(),
+                            _q_arg0, _q_self->nativeErrorCode());
         return context->engine()->undefinedValue();
     }
     break;
@@ -358,7 +362,7 @@ static QScriptValue qtscript_QSqlError_static_call(QScriptContext *context, QScr
             QString _q_arg1 = context->argument(1).toString();
             QSqlError::ErrorType _q_arg2 = qscriptvalue_cast<QSqlError::ErrorType>(context->argument(2));
             int _q_arg3 = context->argument(3).toInt32();
-            QSqlError _q_cpp_result(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+            QSqlError _q_cpp_result(_q_arg0, _q_arg1, _q_arg2, QString::number(_q_arg3));
             QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
             return _q_result;
         }

@@ -147,7 +147,6 @@ static const QDockWidget::DockWidgetFeature qtscript_QDockWidget_DockWidgetFeatu
     , QDockWidget::DockWidgetClosable
     , QDockWidget::DockWidgetMovable
     , QDockWidget::DockWidgetFloatable
-    , QDockWidget::AllDockWidgetFeatures
     , QDockWidget::DockWidgetVerticalTitleBar
     , QDockWidget::DockWidgetFeatureMask
     , QDockWidget::Reserved
@@ -158,7 +157,6 @@ static const char * const qtscript_QDockWidget_DockWidgetFeature_keys[] = {
     , "DockWidgetClosable"
     , "DockWidgetMovable"
     , "DockWidgetFloatable"
-    , "AllDockWidgetFeatures"
     , "DockWidgetVerticalTitleBar"
     , "DockWidgetFeatureMask"
     , "Reserved"
@@ -166,7 +164,7 @@ static const char * const qtscript_QDockWidget_DockWidgetFeature_keys[] = {
 
 static QString qtscript_QDockWidget_DockWidgetFeature_toStringHelper(QDockWidget::DockWidgetFeature value)
 {
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         if (qtscript_QDockWidget_DockWidgetFeature_values[i] == value)
             return QString::fromLatin1(qtscript_QDockWidget_DockWidgetFeature_keys[i]);
     }
@@ -187,7 +185,7 @@ static void qtscript_QDockWidget_DockWidgetFeature_fromScriptValue(const QScript
 static QScriptValue qtscript_construct_QDockWidget_DockWidgetFeature(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         if (qtscript_QDockWidget_DockWidgetFeature_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QDockWidget::DockWidgetFeature>(arg));
     }
@@ -213,7 +211,7 @@ static QScriptValue qtscript_create_QDockWidget_DockWidgetFeature_class(QScriptE
         qtscript_QDockWidget_DockWidgetFeature_valueOf, qtscript_QDockWidget_DockWidgetFeature_toString);
     qScriptRegisterMetaType<QDockWidget::DockWidgetFeature>(engine, qtscript_QDockWidget_DockWidgetFeature_toScriptValue,
         qtscript_QDockWidget_DockWidgetFeature_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QDockWidget_DockWidgetFeature_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QDockWidget_DockWidgetFeature_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);
@@ -238,14 +236,14 @@ static void qtscript_QDockWidget_DockWidgetFeatures_fromScriptValue(const QScrip
     else if (var.userType() == qMetaTypeId<QDockWidget::DockWidgetFeature>())
         out = qvariant_cast<QDockWidget::DockWidgetFeature>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QDockWidget_DockWidgetFeatures(QScriptContext *context, QScriptEngine *engine)
 {
-    QDockWidget::DockWidgetFeatures result = 0;
+    QDockWidget::DockWidgetFeatures result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QDockWidget::DockWidgetFeatures>(context->argument(0).toInt32());
+        result = QDockWidget::DockWidgetFeatures::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -269,7 +267,7 @@ static QScriptValue qtscript_QDockWidget_DockWidgetFeatures_toString(QScriptCont
 {
     QDockWidget::DockWidgetFeatures value = qscriptvalue_cast<QDockWidget::DockWidgetFeatures>(context->thisObject());
     QString result;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         if ((value & qtscript_QDockWidget_DockWidgetFeature_values[i]) == qtscript_QDockWidget_DockWidgetFeature_values[i]) {
             if (!result.isEmpty())
                 result.append(QString::fromLatin1(","));

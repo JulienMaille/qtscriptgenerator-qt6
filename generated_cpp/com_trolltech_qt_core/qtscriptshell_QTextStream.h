@@ -2,6 +2,7 @@
 #define QTSCRIPTSHELL_QTEXTSTREAM_H
 
 #include <qtextstream.h>
+#include <qiodevice.h>
 
 #include <QtScript/qscriptvalue.h>
 #include <__package_shared.h>

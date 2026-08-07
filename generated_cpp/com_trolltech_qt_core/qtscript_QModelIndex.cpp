@@ -116,7 +116,9 @@ static QScriptValue qtscript_QModelIndex_prototype_call(QScriptContext *context,
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
         int _q_arg1 = context->argument(1).toInt32();
-        QModelIndex _q_result = _q_self->child(_q_arg0, _q_arg1);
+        QModelIndex _q_result = _q_self->model()
+            ? _q_self->model()->index(_q_arg0, _q_arg1, *_q_self)
+            : QModelIndex();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -178,7 +180,7 @@ static QScriptValue qtscript_QModelIndex_prototype_call(QScriptContext *context,
     case 8:
     if (context->argumentCount() == 1) {
         QModelIndex _q_arg0 = qscriptvalue_cast<QModelIndex>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -186,7 +188,7 @@ static QScriptValue qtscript_QModelIndex_prototype_call(QScriptContext *context,
     case 9:
     if (context->argumentCount() == 1) {
         QModelIndex _q_arg0 = qscriptvalue_cast<QModelIndex>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        bool _q_result = (*_q_self < _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

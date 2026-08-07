@@ -479,14 +479,14 @@ static void qtscript_QTextStream_NumberFlags_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<QTextStream::NumberFlag>())
         out = qvariant_cast<QTextStream::NumberFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QTextStream_NumberFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QTextStream::NumberFlags result = 0;
+    QTextStream::NumberFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QTextStream::NumberFlags>(context->argument(0).toInt32());
+        result = QTextStream::NumberFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -651,7 +651,8 @@ static QScriptValue qtscript_QTextStream_prototype_call(QScriptContext *context,
 
     case 2:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = _q_self->codec();
+        QTextCodec* _q_result = QTextCodec::codecForName(
+            QStringConverter::nameForEncoding(_q_self->encoding()));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -897,15 +898,19 @@ static QScriptValue qtscript_QTextStream_prototype_call(QScriptContext *context,
     if (context->argumentCount() == 1) {
         if (qscriptvalue_cast<QTextCodec*>(context->argument(0))) {
             QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-            _q_self->setCodec(_q_arg0);
+            const auto encoding = QStringConverter::encodingForName(
+                QString::fromLatin1(_q_arg0->name()));
+            if (!encoding)
+                return context->throwError(QScriptContext::TypeError,
+                    QString::fromLatin1("QTextStream.setCodec(): codec is not supported by Qt 6 QTextStream"));
+            _q_self->setEncoding(*encoding);
             return context->engine()->undefinedValue();
         } else if (context->argument(0).isString()) {
-
-            // TEMPLATE - core.convert_string_arg_to_char* - START
-          QByteArray tmp__q_arg0 = context->argument(0).toString().toLatin1();
-          const char * _q_arg0 = tmp__q_arg0.constData();
-    // TEMPLATE - core.convert_string_arg_to_char* - END
-                      _q_self->setCodec(_q_arg0);
+            const auto encoding = QStringConverter::encodingForName(context->argument(0).toString());
+            if (!encoding)
+                return context->throwError(QScriptContext::TypeError,
+                    QString::fromLatin1("QTextStream.setCodec(): codec is not supported by Qt 6 QTextStream"));
+            _q_self->setEncoding(*encoding);
             return context->engine()->undefinedValue();
         }
     }

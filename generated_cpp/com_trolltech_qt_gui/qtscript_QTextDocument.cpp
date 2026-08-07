@@ -339,14 +339,14 @@ static void qtscript_QTextDocument_FindFlags_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<QTextDocument::FindFlag>())
         out = qvariant_cast<QTextDocument::FindFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QTextDocument_FindFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QTextDocument::FindFlags result = 0;
+    QTextDocument::FindFlags result;
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QTextDocument::FindFlags>(context->argument(0).toInt32());
+        result = QTextDocument::FindFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -770,9 +770,9 @@ static QScriptValue qtscript_QTextDocument_prototype_call(QScriptContext *contex
 
     case 16:
     if (context->argumentCount() == 1) {
-        if (context->argument(0).isRegExp()) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
-            QTextCursor _q_result = _q_self->find(_q_arg0);
+        if (qtscriptIsRegExp(context->argument(0))) {
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
+            QTextCursor _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0));
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()) {
             QString _q_arg0 = context->argument(0).toString();
@@ -781,17 +781,17 @@ static QScriptValue qtscript_QTextDocument_prototype_call(QScriptContext *contex
         }
     }
     if (context->argumentCount() == 2) {
-        if (context->argument(0).isRegExp()
+        if (qtscriptIsRegExp(context->argument(0))
             && (qMetaTypeId<QTextCursor>() == context->argument(1).toVariant().userType())) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             QTextCursor _q_arg1 = qscriptvalue_cast<QTextCursor>(context->argument(1));
-            QTextCursor _q_result = _q_self->find(_q_arg0, _q_arg1);
+            QTextCursor _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1);
             return qScriptValueFromValue(context->engine(), _q_result);
-        } else if (context->argument(0).isRegExp()
+        } else if (qtscriptIsRegExp(context->argument(0))
             && context->argument(1).isNumber()) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
-            QTextCursor _q_result = _q_self->find(_q_arg0, _q_arg1);
+            QTextCursor _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && (qMetaTypeId<QTextCursor>() == context->argument(1).toVariant().userType())) {
@@ -808,21 +808,21 @@ static QScriptValue qtscript_QTextDocument_prototype_call(QScriptContext *contex
         }
     }
     if (context->argumentCount() == 3) {
-        if (context->argument(0).isRegExp()
+        if (qtscriptIsRegExp(context->argument(0))
             && (qMetaTypeId<QTextCursor>() == context->argument(1).toVariant().userType())
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(2).toVariant().userType())) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             QTextCursor _q_arg1 = qscriptvalue_cast<QTextCursor>(context->argument(1));
             QFlags<QTextDocument::FindFlag> _q_arg2 = qscriptvalue_cast<QFlags<QTextDocument::FindFlag> >(context->argument(2));
-            QTextCursor _q_result = _q_self->find(_q_arg0, _q_arg1, _q_arg2);
+            QTextCursor _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1, _q_arg2);
             return qScriptValueFromValue(context->engine(), _q_result);
-        } else if (context->argument(0).isRegExp()
+        } else if (qtscriptIsRegExp(context->argument(0))
             && context->argument(1).isNumber()
             && (qMetaTypeId<QFlags<QTextDocument::FindFlag> >() == context->argument(2).toVariant().userType())) {
-            QRegExp _q_arg0 = context->argument(0).toRegExp();
+            QRegExp _q_arg0 = qtscriptToRegExp(context->argument(0));
             int _q_arg1 = context->argument(1).toInt32();
             QFlags<QTextDocument::FindFlag> _q_arg2 = qscriptvalue_cast<QFlags<QTextDocument::FindFlag> >(context->argument(2));
-            QTextCursor _q_result = _q_self->find(_q_arg0, _q_arg1, _q_arg2);
+            QTextCursor _q_result = _q_self->find(qtscriptRegularExpression(_q_arg0), _q_arg1, _q_arg2);
             return qScriptValueFromValue(context->engine(), _q_result);
         } else if (context->argument(0).isString()
             && (qMetaTypeId<QTextCursor>() == context->argument(1).toVariant().userType())
@@ -1052,7 +1052,8 @@ static QScriptValue qtscript_QTextDocument_prototype_call(QScriptContext *contex
     }
     if (context->argumentCount() == 1) {
         QByteArray _q_arg0 = qscriptvalue_cast<QByteArray>(context->argument(0));
-        QString _q_result = _q_self->toHtml(_q_arg0);
+        Q_UNUSED(_q_arg0);
+        QString _q_result = _q_self->toHtml();
         return QScriptValue(context->engine(), _q_result);
     }
     break;

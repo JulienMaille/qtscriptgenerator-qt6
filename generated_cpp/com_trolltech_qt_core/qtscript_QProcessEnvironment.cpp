@@ -162,7 +162,7 @@ static QScriptValue qtscript_QProcessEnvironment_prototype_call(QScriptContext *
     case 6:
     if (context->argumentCount() == 1) {
         QProcessEnvironment _q_arg0 = qscriptvalue_cast<QProcessEnvironment>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

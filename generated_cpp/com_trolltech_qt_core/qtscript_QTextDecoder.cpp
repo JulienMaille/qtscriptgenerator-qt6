@@ -51,7 +51,7 @@ static QScriptValue qtscript_QTextDecoder_throw_ambiguity_error_helper(
 
 Q_DECLARE_METATYPE(QTextDecoder*)
 Q_DECLARE_METATYPE(const QTextCodec*)
-Q_DECLARE_METATYPE(QFlags<QTextCodec::ConversionFlag>)
+Q_DECLARE_METATYPE(QFlags<QTextCodec::Flag>)
 
 //
 // QTextDecoder
@@ -124,7 +124,7 @@ static QScriptValue qtscript_QTextDecoder_static_call(QScriptContext *context, Q
         return _q_result;
     } else if (context->argumentCount() == 2) {
         const QTextCodec* _q_arg0 = qscriptvalue_cast<const QTextCodec*>(context->argument(0));
-        QFlags<QTextCodec::ConversionFlag> _q_arg1 = qscriptvalue_cast<QFlags<QTextCodec::ConversionFlag> >(context->argument(1));
+        QFlags<QTextCodec::Flag> _q_arg1 = qscriptvalue_cast<QFlags<QTextCodec::Flag> >(context->argument(1));
         QTextDecoder* _q_cpp_result = new QTextDecoder(_q_arg0, _q_arg1);
         QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
         return _q_result;

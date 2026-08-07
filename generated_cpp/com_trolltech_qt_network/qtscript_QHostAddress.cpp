@@ -89,9 +89,9 @@ struct QMetaTypeId< QPair<QHostAddress,int > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QPair<QHostAddress,int > >("QPair<QHostAddress,int >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QPair<QHostAddress,int > >("QPair<QHostAddress,int >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 Q_DECLARE_METATYPE(QAbstractSocket::NetworkLayerProtocol)

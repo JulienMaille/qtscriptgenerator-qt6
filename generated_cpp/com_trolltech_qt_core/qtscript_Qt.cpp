@@ -133,6 +133,7 @@ Q_DECLARE_METATYPE(Qt::TileRule)
 Q_DECLARE_METATYPE(Qt::ToolBarAreaSizes)
 Q_DECLARE_METATYPE(Qt::PenJoinStyle)
 Q_DECLARE_METATYPE(Qt::ToolButtonStyle)
+Q_DECLARE_METATYPE(Qt::ScrollPhase)
 
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
@@ -743,16 +744,16 @@ static QScriptValue qtscript_create_Qt_SortOrder_class(QScriptEngine *engine, QS
 //
 
 static const Qt::ApplicationAttribute qtscript_Qt_ApplicationAttribute_values[] = {
-    Qt::AA_ImmediateWidgetCreation
-    , Qt::AA_MSWindowsUseDirect3DByDefault
+    static_cast<Qt::ApplicationAttribute>(0)
+    , static_cast<Qt::ApplicationAttribute>(1)
     , Qt::AA_DontShowIconsInMenus
     , Qt::AA_NativeWindows
     , Qt::AA_DontCreateNativeWidgetSiblings
-    , Qt::AA_MacPluginApplication
+    , Qt::AA_PluginApplication
     , Qt::AA_DontUseNativeMenuBar
     , Qt::AA_MacDontSwapCtrlAndMeta
     , Qt::AA_Use96Dpi
-    , Qt::AA_X11InitThreads
+    , static_cast<Qt::ApplicationAttribute>(10)
     , Qt::AA_SynthesizeTouchForUnhandledMouseEvents
     , Qt::AA_SynthesizeMouseForUnhandledTouchEvents
     , Qt::AA_UseHighDpiPixmaps
@@ -1288,7 +1289,7 @@ static const Qt::MatchFlag qtscript_Qt_MatchFlag_values[] = {
     , Qt::MatchContains
     , Qt::MatchStartsWith
     , Qt::MatchEndsWith
-    , Qt::MatchRegExp
+    , static_cast<Qt::MatchFlag>(4)
     , Qt::MatchWildcard
     , Qt::MatchFixedString
     , Qt::MatchCaseSensitive
@@ -1383,14 +1384,14 @@ static void qtscript_Qt_MatchFlags_fromScriptValue(const QScriptValue &value, Qt
     else if (var.userType() == qMetaTypeId<Qt::MatchFlag>())
         out = qvariant_cast<Qt::MatchFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_MatchFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::MatchFlags result = 0;
+    Qt::MatchFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::MatchFlags>(context->argument(0).toInt32());
+        result = Qt::MatchFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -1665,14 +1666,14 @@ static void qtscript_Qt_WindowFlags_fromScriptValue(const QScriptValue &value, Q
     else if (var.userType() == qMetaTypeId<Qt::WindowType>())
         out = qvariant_cast<Qt::WindowType>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_WindowFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::WindowFlags result = 0;
+    Qt::WindowFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::WindowFlags>(context->argument(0).toInt32());
+        result = Qt::WindowFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -1885,8 +1886,8 @@ static const Qt::ItemDataRole qtscript_Qt_ItemDataRole_values[] = {
     , Qt::WhatsThisRole
     , Qt::FontRole
     , Qt::TextAlignmentRole
-    , Qt::BackgroundColorRole
-    , Qt::TextColorRole
+    , Qt::BackgroundRole
+    , Qt::ForegroundRole
     , Qt::CheckStateRole
     , Qt::AccessibleTextRole
     , Qt::AccessibleDescriptionRole
@@ -2089,14 +2090,14 @@ static void qtscript_Qt_Alignment_fromScriptValue(const QScriptValue &value, Qt:
     else if (var.userType() == qMetaTypeId<Qt::AlignmentFlag>())
         out = qvariant_cast<Qt::AlignmentFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_Alignment(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::Alignment result = 0;
+    Qt::Alignment result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::Alignment>(context->argument(0).toInt32());
+        result = Qt::Alignment::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -2244,12 +2245,12 @@ static void qtscript_Qt_DockWidgetAreas_fromScriptValue(const QScriptValue &valu
     else if (var.userType() == qMetaTypeId<Qt::DockWidgetArea>())
         out = qvariant_cast<Qt::DockWidgetArea>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_DockWidgetAreas(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::DockWidgetAreas result = 0;
+    Qt::DockWidgetAreas result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
         result = static_cast<Qt::DockWidgetAreas>(context->argument(0).toInt32());
     } else {
@@ -2813,14 +2814,14 @@ static void qtscript_Qt_WindowStates_fromScriptValue(const QScriptValue &value, 
     else if (var.userType() == qMetaTypeId<Qt::WindowState>())
         out = qvariant_cast<Qt::WindowState>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_WindowStates(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::WindowStates result = 0;
+    Qt::WindowStates result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::WindowStates>(context->argument(0).toInt32());
+        result = Qt::WindowStates::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -3094,12 +3095,12 @@ static QScriptValue qtscript_create_Qt_GestureType_class(QScriptEngine *engine, 
 static const Qt::DateFormat qtscript_Qt_DateFormat_values[] = {
     Qt::TextDate
     , Qt::ISODate
-    , Qt::SystemLocaleDate
-    , Qt::LocaleDate
-    , Qt::SystemLocaleShortDate
-    , Qt::SystemLocaleLongDate
-    , Qt::DefaultLocaleShortDate
-    , Qt::DefaultLocaleLongDate
+    , static_cast<Qt::DateFormat>(2)
+    , static_cast<Qt::DateFormat>(3)
+    , static_cast<Qt::DateFormat>(4)
+    , static_cast<Qt::DateFormat>(5)
+    , static_cast<Qt::DateFormat>(6)
+    , static_cast<Qt::DateFormat>(7)
     , Qt::RFC2822Date
 };
 
@@ -3322,7 +3323,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     Qt::WA_Disabled
     , Qt::WA_UnderMouse
     , Qt::WA_MouseTracking
-    , Qt::WA_ContentsPropagated
+    , static_cast<Qt::WidgetAttribute>(3)
     , Qt::WA_OpaquePaintEvent
     , Qt::WA_StaticContents
     , Qt::WA_LaidOut
@@ -3330,7 +3331,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_NoSystemBackground
     , Qt::WA_UpdatesDisabled
     , Qt::WA_Mapped
-    , Qt::WA_MacNoClickThrough
+    , static_cast<Qt::WidgetAttribute>(12)
     , Qt::WA_InputMethodEnabled
     , Qt::WA_WState_Visible
     , Qt::WA_WState_Hidden
@@ -3347,7 +3348,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_Moved
     , Qt::WA_PendingUpdate
     , Qt::WA_InvalidSize
-    , Qt::WA_MacBrushedMetal
+    , static_cast<Qt::WidgetAttribute>(46)
     , Qt::WA_CustomWhatsThis
     , Qt::WA_LayoutOnEntireRect
     , Qt::WA_OutsideWSRange
@@ -3367,12 +3368,12 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_WState_Reparented
     , Qt::WA_WState_ConfigPending
     , Qt::WA_WState_Polished
-    , Qt::WA_WState_DND
+    , static_cast<Qt::WidgetAttribute>(67)
     , Qt::WA_WState_OwnSizePolicy
     , Qt::WA_WState_ExplicitShowHide
     , Qt::WA_ShowModal
     , Qt::WA_MouseNoMask
-    , Qt::WA_GroupLeader
+    , static_cast<Qt::WidgetAttribute>(72)
     , Qt::WA_NoMousePropagation
     , Qt::WA_Hover
     , Qt::WA_InputMethodTransparent
@@ -3394,7 +3395,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_MacMiniSize
     , Qt::WA_LayoutUsesWidgetRect
     , Qt::WA_StyledBackground
-    , Qt::WA_MSWindowsUseDirect3D
+    , static_cast<Qt::WidgetAttribute>(94)
     , Qt::WA_CanHostQMdiSubWindowTitleBar
     , Qt::WA_MacAlwaysShowToolWindow
     , Qt::WA_StyleSheet
@@ -3402,7 +3403,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_X11BypassTransientForHint
     , Qt::WA_NativeWindow
     , Qt::WA_DontCreateNativeAncestors
-    , Qt::WA_MacVariableSize
+    , static_cast<Qt::WidgetAttribute>(102)
     , Qt::WA_DontShowOnScreen
     , Qt::WA_X11NetWmWindowTypeDesktop
     , Qt::WA_X11NetWmWindowTypeDock
@@ -3417,7 +3418,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_X11NetWmWindowTypeNotification
     , Qt::WA_X11NetWmWindowTypeCombo
     , Qt::WA_X11NetWmWindowTypeDND
-    , Qt::WA_MacFrameworkScaled
+    , static_cast<Qt::WidgetAttribute>(117)
     , Qt::WA_SetWindowModality
     , Qt::WA_WState_WindowOpacitySet
     , Qt::WA_TranslucentBackground
@@ -3425,7 +3426,7 @@ static const Qt::WidgetAttribute qtscript_Qt_WidgetAttribute_values[] = {
     , Qt::WA_WState_AcceptedTouchBeginEvent
     , Qt::WA_TouchPadAcceptSingleTouchEvents
     , Qt::WA_X11DoNotAcceptFocus
-    , Qt::WA_MacNoShadow
+    , static_cast<Qt::WidgetAttribute>(127)
     , Qt::WA_AttributeCount
 };
 
@@ -3940,7 +3941,7 @@ static const Qt::TextFlag qtscript_Qt_TextFlag_values[] = {
     , Qt::TextForceLeftToRight
     , Qt::TextForceRightToLeft
     , Qt::TextLongestVariant
-    , Qt::TextBypassShaping
+    , static_cast<Qt::TextFlag>(0x100000)
     , Qt::TextIncludeTrailingSpaces
 };
 
@@ -4457,14 +4458,14 @@ static void qtscript_Qt_DropActions_fromScriptValue(const QScriptValue &value, Q
     else if (var.userType() == qMetaTypeId<Qt::DropAction>())
         out = qvariant_cast<Qt::DropAction>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_DropActions(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::DropActions result = 0;
+    Qt::DropActions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::DropActions>(context->argument(0).toInt32());
+        result = Qt::DropActions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -4689,14 +4690,14 @@ static void qtscript_Qt_KeyboardModifiers_fromScriptValue(const QScriptValue &va
     else if (var.userType() == qMetaTypeId<Qt::KeyboardModifier>())
         out = qvariant_cast<Qt::KeyboardModifier>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_KeyboardModifiers(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::KeyboardModifiers result = 0;
+    Qt::KeyboardModifiers result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::KeyboardModifiers>(context->argument(0).toInt32());
+        result = Qt::KeyboardModifiers::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -5040,7 +5041,7 @@ static const Qt::ItemFlag qtscript_Qt_ItemFlag_values[] = {
     , Qt::ItemIsDropEnabled
     , Qt::ItemIsUserCheckable
     , Qt::ItemIsEnabled
-    , Qt::ItemIsTristate
+    , Qt::ItemIsAutoTristate
     , Qt::ItemNeverHasChildren
 };
 
@@ -5130,14 +5131,14 @@ static void qtscript_Qt_ItemFlags_fromScriptValue(const QScriptValue &value, Qt:
     else if (var.userType() == qMetaTypeId<Qt::ItemFlag>())
         out = qvariant_cast<Qt::ItemFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_ItemFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::ItemFlags result = 0;
+    Qt::ItemFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::ItemFlags>(context->argument(0).toInt32());
+        result = Qt::ItemFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -5198,7 +5199,7 @@ static const Qt::MouseButton qtscript_Qt_MouseButton_values[] = {
     , Qt::NoButton
     , Qt::LeftButton
     , Qt::RightButton
-    , Qt::MidButton
+    , Qt::MiddleButton
     , Qt::BackButton
     , Qt::ForwardButton
     , Qt::TaskButton
@@ -5333,14 +5334,14 @@ static void qtscript_Qt_MouseButtons_fromScriptValue(const QScriptValue &value, 
     else if (var.userType() == qMetaTypeId<Qt::MouseButton>())
         out = qvariant_cast<Qt::MouseButton>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_MouseButtons(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::MouseButtons result = 0;
+    Qt::MouseButtons result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::MouseButtons>(context->argument(0).toInt32());
+        result = Qt::MouseButtons::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -5476,14 +5477,14 @@ static void qtscript_Qt_Orientations_fromScriptValue(const QScriptValue &value, 
     else if (var.userType() == qMetaTypeId<Qt::Orientation>())
         out = qvariant_cast<Qt::Orientation>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_Orientations(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::Orientations result = 0;
+    Qt::Orientations result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::Orientations>(context->argument(0).toInt32());
+        result = Qt::Orientations::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -5730,14 +5731,14 @@ static void qtscript_Qt_TouchPointStates_fromScriptValue(const QScriptValue &val
     else if (var.userType() == qMetaTypeId<Qt::TouchPointState>())
         out = qvariant_cast<Qt::TouchPointState>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_TouchPointStates(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::TouchPointStates result = 0;
+    Qt::TouchPointStates result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::TouchPointStates>(context->argument(0).toInt32());
+        result = Qt::TouchPointStates::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -5982,14 +5983,14 @@ static void qtscript_Qt_InputMethodHints_fromScriptValue(const QScriptValue &val
     else if (var.userType() == qMetaTypeId<Qt::InputMethodHint>())
         out = qvariant_cast<Qt::InputMethodHint>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_InputMethodHints(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::InputMethodHints result = 0;
+    Qt::InputMethodHints result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::InputMethodHints>(context->argument(0).toInt32());
+        result = Qt::InputMethodHints::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -6153,14 +6154,14 @@ static void qtscript_Qt_ImageConversionFlags_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<Qt::ImageConversionFlag>())
         out = qvariant_cast<Qt::ImageConversionFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_ImageConversionFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::ImageConversionFlags result = 0;
+    Qt::ImageConversionFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::ImageConversionFlags>(context->argument(0).toInt32());
+        result = Qt::ImageConversionFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -6385,14 +6386,14 @@ static void qtscript_Qt_GestureFlags_fromScriptValue(const QScriptValue &value, 
     else if (var.userType() == qMetaTypeId<Qt::GestureFlag>())
         out = qvariant_cast<Qt::GestureFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_GestureFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::GestureFlags result = 0;
+    Qt::GestureFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::GestureFlags>(context->argument(0).toInt32());
+        result = Qt::GestureFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -6540,14 +6541,14 @@ static void qtscript_Qt_ToolBarAreas_fromScriptValue(const QScriptValue &value, 
     else if (var.userType() == qMetaTypeId<Qt::ToolBarArea>())
         out = qvariant_cast<Qt::ToolBarArea>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_ToolBarAreas(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::ToolBarAreas result = 0;
+    Qt::ToolBarAreas result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::ToolBarAreas>(context->argument(0).toInt32());
+        result = Qt::ToolBarAreas::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -6841,14 +6842,14 @@ static void qtscript_Qt_TextInteractionFlags_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<Qt::TextInteractionFlag>())
         out = qvariant_cast<Qt::TextInteractionFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_Qt_TextInteractionFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    Qt::TextInteractionFlags result = 0;
+    Qt::TextInteractionFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<Qt::TextInteractionFlags>(context->argument(0).toInt32());
+        result = Qt::TextInteractionFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -8260,6 +8261,90 @@ static QScriptValue qtscript_create_Qt_ToolButtonStyle_class(QScriptEngine *engi
 }
 
 //
+// Qt::ScrollPhase
+//
+
+static const Qt::ScrollPhase qtscript_Qt_ScrollPhase_values[] = {
+    Qt::NoScrollPhase,
+    Qt::ScrollBegin,
+    Qt::ScrollUpdate,
+    Qt::ScrollEnd,
+    Qt::ScrollMomentum
+};
+
+static const char * const qtscript_Qt_ScrollPhase_keys[] = {
+    "NoScrollPhase",
+    "ScrollBegin",
+    "ScrollUpdate",
+    "ScrollEnd",
+    "ScrollMomentum"
+};
+
+static QString qtscript_Qt_ScrollPhase_toStringHelper(Qt::ScrollPhase value)
+{
+    const int index = static_cast<int>(value);
+    return index >= 0 && index < 5
+        ? QString::fromLatin1(qtscript_Qt_ScrollPhase_keys[index]) : QString();
+}
+
+static QScriptValue qtscript_Qt_ScrollPhase_toScriptValue(
+    QScriptEngine *engine, const Qt::ScrollPhase &value)
+{
+    return engine->globalObject().property(QString::fromLatin1("Qt"))
+        .property(qtscript_Qt_ScrollPhase_toStringHelper(value));
+}
+
+static void qtscript_Qt_ScrollPhase_fromScriptValue(
+    const QScriptValue &value, Qt::ScrollPhase &out)
+{
+    const QVariant variant = value.toVariant();
+    out = variant.metaType() == QMetaType::fromType<Qt::ScrollPhase>()
+        ? variant.value<Qt::ScrollPhase>()
+        : static_cast<Qt::ScrollPhase>(value.toInt32());
+}
+
+static QScriptValue qtscript_construct_Qt_ScrollPhase(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    const int value = context->argument(0).toInt32();
+    if (value >= 0 && value < 5)
+        return qScriptValueFromValue(engine, static_cast<Qt::ScrollPhase>(value));
+    return context->throwError(QString::fromLatin1("ScrollPhase(): invalid enum value (%0)").arg(value));
+}
+
+static QScriptValue qtscript_Qt_ScrollPhase_valueOf(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    return QScriptValue(engine, static_cast<int>(
+        qscriptvalue_cast<Qt::ScrollPhase>(context->thisObject())));
+}
+
+static QScriptValue qtscript_Qt_ScrollPhase_toString(
+    QScriptContext *context, QScriptEngine *engine)
+{
+    return QScriptValue(engine, qtscript_Qt_ScrollPhase_toStringHelper(
+        qscriptvalue_cast<Qt::ScrollPhase>(context->thisObject())));
+}
+
+static QScriptValue qtscript_create_Qt_ScrollPhase_class(
+    QScriptEngine *engine, QScriptValue &clazz)
+{
+    QScriptValue ctor = qtscript_create_enum_class_helper(
+        engine, qtscript_construct_Qt_ScrollPhase,
+        qtscript_Qt_ScrollPhase_valueOf, qtscript_Qt_ScrollPhase_toString);
+    qScriptRegisterMetaType<Qt::ScrollPhase>(
+        engine, qtscript_Qt_ScrollPhase_toScriptValue,
+        qtscript_Qt_ScrollPhase_fromScriptValue,
+        ctor.property(QString::fromLatin1("prototype")));
+    for (int i = 0; i < 5; ++i) {
+        clazz.setProperty(QString::fromLatin1(qtscript_Qt_ScrollPhase_keys[i]),
+            engine->newVariant(qVariantFromValue(qtscript_Qt_ScrollPhase_values[i])),
+            QScriptValue::ReadOnly | QScriptValue::Undeletable);
+    }
+    return ctor;
+}
+
+//
 // Qt
 //
 
@@ -8468,5 +8553,9 @@ QScriptValue qtscript_create_Qt_class(QScriptEngine *engine)
         qtscript_create_Qt_PenJoinStyle_class(engine, ctor));
     ctor.setProperty(QString::fromLatin1("ToolButtonStyle"),
         qtscript_create_Qt_ToolButtonStyle_class(engine, ctor));
+    ctor.setProperty(QString::fromLatin1("ScrollPhase"),
+        qtscript_create_Qt_ScrollPhase_class(engine, ctor));
+    ctor.setProperty(QString::fromLatin1("version"),
+        QScriptValue(engine, QString::fromLatin1(qVersion())));
     return ctor;
 }

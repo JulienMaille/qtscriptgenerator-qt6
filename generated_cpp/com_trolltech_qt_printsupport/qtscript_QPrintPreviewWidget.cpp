@@ -97,7 +97,6 @@ Q_DECLARE_METATYPE(QPrintPreviewWidget*)
 Q_DECLARE_METATYPE(QtScriptShell_QPrintPreviewWidget*)
 Q_DECLARE_METATYPE(QPrintPreviewWidget::ZoomMode)
 Q_DECLARE_METATYPE(QPrintPreviewWidget::ViewMode)
-Q_DECLARE_METATYPE(QPrinter::Orientation)
 Q_DECLARE_METATYPE(QPrinter*)
 Q_DECLARE_METATYPE(QWidget*)
 Q_DECLARE_METATYPE(QFlags<Qt::WindowType>)
@@ -289,7 +288,7 @@ static QScriptValue qtscript_QPrintPreviewWidget_prototype_call(QScriptContext *
 
     case 1:
     if (context->argumentCount() == 0) {
-        QPrinter::Orientation _q_result = _q_self->orientation();
+        QPageLayout::Orientation _q_result = _q_self->orientation();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

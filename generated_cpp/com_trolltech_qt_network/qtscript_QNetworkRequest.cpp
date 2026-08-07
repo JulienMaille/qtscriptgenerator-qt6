@@ -217,8 +217,18 @@ static const QNetworkRequest::Attribute qtscript_QNetworkRequest_Attribute_value
     , QNetworkRequest::DownloadBufferAttribute
     , QNetworkRequest::SynchronousRequestAttribute
     , QNetworkRequest::BackgroundRequestAttribute
-    , QNetworkRequest::SpdyAllowedAttribute
-    , QNetworkRequest::SpdyWasUsedAttribute
+    , QNetworkRequest::EmitAllUploadProgressSignalsAttribute
+    , QNetworkRequest::Http2AllowedAttribute
+    , QNetworkRequest::Http2WasUsedAttribute
+    , QNetworkRequest::OriginalContentLengthAttribute
+    , QNetworkRequest::RedirectPolicyAttribute
+    , QNetworkRequest::Http2DirectAttribute
+    , QNetworkRequest::ResourceTypeAttribute
+    , QNetworkRequest::AutoDeleteReplyOnFinishAttribute
+    , QNetworkRequest::ConnectionCacheExpiryTimeoutSecondsAttribute
+    , QNetworkRequest::Http2CleartextAllowedAttribute
+    , QNetworkRequest::UseCredentialsAttribute
+    , QNetworkRequest::FullLocalServerNameAttribute
     , QNetworkRequest::User
     , QNetworkRequest::UserMax
 };
@@ -242,15 +252,25 @@ static const char * const qtscript_QNetworkRequest_Attribute_keys[] = {
     , "DownloadBufferAttribute"
     , "SynchronousRequestAttribute"
     , "BackgroundRequestAttribute"
-    , "SpdyAllowedAttribute"
-    , "SpdyWasUsedAttribute"
+    , "EmitAllUploadProgressSignalsAttribute"
+    , "Http2AllowedAttribute"
+    , "Http2WasUsedAttribute"
+    , "OriginalContentLengthAttribute"
+    , "RedirectPolicyAttribute"
+    , "Http2DirectAttribute"
+    , "ResourceTypeAttribute"
+    , "AutoDeleteReplyOnFinishAttribute"
+    , "ConnectionCacheExpiryTimeoutSecondsAttribute"
+    , "Http2CleartextAllowedAttribute"
+    , "UseCredentialsAttribute"
+    , "FullLocalServerNameAttribute"
     , "User"
     , "UserMax"
 };
 
 static QString qtscript_QNetworkRequest_Attribute_toStringHelper(QNetworkRequest::Attribute value)
 {
-    for (int i = 0; i < 22; ++i) {
+    for (int i = 0; i < 32; ++i) {
         if (qtscript_QNetworkRequest_Attribute_values[i] == value)
             return QString::fromLatin1(qtscript_QNetworkRequest_Attribute_keys[i]);
     }
@@ -271,7 +291,7 @@ static void qtscript_QNetworkRequest_Attribute_fromScriptValue(const QScriptValu
 static QScriptValue qtscript_construct_QNetworkRequest_Attribute(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    for (int i = 0; i < 22; ++i) {
+    for (int i = 0; i < 32; ++i) {
         if (qtscript_QNetworkRequest_Attribute_values[i] == arg)
             return qScriptValueFromValue(engine,  static_cast<QNetworkRequest::Attribute>(arg));
     }
@@ -297,7 +317,7 @@ static QScriptValue qtscript_create_QNetworkRequest_Attribute_class(QScriptEngin
         qtscript_QNetworkRequest_Attribute_valueOf, qtscript_QNetworkRequest_Attribute_toString);
     qScriptRegisterMetaType<QNetworkRequest::Attribute>(engine, qtscript_QNetworkRequest_Attribute_toScriptValue,
         qtscript_QNetworkRequest_Attribute_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 22; ++i) {
+    for (int i = 0; i < 32; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QNetworkRequest_Attribute_keys[i]),
             engine->newVariant(qVariantFromValue(qtscript_QNetworkRequest_Attribute_values[i])),
             QScriptValue::ReadOnly | QScriptValue::Undeletable);

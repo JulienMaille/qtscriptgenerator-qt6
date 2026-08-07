@@ -547,7 +547,7 @@ static QScriptValue qtscript_QSettings_prototype_call(QScriptContext *context, Q
 
     case 15:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = _q_self->iniCodec();
+        QTextCodec* _q_result = QTextCodec::codecForName("UTF-8");
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -601,11 +601,11 @@ static QScriptValue qtscript_QSettings_prototype_call(QScriptContext *context, Q
     if (context->argumentCount() == 1) {
         if (qscriptvalue_cast<QTextCodec*>(context->argument(0))) {
             QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-            _q_self->setIniCodec(_q_arg0);
+            Q_UNUSED(_q_arg0);
             return context->engine()->undefinedValue();
         } else if (qscriptvalue_cast<const char*>(context->argument(0))) {
             const char* _q_arg0 = qscriptvalue_cast<const char*>(context->argument(0));
-            _q_self->setIniCodec(_q_arg0);
+            Q_UNUSED(_q_arg0);
             return context->engine()->undefinedValue();
         }
     }

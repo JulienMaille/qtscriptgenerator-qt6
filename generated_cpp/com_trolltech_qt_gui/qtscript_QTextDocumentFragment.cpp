@@ -105,7 +105,8 @@ static QScriptValue qtscript_QTextDocumentFragment_prototype_call(QScriptContext
     }
     if (context->argumentCount() == 1) {
         QByteArray _q_arg0 = qscriptvalue_cast<QByteArray>(context->argument(0));
-        QString _q_result = _q_self->toHtml(_q_arg0);
+        Q_UNUSED(_q_arg0);
+        QString _q_result = _q_self->toHtml();
         return QScriptValue(context->engine(), _q_result);
     }
     break;

@@ -220,7 +220,7 @@ static QScriptValue qtscript_QItemSelectionRange_prototype_call(QScriptContext *
     case 11:
     if (context->argumentCount() == 1) {
         QItemSelectionRange _q_arg0 = qscriptvalue_cast<QItemSelectionRange>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -228,7 +228,22 @@ static QScriptValue qtscript_QItemSelectionRange_prototype_call(QScriptContext *
     case 12:
     if (context->argumentCount() == 1) {
         QItemSelectionRange _q_arg0 = qscriptvalue_cast<QItemSelectionRange>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        const QModelIndex _q_leftTop = _q_self->topLeft();
+        const QModelIndex _q_rightTop = _q_arg0.topLeft();
+        bool _q_result;
+        if (_q_leftTop.model() != _q_rightTop.model()) {
+            _q_result = std::less<const QAbstractItemModel*>()(_q_leftTop.model(), _q_rightTop.model());
+        } else if (_q_leftTop.parent() != _q_rightTop.parent()) {
+            _q_result = QPersistentModelIndex(_q_leftTop.parent()) < QPersistentModelIndex(_q_rightTop.parent());
+        } else if (_q_leftTop.row() != _q_rightTop.row()) {
+            _q_result = _q_leftTop.row() < _q_rightTop.row();
+        } else if (_q_leftTop.column() != _q_rightTop.column()) {
+            _q_result = _q_leftTop.column() < _q_rightTop.column();
+        } else if (_q_self->bottomRight().row() != _q_arg0.bottomRight().row()) {
+            _q_result = _q_self->bottomRight().row() < _q_arg0.bottomRight().row();
+        } else {
+            _q_result = _q_self->bottomRight().column() < _q_arg0.bottomRight().column();
+        }
         return QScriptValue(context->engine(), _q_result);
     }
     break;

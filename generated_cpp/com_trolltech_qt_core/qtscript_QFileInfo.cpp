@@ -278,7 +278,7 @@ static QScriptValue qtscript_QFileInfo_prototype_call(QScriptContext *context, Q
 
     case 10:
     if (context->argumentCount() == 0) {
-        QDateTime _q_result = _q_self->created();
+        QDateTime _q_result = _q_self->birthTime();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

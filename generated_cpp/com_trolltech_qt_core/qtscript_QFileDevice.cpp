@@ -318,14 +318,14 @@ static void qtscript_QFileDevice_Permissions_fromScriptValue(const QScriptValue 
     else if (var.userType() == qMetaTypeId<QFileDevice::Permission>())
         out = qvariant_cast<QFileDevice::Permission>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QFileDevice_Permissions(QScriptContext *context, QScriptEngine *engine)
 {
-    QFileDevice::Permissions result = 0;
+    QFileDevice::Permissions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QFileDevice::Permissions>(context->argument(0).toInt32());
+        result = QFileDevice::Permissions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -526,14 +526,14 @@ static void qtscript_QFileDevice_FileHandleFlags_fromScriptValue(const QScriptVa
     else if (var.userType() == qMetaTypeId<QFileDevice::FileHandleFlag>())
         out = qvariant_cast<QFileDevice::FileHandleFlag>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QFileDevice_FileHandleFlags(QScriptContext *context, QScriptEngine *engine)
 {
-    QFileDevice::FileHandleFlags result = 0;
+    QFileDevice::FileHandleFlags result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QFileDevice::FileHandleFlags>(context->argument(0).toInt32());
+        result = QFileDevice::FileHandleFlags::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

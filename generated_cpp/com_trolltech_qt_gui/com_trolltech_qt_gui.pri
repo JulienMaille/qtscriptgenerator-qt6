@@ -25,11 +25,9 @@ HEADERS += \
            $$PWD/qtscriptshell_QPicture.h \
            $$PWD/qtscriptshell_QPixmap.h \
            $$PWD/qtscriptshell_QPixmapCache.h \
-           $$PWD/qtscriptshell_QRegExpValidator.h \
            $$PWD/qtscriptshell_QResizeEvent.h \
            $$PWD/qtscriptshell_QShortcutEvent.h \
            $$PWD/qtscriptshell_QSyntaxHighlighter.h \
-           $$PWD/qtscriptshell_QTabletEvent.h \
            $$PWD/qtscriptshell_QTextBlockFormat.h \
            $$PWD/qtscriptshell_QTextBlockGroup.h \
            $$PWD/qtscriptshell_QTextBlockUserData.h \
@@ -47,7 +45,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QTextTableFormat.h \
            $$PWD/qtscriptshell_QTileRules.h \
            $$PWD/qtscriptshell_QValidator.h \
-           $$PWD/qtscriptshell_QWheelEvent.h \
 
 SOURCES += \
            $$PWD/qtscript_QActionEvent.cpp \
@@ -107,7 +104,6 @@ SOURCES += \
            $$PWD/qtscript_QPalette.cpp \
            $$PWD/qtscript_QPen.cpp \
            $$PWD/qtscript_QPicture.cpp \
-           $$PWD/qtscript_QPictureIO.cpp \
            $$PWD/qtscript_QPixmap.cpp \
            $$PWD/qtscript_QPixmapCache.cpp \
            $$PWD/qtscript_QPixmapCache_Key.cpp \
@@ -115,14 +111,12 @@ SOURCES += \
            $$PWD/qtscript_QPolygonF.cpp \
            $$PWD/qtscript_QQuaternion.cpp \
            $$PWD/qtscript_QRadialGradient.cpp \
-           $$PWD/qtscript_QRegExpValidator.cpp \
            $$PWD/qtscript_QRegion.cpp \
            $$PWD/qtscript_QResizeEvent.cpp \
            $$PWD/qtscript_QShortcutEvent.cpp \
            $$PWD/qtscript_QShowEvent.cpp \
            $$PWD/qtscript_QStatusTipEvent.cpp \
            $$PWD/qtscript_QSyntaxHighlighter.cpp \
-           $$PWD/qtscript_QTabletEvent.cpp \
            $$PWD/qtscript_QTextBlock.cpp \
            $$PWD/qtscript_QTextBlockFormat.cpp \
            $$PWD/qtscript_QTextBlockGroup.cpp \
@@ -151,14 +145,12 @@ SOURCES += \
            $$PWD/qtscript_QTextTableFormat.cpp \
            $$PWD/qtscript_QTileRules.cpp \
            $$PWD/qtscript_QToolBarChangeEvent.cpp \
-           $$PWD/qtscript_QTouchEvent_TouchPoint.cpp \
            $$PWD/qtscript_QTransform.cpp \
            $$PWD/qtscript_QValidator.cpp \
            $$PWD/qtscript_QVector2D.cpp \
            $$PWD/qtscript_QVector3D.cpp \
            $$PWD/qtscript_QVector4D.cpp \
            $$PWD/qtscript_QWhatsThisClickedEvent.cpp \
-           $$PWD/qtscript_QWheelEvent.cpp \
            $$PWD/qtscript_QWindowStateChangeEvent.cpp \
            $$PWD/qtscriptshell_QBitmap.cpp \
            $$PWD/qtscriptshell_QContextMenuEvent.cpp \
@@ -186,11 +178,9 @@ SOURCES += \
            $$PWD/qtscriptshell_QPicture.cpp \
            $$PWD/qtscriptshell_QPixmap.cpp \
            $$PWD/qtscriptshell_QPixmapCache.cpp \
-           $$PWD/qtscriptshell_QRegExpValidator.cpp \
            $$PWD/qtscriptshell_QResizeEvent.cpp \
            $$PWD/qtscriptshell_QShortcutEvent.cpp \
            $$PWD/qtscriptshell_QSyntaxHighlighter.cpp \
-           $$PWD/qtscriptshell_QTabletEvent.cpp \
            $$PWD/qtscriptshell_QTextBlockFormat.cpp \
            $$PWD/qtscriptshell_QTextBlockGroup.cpp \
            $$PWD/qtscriptshell_QTextBlockUserData.cpp \
@@ -208,5 +198,4 @@ SOURCES += \
            $$PWD/qtscriptshell_QTextTableFormat.cpp \
            $$PWD/qtscriptshell_QTileRules.cpp \
            $$PWD/qtscriptshell_QValidator.cpp \
-           $$PWD/qtscriptshell_QWheelEvent.cpp \
            $$PWD/com_trolltech_qt_gui_init.cpp

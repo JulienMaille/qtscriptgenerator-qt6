@@ -244,7 +244,7 @@ static QScriptValue qtscript_QLineF_prototype_call(QScriptContext *context, QScr
     }
     if (context->argumentCount() == 1) {
         QLineF _q_arg0 = qscriptvalue_cast<QLineF>(context->argument(0));
-        qreal _q_result = _q_self->angle(_q_arg0);
+        qreal _q_result = _q_self->angleTo(_q_arg0);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -275,7 +275,7 @@ static QScriptValue qtscript_QLineF_prototype_call(QScriptContext *context, QScr
     if (context->argumentCount() == 2) {
         QLineF _q_arg0 = qscriptvalue_cast<QLineF>(context->argument(0));
         QPointF* _q_arg1 = qscriptvalue_cast<QPointF*>(context->argument(1));
-        QLineF::IntersectType _q_result = _q_self->intersect(_q_arg0, _q_arg1);
+        QLineF::IntersectType _q_result = _q_self->intersects(_q_arg0, _q_arg1);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -304,7 +304,7 @@ static QScriptValue qtscript_QLineF_prototype_call(QScriptContext *context, QScr
     case 8:
     if (context->argumentCount() == 1) {
         QLineF _q_arg0 = qscriptvalue_cast<QLineF>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

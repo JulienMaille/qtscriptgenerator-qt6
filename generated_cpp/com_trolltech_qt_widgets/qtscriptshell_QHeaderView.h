@@ -30,7 +30,7 @@ public:
     void dropEvent(QDropEvent*  event);
     bool  edit(const QModelIndex&  index, QAbstractItemView::EditTrigger  trigger, QEvent*  event);
     void editorDestroyed(QObject*  editor);
-    void enterEvent(QEvent*  arg__1);
+    void enterEvent(QEnterEvent*  arg__1);
     bool  event(QEvent*  e);
     bool  eventFilter(QObject*  arg__1, QEvent*  arg__2);
     void focusInEvent(QFocusEvent*  event);
@@ -57,7 +57,7 @@ public:
     void mousePressEvent(QMouseEvent*  e);
     void mouseReleaseEvent(QMouseEvent*  e);
     void moveEvent(QMoveEvent*  arg__1);
-    bool  nativeEvent(const QByteArray&  eventType, void*  message, long*  result);
+    bool  nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result);
     QPaintEngine*  paintEngine() const;
     void paintEvent(QPaintEvent*  e);
     void paintSection(QPainter*  painter, const QRect&  rect, int  logicalIndex) const;

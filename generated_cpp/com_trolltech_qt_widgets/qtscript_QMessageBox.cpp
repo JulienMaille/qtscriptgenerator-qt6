@@ -68,6 +68,7 @@ static const char * const qtscript_QMessageBox_function_names[] = {
     , "setDefaultButton"
     , "setEscapeButton"
     , "standardButton"
+    , "setIconPixmap"
     , "toString"
 };
 
@@ -95,6 +96,7 @@ static const char * const qtscript_QMessageBox_function_signatures[] = {
     , "StandardButton button\nQPushButton button"
     , "QAbstractButton button\nStandardButton button"
     , "QAbstractButton button"
+    , "QPixmap pixmap"
 ""
 };
 
@@ -117,6 +119,7 @@ static const int qtscript_QMessageBox_function_lengths[] = {
     , 0
     , 0
     , 2
+    , 1
     , 1
     , 1
     , 1
@@ -317,14 +320,14 @@ static void qtscript_QMessageBox_StandardButtons_fromScriptValue(const QScriptVa
     else if (var.userType() == qMetaTypeId<QMessageBox::StandardButton>())
         out = qvariant_cast<QMessageBox::StandardButton>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QMessageBox_StandardButtons(QScriptContext *context, QScriptEngine *engine)
 {
-    QMessageBox::StandardButtons result = 0;
+    QMessageBox::StandardButtons result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QMessageBox::StandardButtons>(context->argument(0).toInt32());
+        result = QMessageBox::StandardButtons::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -554,7 +557,7 @@ static QScriptValue qtscript_QMessageBox_prototype_call(QScriptContext *context,
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 14;
+        _id = 0xBABE0000 + 15;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -701,7 +704,15 @@ static QScriptValue qtscript_QMessageBox_prototype_call(QScriptContext *context,
     }
     break;
 
-    case 14: {
+    case 14:
+    if (context->argumentCount() == 1) {
+        QPixmap _q_arg0 = qscriptvalue_cast<QPixmap>(context->argument(0));
+        _q_self->setIconPixmap(_q_arg0);
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 15: {
     QString result = QString::fromLatin1("QMessageBox");
     return QScriptValue(context->engine(), result);
     }
@@ -1018,7 +1029,7 @@ QScriptValue qtscript_create_QMessageBox_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QMessageBox*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QMessageBox*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QDialog*>()));
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 16; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QMessageBox_prototype_call, qtscript_QMessageBox_function_lengths[i+7]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QMessageBox_function_names[i+7]),

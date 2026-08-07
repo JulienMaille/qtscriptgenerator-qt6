@@ -225,7 +225,7 @@ static QScriptValue qtscript_QPaintEngineState_prototype_call(QScriptContext *co
 
     case 11:
     if (context->argumentCount() == 0) {
-        QMatrix _q_result = _q_self->matrix();
+        QMatrix _q_result = _q_self->transform();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

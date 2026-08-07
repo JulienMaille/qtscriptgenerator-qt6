@@ -149,9 +149,9 @@ struct QMetaTypeId< QHash<int,QByteArray > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QHash<int,QByteArray > >("QHash<int,QByteArray >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QHash<int,QByteArray > >("QHash<int,QByteArray >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 Q_DECLARE_METATYPE(QAbstractItemModel*)

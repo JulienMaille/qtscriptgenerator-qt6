@@ -52,7 +52,7 @@ Q_DECLARE_METATYPE(QKeyEvent*)
 Q_DECLARE_METATYPE(QPaintDevice::PaintDeviceMetric)
 Q_DECLARE_METATYPE(QMouseEvent*)
 Q_DECLARE_METATYPE(QMoveEvent*)
-Q_DECLARE_METATYPE(long*)
+Q_DECLARE_METATYPE(qintptr*)
 Q_DECLARE_METATYPE(QPaintEngine*)
 Q_DECLARE_METATYPE(QPaintEvent*)
 Q_DECLARE_METATYPE(QPoint*)
@@ -219,7 +219,7 @@ void QtScriptShell_QSizeGrip::dropEvent(QDropEvent*  arg__1)
     }
 }
 
-void QtScriptShell_QSizeGrip::enterEvent(QEvent*  arg__1)
+void QtScriptShell_QSizeGrip::enterEvent(QEnterEvent*  arg__1)
 {
     QScriptValue _q_function = __qtscript_self.property("enterEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)
@@ -522,7 +522,7 @@ void QtScriptShell_QSizeGrip::moveEvent(QMoveEvent*  moveEvent)
     }
 }
 
-bool  QtScriptShell_QSizeGrip::nativeEvent(const QByteArray&  eventType, void*  message, long*  result)
+bool  QtScriptShell_QSizeGrip::nativeEvent(const QByteArray&  eventType, void*  message, qintptr*  result)
 {
     QScriptValue _q_function = __qtscript_self.property("nativeEvent");
     if (!_q_function.isFunction() || QTSCRIPT_IS_GENERATED_FUNCTION(_q_function)

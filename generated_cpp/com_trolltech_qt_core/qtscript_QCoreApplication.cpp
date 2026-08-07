@@ -274,15 +274,15 @@ static QScriptValue qtscript_QCoreApplication_static_call(QScriptContext *contex
 
     case 8:
     if (context->argumentCount() == 0) {
-        QCoreApplication::flush();
+        QCoreApplication::sendPostedEvents();
         return context->engine()->undefinedValue();
     }
     break;
 
     case 9:
     if (context->argumentCount() == 0) {
-        bool _q_result = QCoreApplication::hasPendingEvents();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QScriptContext::TypeError,
+            QString::fromLatin1("QCoreApplication.hasPendingEvents() is not available in Qt 6"));
     }
     break;
 

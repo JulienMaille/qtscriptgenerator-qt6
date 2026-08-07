@@ -16,6 +16,8 @@ static const char * const qtscript_QGraphicsSceneEvent_function_names[] = {
     // static
     // prototype
     , "widget"
+    , "timestamp"
+    , "setTimestamp"
     , "toString"
 };
 
@@ -24,6 +26,8 @@ static const char * const qtscript_QGraphicsSceneEvent_function_signatures[] = {
     // static
     // prototype
     , ""
+    , ""
+    , "quint64 timestamp"
 ""
 };
 
@@ -32,6 +36,8 @@ static const int qtscript_QGraphicsSceneEvent_function_lengths[] = {
     // static
     // prototype
     , 0
+    , 0
+    , 1
     , 0
 };
 
@@ -84,7 +90,19 @@ static QScriptValue qtscript_QGraphicsSceneEvent_prototype_call(QScriptContext *
     }
     break;
 
-    case 1: {
+    case 1:
+    if (context->argumentCount() == 0)
+        return QScriptValue(context->engine(), static_cast<qsreal>(_q_self->timestamp()));
+    break;
+
+    case 2:
+    if (context->argumentCount() == 1) {
+        _q_self->setTimestamp(static_cast<quint64>(context->argument(0).toNumber()));
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 3: {
     QString result = QString::fromLatin1("QGraphicsSceneEvent");
     return QScriptValue(context->engine(), result);
     }
@@ -128,7 +146,7 @@ QScriptValue qtscript_create_QGraphicsSceneEvent_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QGraphicsSceneEvent*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QGraphicsSceneEvent*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QEvent*>()));
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 4; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QGraphicsSceneEvent_prototype_call, qtscript_QGraphicsSceneEvent_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QGraphicsSceneEvent_function_names[i+1]),

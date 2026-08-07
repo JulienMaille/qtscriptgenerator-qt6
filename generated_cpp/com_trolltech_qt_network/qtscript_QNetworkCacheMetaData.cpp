@@ -103,9 +103,9 @@ struct QMetaTypeId< QHash<QNetworkRequest::Attribute,QVariant > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QHash<QNetworkRequest::Attribute,QVariant > >("QHash<QNetworkRequest::Attribute,QVariant >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QHash<QNetworkRequest::Attribute,QVariant > >("QHash<QNetworkRequest::Attribute,QVariant >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -115,9 +115,9 @@ struct QMetaTypeId< QPair<QByteArray,QByteArray > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QPair<QByteArray,QByteArray > >("QPair<QByteArray,QByteArray >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QPair<QByteArray,QByteArray > >("QPair<QByteArray,QByteArray >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 template <> \
@@ -127,9 +127,9 @@ struct QMetaTypeId< QList<QPair<QByteArray,QByteArray > > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QList<QPair<QByteArray,QByteArray > > >("QList<QPair<QByteArray,QByteArray > >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QList<QPair<QByteArray,QByteArray > > >("QList<QPair<QByteArray,QByteArray > >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 

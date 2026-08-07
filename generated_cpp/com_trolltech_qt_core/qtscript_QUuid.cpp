@@ -290,7 +290,7 @@ static QScriptValue qtscript_QUuid_prototype_call(QScriptContext *context, QScri
     case 1:
     if (context->argumentCount() == 1) {
         QUuid _q_arg0 = qscriptvalue_cast<QUuid>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
+        bool _q_result = (*_q_self == _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -298,7 +298,7 @@ static QScriptValue qtscript_QUuid_prototype_call(QScriptContext *context, QScri
     case 2:
     if (context->argumentCount() == 1) {
         QUuid _q_arg0 = qscriptvalue_cast<QUuid>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        bool _q_result = (*_q_self < _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

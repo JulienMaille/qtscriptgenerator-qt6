@@ -9,7 +9,7 @@
 class QtScriptShell_QGraphicsProxyWidget : public QGraphicsProxyWidget
 {
 public:
-    QtScriptShell_QGraphicsProxyWidget(QGraphicsItem*  parent = 0, Qt::WindowFlags  wFlags = 0);
+    QtScriptShell_QGraphicsProxyWidget(QGraphicsItem*  parent = 0, Qt::WindowFlags  wFlags = {});
     ~QtScriptShell_QGraphicsProxyWidget();
 
     void advance(int  phase);

@@ -239,7 +239,6 @@ static QScriptValue qtscript_QPrinter_throw_ambiguity_error_helper(
 Q_DECLARE_METATYPE(QPaintDevice*)
 Q_DECLARE_METATYPE(QPrinter*)
 Q_DECLARE_METATYPE(QtScriptShell_QPrinter*)
-Q_DECLARE_METATYPE(QPrinter::Orientation)
 Q_DECLARE_METATYPE(QPrinter::ColorMode)
 Q_DECLARE_METATYPE(QPrinter::PrinterState)
 Q_DECLARE_METATYPE(QPrinter::OutputFormat)
@@ -254,7 +253,6 @@ Q_DECLARE_METATYPE(QPaintEngine*)
 Q_DECLARE_METATYPE(QPrintEngine*)
 Q_DECLARE_METATYPE(QList<int >)
 Q_DECLARE_METATYPE(QPrinterInfo)
-Q_DECLARE_METATYPE(QPrinter::PageSize)
 
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
@@ -271,12 +269,12 @@ static QScriptValue qtscript_create_enum_class_helper(
 }
 
 //
-// QPrinter::Orientation
+// QPrinter::Orientation (backed by QPageLayout::Orientation in Qt 6)
 //
 
-static const QPrinter::Orientation qtscript_QPrinter_Orientation_values[] = {
-    QPrinter::Portrait
-    , QPrinter::Landscape
+static const QPageLayout::Orientation qtscript_QPrinter_Orientation_values[] = {
+    QPageLayout::Portrait
+    , QPageLayout::Landscape
 };
 
 static const char * const qtscript_QPrinter_Orientation_keys[] = {
@@ -284,41 +282,41 @@ static const char * const qtscript_QPrinter_Orientation_keys[] = {
     , "Landscape"
 };
 
-static QString qtscript_QPrinter_Orientation_toStringHelper(QPrinter::Orientation value)
+static QString qtscript_QPrinter_Orientation_toStringHelper(QPageLayout::Orientation value)
 {
-    if ((value >= QPrinter::Portrait) && (value <= QPrinter::Landscape))
-        return qtscript_QPrinter_Orientation_keys[static_cast<int>(value)-static_cast<int>(QPrinter::Portrait)];
+    if ((value >= QPageLayout::Portrait) && (value <= QPageLayout::Landscape))
+        return qtscript_QPrinter_Orientation_keys[static_cast<int>(value)-static_cast<int>(QPageLayout::Portrait)];
     return QString();
 }
 
-static QScriptValue qtscript_QPrinter_Orientation_toScriptValue(QScriptEngine *engine, const QPrinter::Orientation &value)
+static QScriptValue qtscript_QPrinter_Orientation_toScriptValue(QScriptEngine *engine, const QPageLayout::Orientation &value)
 {
     QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QPrinter"));
     return clazz.property(qtscript_QPrinter_Orientation_toStringHelper(value));
 }
 
-static void qtscript_QPrinter_Orientation_fromScriptValue(const QScriptValue &value, QPrinter::Orientation &out)
+static void qtscript_QPrinter_Orientation_fromScriptValue(const QScriptValue &value, QPageLayout::Orientation &out)
 {
-    out = qvariant_cast<QPrinter::Orientation>(value.toVariant());
+    out = qvariant_cast<QPageLayout::Orientation>(value.toVariant());
 }
 
 static QScriptValue qtscript_construct_QPrinter_Orientation(QScriptContext *context, QScriptEngine *engine)
 {
     int arg = context->argument(0).toInt32();
-    if ((arg >= QPrinter::Portrait) && (arg <= QPrinter::Landscape))
-        return qScriptValueFromValue(engine,  static_cast<QPrinter::Orientation>(arg));
+    if ((arg >= QPageLayout::Portrait) && (arg <= QPageLayout::Landscape))
+        return qScriptValueFromValue(engine,  static_cast<QPageLayout::Orientation>(arg));
     return context->throwError(QString::fromLatin1("Orientation(): invalid enum value (%0)").arg(arg));
 }
 
 static QScriptValue qtscript_QPrinter_Orientation_valueOf(QScriptContext *context, QScriptEngine *engine)
 {
-    QPrinter::Orientation value = qscriptvalue_cast<QPrinter::Orientation>(context->thisObject());
+    QPageLayout::Orientation value = qscriptvalue_cast<QPageLayout::Orientation>(context->thisObject());
     return QScriptValue(engine, static_cast<int>(value));
 }
 
 static QScriptValue qtscript_QPrinter_Orientation_toString(QScriptContext *context, QScriptEngine *engine)
 {
-    QPrinter::Orientation value = qscriptvalue_cast<QPrinter::Orientation>(context->thisObject());
+    QPageLayout::Orientation value = qscriptvalue_cast<QPageLayout::Orientation>(context->thisObject());
     return QScriptValue(engine, qtscript_QPrinter_Orientation_toStringHelper(value));
 }
 
@@ -327,7 +325,7 @@ static QScriptValue qtscript_create_QPrinter_Orientation_class(QScriptEngine *en
     QScriptValue ctor = qtscript_create_enum_class_helper(
         engine, qtscript_construct_QPrinter_Orientation,
         qtscript_QPrinter_Orientation_valueOf, qtscript_QPrinter_Orientation_toString);
-    qScriptRegisterMetaType<QPrinter::Orientation>(engine, qtscript_QPrinter_Orientation_toScriptValue,
+    qScriptRegisterMetaType<QPageLayout::Orientation>(engine, qtscript_QPrinter_Orientation_toScriptValue,
         qtscript_QPrinter_Orientation_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
     for (int i = 0; i < 2; ++i) {
         clazz.setProperty(QString::fromLatin1(qtscript_QPrinter_Orientation_keys[i]),
@@ -1025,7 +1023,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 1:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->actualNumCopies();
+        int _q_result = _q_self->copyCount();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -1074,7 +1072,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 8:
     if (context->argumentCount() == 0) {
-        bool _q_result = _q_self->doubleSidedPrinting();
+        bool _q_result = _q_self->duplex() != QPrinter::DuplexNone;
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -1114,7 +1112,15 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
         qreal* _q_arg2 = qscriptvalue_cast<qreal*>(context->argument(2));
         qreal* _q_arg3 = qscriptvalue_cast<qreal*>(context->argument(3));
         QPrinter::Unit _q_arg4 = qscriptvalue_cast<QPrinter::Unit>(context->argument(4));
-        _q_self->getPageMargins(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        QMarginsF _q_margins;
+        if (_q_arg4 == QPrinter::DevicePixel)
+            _q_margins = QMarginsF(_q_self->pageLayout().marginsPixels(_q_self->resolution()));
+        else
+            _q_margins = _q_self->pageLayout().margins(static_cast<QPageLayout::Unit>(_q_arg4));
+        if (_q_arg0) *_q_arg0 = _q_margins.left();
+        if (_q_arg1) *_q_arg1 = _q_margins.top();
+        if (_q_arg2) *_q_arg2 = _q_margins.right();
+        if (_q_arg3) *_q_arg3 = _q_margins.bottom();
         return context->engine()->undefinedValue();
     }
     break;
@@ -1135,14 +1141,14 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 16:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->numCopies();
+        int _q_result = _q_self->copyCount();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 17:
     if (context->argumentCount() == 0) {
-        QPrinter::Orientation _q_result = _q_self->orientation();
+        QPageLayout::Orientation _q_result = _q_self->pageLayout().orientation();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -1170,7 +1176,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 21:
     if (context->argumentCount() == 0) {
-        QRect _q_result = _q_self->pageRect();
+        QRect _q_result = _q_self->pageRect(QPrinter::DevicePixel).toRect();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 1) {
@@ -1189,14 +1195,14 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 23:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->paperName();
+        QString _q_result = _q_self->pageLayout().pageSize().name();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
     case 24:
     if (context->argumentCount() == 0) {
-        QRect _q_result = _q_self->paperRect();
+        QRect _q_result = _q_self->paperRect(QPrinter::DevicePixel).toRect();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     if (context->argumentCount() == 1) {
@@ -1209,7 +1215,11 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 25:
     if (context->argumentCount() == 1) {
         QPrinter::Unit _q_arg0 = qscriptvalue_cast<QPrinter::Unit>(context->argument(0));
-        QSizeF _q_result = _q_self->paperSize(_q_arg0);
+        QSizeF _q_result;
+        if (_q_arg0 == QPrinter::DevicePixel)
+            _q_result = _q_self->pageLayout().pageSize().sizePixels(_q_self->resolution());
+        else
+            _q_result = _q_self->pageLayout().pageSize().size(static_cast<QPageSize::Unit>(_q_arg0));
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -1306,7 +1316,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 38:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
-        _q_self->setDoubleSidedPrinting(_q_arg0);
+        _q_self->setDuplex(_q_arg0 ? QPrinter::DuplexAuto : QPrinter::DuplexNone);
         return context->engine()->undefinedValue();
     }
     break;
@@ -1347,15 +1357,15 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 43:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
-        _q_self->setNumCopies(_q_arg0);
+        _q_self->setCopyCount(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
 
     case 44:
     if (context->argumentCount() == 1) {
-        QPrinter::Orientation _q_arg0 = qscriptvalue_cast<QPrinter::Orientation>(context->argument(0));
-        _q_self->setOrientation(_q_arg0);
+        QPageLayout::Orientation _q_arg0 = qscriptvalue_cast<QPageLayout::Orientation>(context->argument(0));
+        _q_self->setPageOrientation(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;
@@ -1383,7 +1393,15 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
         qreal _q_arg2 = qscriptvalue_cast<qreal>(context->argument(2));
         qreal _q_arg3 = qscriptvalue_cast<qreal>(context->argument(3));
         QPrinter::Unit _q_arg4 = qscriptvalue_cast<QPrinter::Unit>(context->argument(4));
-        _q_self->setPageMargins(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        if (_q_arg4 == QPrinter::DevicePixel) {
+            const qreal _q_scale = 72.0 / _q_self->resolution();
+            _q_self->setPageMargins(QMarginsF(_q_arg0 * _q_scale, _q_arg1 * _q_scale,
+                                               _q_arg2 * _q_scale, _q_arg3 * _q_scale),
+                                    QPageLayout::Point);
+        } else {
+            _q_self->setPageMargins(QMarginsF(_q_arg0, _q_arg1, _q_arg2, _q_arg3),
+                                    static_cast<QPageLayout::Unit>(_q_arg4));
+        }
         return context->engine()->undefinedValue();
     }
     break;
@@ -1399,7 +1417,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 49:
     if (context->argumentCount() == 1) {
         QSizeF _q_arg0 = qscriptvalue_cast<QSizeF>(context->argument(0));
-        _q_self->setPageSizeMM(_q_arg0);
+        _q_self->setPageSize(QPageSize(_q_arg0, QPageSize::Millimeter));
         return context->engine()->undefinedValue();
     }
     break;
@@ -1407,7 +1425,8 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 50:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
-        _q_self->setPaperName(_q_arg0);
+        const QPageSize _q_current = _q_self->pageLayout().pageSize();
+        _q_self->setPageSize(QPageSize(_q_current.size(QPageSize::Point), QPageSize::Point, _q_arg0));
         return context->engine()->undefinedValue();
     }
     break;
@@ -1415,15 +1434,20 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
     case 51:
     // andrew: begin: fix call with one argument:
     if (context->argumentCount() == 1) {
-        QPrinter::PageSize _q_arg0 = qscriptvalue_cast<QPrinter::PageSize>(context->argument(0));
-        _q_self->setPaperSize(_q_arg0);
+        QPageSize::PageSizeId _q_arg0 = static_cast<QPageSize::PageSizeId>(context->argument(0).toInt32());
+        _q_self->setPageSize(QPageSize(_q_arg0));
         return context->engine()->undefinedValue();
     }
     // andrew: end
     if (context->argumentCount() == 2) {
         QSizeF _q_arg0 = qscriptvalue_cast<QSizeF>(context->argument(0));
         QPrinter::Unit _q_arg1 = qscriptvalue_cast<QPrinter::Unit>(context->argument(1));
-        _q_self->setPaperSize(_q_arg0, _q_arg1);
+        if (_q_arg1 == QPrinter::DevicePixel) {
+            const qreal _q_scale = 72.0 / _q_self->resolution();
+            _q_self->setPageSize(QPageSize(_q_arg0 * _q_scale, QPageSize::Point));
+        } else {
+            _q_self->setPageSize(QPageSize(_q_arg0, static_cast<QPageSize::Unit>(_q_arg1)));
+        }
         return context->engine()->undefinedValue();
     }
     break;
@@ -1470,9 +1494,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 57:
     if (context->argumentCount() == 1) {
-        int _q_arg0 = context->argument(0).toInt32();
-        _q_self->setWinPageSize(_q_arg0);
-        return context->engine()->undefinedValue();
+        return context->throwError(QString::fromLatin1("QPrinter.setWinPageSize() was removed from Qt 6"));
     }
     break;
 
@@ -1499,8 +1521,7 @@ static QScriptValue qtscript_QPrinter_prototype_call(QScriptContext *context, QS
 
     case 61:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->winPageSize();
-        return QScriptValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QPrinter.winPageSize() was removed from Qt 6"));
     }
     break;
 

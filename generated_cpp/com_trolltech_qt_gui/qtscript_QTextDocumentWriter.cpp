@@ -113,8 +113,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = _q_self->codec();
-        return qScriptValueFromValue(context->engine(), _q_result);
+        return context->throwError(QString::fromLatin1("QTextDocumentWriter.codec() was removed in Qt 6; output is UTF-8"));
     }
     break;
 
@@ -142,8 +141,8 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     case 4:
     if (context->argumentCount() == 1) {
         QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-        _q_self->setCodec(_q_arg0);
-        return context->engine()->undefinedValue();
+        Q_UNUSED(_q_arg0);
+        return context->throwError(QString::fromLatin1("QTextDocumentWriter.setCodec() was removed in Qt 6; output is UTF-8"));
     }
     break;
 

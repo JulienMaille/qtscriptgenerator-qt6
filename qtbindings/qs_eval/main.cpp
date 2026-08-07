@@ -39,14 +39,17 @@
 **
 ****************************************************************************/
 
-
-#include <QtScript>
-#if QT_VERSION >= 0x040500
-#include <QtScriptTools>
-#endif
+#include <QtScript/QScriptContext>
+#include <QtScript/QScriptEngine>
+#include <QtScript/QScriptValue>
+#include <QtScript/QScriptValueIterator>
+#include <QtScriptTools/QScriptEngineDebugger>
+#include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QString>
 #include <QtCore/QTextStream>
 #include <QtCore/QStringList>
+#include <QtCore/QtGlobal>
 #include <QApplication>
 
 #include <stdlib.h>
@@ -156,6 +159,14 @@ int main(int argc, char *argv[])
     QStringList extensions;
     extensions << "qt.core"
                << "qt.gui"
+               << "qt.network"
+               << "qt.sql"
+               << "qt.widgets"
+               << "qt.printsupport"
+               << "qt.uitools";
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    extensions
+               << "qt.gui"
                << "qt.widgets"
                << "qt.printsupport"
                << "qt.xml"
@@ -163,10 +174,9 @@ int main(int argc, char *argv[])
                << "qt.network"
                << "qt.sql"
                << "qt.opengl"
-               << "qt.webkit"
-               << "qt.webkitwidgets"
                << "qt.xmlpatterns"
                << "qt.uitools";
+#endif
     QStringList failExtensions;
     foreach (const QString &ext, extensions) {
         QScriptValue ret = eng->importExtension(ext);
@@ -190,10 +200,8 @@ int main(int argc, char *argv[])
         }
     }
 
-#if QT_VERSION >= 0x040500
     QScriptEngineDebugger *dbg = new QScriptEngineDebugger();
-    dbg->attachTo(eng);
-#endif
+    dbg->setAutoShowStandardWindow(false);
 
     QScriptValue globalObject = eng->globalObject();
     globalObject.setProperty("qApp", eng->newQObject(app));
@@ -214,6 +222,27 @@ int main(int argc, char *argv[])
         if (fn == QLatin1String("-i")) {
             interactive(eng);
             break;
+        }
+
+        if (fn == QLatin1String("--scripttools-smoke")) {
+            dbg->attachTo(eng);
+            const QScriptValue smokeResult = eng->evaluate(
+                QLatin1String("(function(a, b) { return a + b; })(19, 23)"),
+                QLatin1String("scripttools-smoke"));
+            if (!dbg->action(QScriptEngineDebugger::ContinueAction)
+                || !dbg->widget(QScriptEngineDebugger::ConsoleWidget)
+                || eng->hasUncaughtException()
+                || !smokeResult.isNumber()
+                || smokeResult.toInt32() != 42) {
+                fprintf(stderr, "QtScriptTools debugger smoke test failed\n");
+                dbg->detach();
+                delete dbg;
+                delete eng;
+                delete app;
+                return EXIT_FAILURE;
+            }
+            dbg->detach();
+            continue;
         }
 
         QString contents;
@@ -252,10 +281,9 @@ int main(int argc, char *argv[])
         }
     }
 
-    delete eng;
-#if QT_VERSION >= 0x040500
+    dbg->detach();
     delete dbg;
-#endif
+    delete eng;
     delete app;
 
     return EXIT_SUCCESS;

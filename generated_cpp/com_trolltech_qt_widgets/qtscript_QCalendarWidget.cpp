@@ -117,9 +117,9 @@ struct QMetaTypeId< QMap<QDate,QTextCharFormat > > \
     static int qt_metatype_id() \
     { \
         static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
-        if (!metatype_id.load()) \
-            metatype_id.store(qRegisterMetaType< QMap<QDate,QTextCharFormat > >("QMap<QDate,QTextCharFormat >")); \
-        return metatype_id.load(); \
+        if (!metatype_id.loadRelaxed()) \
+            metatype_id.storeRelaxed(qRegisterMetaType< QMap<QDate,QTextCharFormat > >("QMap<QDate,QTextCharFormat >")); \
+        return metatype_id.loadRelaxed(); \
     } \
 };
 Q_DECLARE_METATYPE(Qt::DayOfWeek)

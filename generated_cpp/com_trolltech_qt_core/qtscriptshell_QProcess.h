@@ -28,7 +28,6 @@ public:
     qint64  readLineData(char*  data, qint64  maxlen);
     bool  reset();
     bool  seek(qint64  pos);
-    void setupChildProcess();
     qint64  size() const;
     void timerEvent(QTimerEvent*  arg__1);
     bool  waitForBytesWritten(int  msecs = 30000);

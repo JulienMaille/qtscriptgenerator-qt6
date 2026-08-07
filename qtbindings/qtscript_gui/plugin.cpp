@@ -21,4 +21,3 @@ void com_trolltech_qt_gui_ScriptPlugin::initialize(const QString &key, QScriptEn
         Q_ASSERT_X(false, "com_trolltech_qt_gui::initialize", qPrintable(key));
     }
 }
-

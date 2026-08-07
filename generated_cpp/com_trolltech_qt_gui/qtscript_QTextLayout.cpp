@@ -167,7 +167,6 @@ Q_DECLARE_METATYPE(QList<QTextLayout::FormatRange >)
 Q_DECLARE_METATYPE(QTextLine)
 Q_DECLARE_METATYPE(Qt::CursorMoveStyle)
 Q_DECLARE_METATYPE(QPainter*)
-Q_DECLARE_METATYPE(QVector<QTextLayout::FormatRange >)
 Q_DECLARE_METATYPE(QTextOption)
 Q_DECLARE_METATYPE(QPaintDevice*)
 Q_DECLARE_METATYPE(QTextBlock)
@@ -281,7 +280,7 @@ static QScriptValue qtscript_QTextLayout_prototype_call(QScriptContext *context,
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        QList<QTextLayout::FormatRange > _q_result = _q_self->additionalFormats();
+        QList<QTextLayout::FormatRange > _q_result = _q_self->formats();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;
@@ -309,7 +308,7 @@ static QScriptValue qtscript_QTextLayout_prototype_call(QScriptContext *context,
 
     case 4:
     if (context->argumentCount() == 0) {
-        _q_self->clearAdditionalFormats();
+        _q_self->clearFormats();
         return context->engine()->undefinedValue();
     }
     break;
@@ -501,7 +500,7 @@ static QScriptValue qtscript_QTextLayout_prototype_call(QScriptContext *context,
     if (context->argumentCount() == 1) {
         QList<QTextLayout::FormatRange> _q_arg0;
         qScriptValueToSequence(context->argument(0), _q_arg0);
-        _q_self->setAdditionalFormats(_q_arg0);
+        _q_self->setFormats(_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

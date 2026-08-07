@@ -102,7 +102,7 @@ static QScriptValue qtscript_QCursor_prototype_call(QScriptContext *context, QSc
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        const QBitmap* _q_result = const_cast<const QBitmap*>(_q_self->bitmap());
+        QBitmap _q_result = _q_self->bitmap();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -116,7 +116,7 @@ static QScriptValue qtscript_QCursor_prototype_call(QScriptContext *context, QSc
 
     case 2:
     if (context->argumentCount() == 0) {
-        const QBitmap* _q_result = const_cast<const QBitmap*>(_q_self->mask());
+        QBitmap _q_result = _q_self->mask();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

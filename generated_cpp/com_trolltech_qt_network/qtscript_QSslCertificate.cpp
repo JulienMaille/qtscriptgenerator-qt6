@@ -3,6 +3,7 @@
 #include <QtScript/QScriptValue>
 #include <QtCore/QStringList>
 #include <QtCore/QDebug>
+#include <QtScript/QRegExp>
 #include <qmetaobject.h>
 #include <__package_shared.h>
 
@@ -133,6 +134,20 @@ Q_DECLARE_METATYPE(QList<QSslCertificate >)
 Q_DECLARE_METATYPE(QIODevice*)
 Q_DECLARE_METATYPE(QRegExp::PatternSyntax)
 Q_DECLARE_METATYPE(QSslError)
+
+static QSslCertificate::PatternSyntax qtscript_QSslCertificate_patternSyntax(
+    QRegExp::PatternSyntax syntax)
+{
+    switch (syntax) {
+    case QRegExp::Wildcard:
+    case QRegExp::WildcardUnix:
+        return QSslCertificate::PatternSyntax::Wildcard;
+    case QRegExp::FixedString:
+        return QSslCertificate::PatternSyntax::FixedString;
+    default:
+        return QSslCertificate::PatternSyntax::RegularExpression;
+    }
+}
 
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
@@ -526,7 +541,8 @@ static QScriptValue qtscript_QSslCertificate_static_call(QScriptContext *context
         QString _q_arg0 = context->argument(0).toString();
         QSsl::EncodingFormat _q_arg1 = qscriptvalue_cast<QSsl::EncodingFormat>(context->argument(1));
         QRegExp::PatternSyntax _q_arg2 = qscriptvalue_cast<QRegExp::PatternSyntax>(context->argument(2));
-        QList<QSslCertificate > _q_result = QSslCertificate::fromPath(_q_arg0, _q_arg1, _q_arg2);
+        QList<QSslCertificate > _q_result = QSslCertificate::fromPath(
+            _q_arg0, _q_arg1, qtscript_QSslCertificate_patternSyntax(_q_arg2));
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;

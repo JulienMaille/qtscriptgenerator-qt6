@@ -452,7 +452,7 @@ static QScriptValue qtscript_QImage_prototype_call(QScriptContext *context, QScr
 
     case 1:
     if (context->argumentCount() == 0) {
-        QImage _q_result = _q_self->alphaChannel();
+        QImage _q_result = _q_self->convertToFormat(QImage::Format_Alpha8);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -466,7 +466,7 @@ static QScriptValue qtscript_QImage_prototype_call(QScriptContext *context, QScr
 
     case 3:
     if (context->argumentCount() == 0) {
-        int _q_result = _q_self->byteCount();
+        int _q_result = static_cast<int>(_q_self->sizeInBytes());
         return QScriptValue(context->engine(), _q_result);
     }
     break;

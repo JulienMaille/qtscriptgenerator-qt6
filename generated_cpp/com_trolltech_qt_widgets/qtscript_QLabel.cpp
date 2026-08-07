@@ -152,7 +152,7 @@ static QScriptValue qtscript_QLabel_prototype_call(QScriptContext *context, QScr
 
     case 3:
     if (context->argumentCount() == 0) {
-        const QPicture* _q_result = const_cast<const QPicture*>(_q_self->picture());
+        QPicture _q_result = _q_self->picture();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

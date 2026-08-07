@@ -1,17 +1,12 @@
-include($$PWD/../../../../shared.pri)
 TEMPLATE = lib
 DEPENDPATH += .
-INCLUDEPATH += .
-
-#CONFIG(debug, debug|release) {
-#    DESTDIR = $$PWD/../plugins/script_debug
-#} else {
-#    DESTDIR = $$PWD/../plugins/script
-#}
-DESTDIR = $$PWD/../../../../plugins/script
-
+INCLUDEPATH += . $$PWD/include
+HEADERS += $$PWD/include/__package_shared.h
+DESTDIR = $$PWD/../plugins/script
 QT += script
-#CONFIG += plugin release build_all
-CONFIG += debug_and_release
+QT.script.libs = $$(QTSCRIPT_PREFIX)/lib
+QT.script.includes = $$(QTSCRIPT_PREFIX)/include $$(QTSCRIPT_PREFIX)/include/QtScript
+QT.script.bins = $$(QTSCRIPT_PREFIX)/bin
+CONFIG += debug_and_release no_batch
 GENERATEDCPP = $$PWD/../generated_cpp
 TARGET=$$qtLibraryTarget($$TARGET)

@@ -12,5 +12,3 @@ public:
     QStringList keys() const;
     void initialize(const QString &key, QScriptEngine *engine);
 };
-
-

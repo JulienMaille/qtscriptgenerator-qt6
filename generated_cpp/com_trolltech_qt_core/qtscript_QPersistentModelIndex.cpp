@@ -120,7 +120,9 @@ static QScriptValue qtscript_QPersistentModelIndex_prototype_call(QScriptContext
     if (context->argumentCount() == 2) {
         int _q_arg0 = context->argument(0).toInt32();
         int _q_arg1 = context->argument(1).toInt32();
-        QModelIndex _q_result = _q_self->child(_q_arg0, _q_arg1);
+        QModelIndex _q_result = _q_self->model()
+            ? _q_self->model()->index(_q_arg0, _q_arg1, static_cast<QModelIndex>(*_q_self))
+            : QModelIndex();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -174,7 +176,7 @@ static QScriptValue qtscript_QPersistentModelIndex_prototype_call(QScriptContext
 
     case 7:
     if (context->argumentCount() == 0) {
-        QModelIndex _q_result = _q_self->operator const QModelIndex&();
+        QModelIndex _q_result = static_cast<QModelIndex>(*_q_self);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -183,11 +185,11 @@ static QScriptValue qtscript_QPersistentModelIndex_prototype_call(QScriptContext
     if (context->argumentCount() == 1) {
         if ((qMetaTypeId<QModelIndex>() == context->argument(0).toVariant().userType())) {
             QModelIndex _q_arg0 = qscriptvalue_cast<QModelIndex>(context->argument(0));
-            bool _q_result = _q_self->operator==(_q_arg0);
+            bool _q_result = (*_q_self == _q_arg0);
             return QScriptValue(context->engine(), _q_result);
         } else if ((qMetaTypeId<QPersistentModelIndex>() == context->argument(0).toVariant().userType())) {
             QPersistentModelIndex _q_arg0 = qscriptvalue_cast<QPersistentModelIndex>(context->argument(0));
-            bool _q_result = _q_self->operator==(_q_arg0);
+            bool _q_result = (*_q_self == _q_arg0);
             return QScriptValue(context->engine(), _q_result);
         }
     }
@@ -196,7 +198,7 @@ static QScriptValue qtscript_QPersistentModelIndex_prototype_call(QScriptContext
     case 9:
     if (context->argumentCount() == 1) {
         QPersistentModelIndex _q_arg0 = qscriptvalue_cast<QPersistentModelIndex>(context->argument(0));
-        bool _q_result = _q_self->operator<(_q_arg0);
+        bool _q_result = (*_q_self < _q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

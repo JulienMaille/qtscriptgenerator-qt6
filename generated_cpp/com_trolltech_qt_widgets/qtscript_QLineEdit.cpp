@@ -378,7 +378,11 @@ static QScriptValue qtscript_QLineEdit_prototype_call(QScriptContext *context, Q
         int* _q_arg1 = qscriptvalue_cast<int*>(context->argument(1));
         int* _q_arg2 = qscriptvalue_cast<int*>(context->argument(2));
         int* _q_arg3 = qscriptvalue_cast<int*>(context->argument(3));
-        _q_self->getTextMargins(_q_arg0, _q_arg1, _q_arg2, _q_arg3);
+        const QMargins _q_margins = _q_self->textMargins();
+        if (_q_arg0) *_q_arg0 = _q_margins.left();
+        if (_q_arg1) *_q_arg1 = _q_margins.top();
+        if (_q_arg2) *_q_arg2 = _q_margins.right();
+        if (_q_arg3) *_q_arg3 = _q_margins.bottom();
         return context->engine()->undefinedValue();
     }
     break;

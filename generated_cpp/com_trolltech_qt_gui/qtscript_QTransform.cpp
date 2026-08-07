@@ -317,7 +317,7 @@ static QScriptValue qtscript_QTransform_prototype_call(QScriptContext *context, 
 
     case 1:
     if (context->argumentCount() == 0) {
-        qreal _q_result = _q_self->det();
+        qreal _q_result = _q_self->determinant();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -640,7 +640,7 @@ static QScriptValue qtscript_QTransform_prototype_call(QScriptContext *context, 
 
     case 36:
     if (context->argumentCount() == 0) {
-        const QMatrix& _q_result = _q_self->toAffine();
+        QMatrix _q_result = *_q_self;
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -721,7 +721,7 @@ static QScriptValue qtscript_QTransform_static_call(QScriptContext *context, QSc
         qreal _q_arg5 = qscriptvalue_cast<qreal>(context->argument(5));
         qreal _q_arg6 = qscriptvalue_cast<qreal>(context->argument(6));
         qreal _q_arg7 = qscriptvalue_cast<qreal>(context->argument(7));
-        QTransform _q_cpp_result(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5, _q_arg6, _q_arg7);
+        QTransform _q_cpp_result(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5, _q_arg6, _q_arg7, 1.0);
         QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
         return _q_result;
     } else if (context->argumentCount() == 9) {

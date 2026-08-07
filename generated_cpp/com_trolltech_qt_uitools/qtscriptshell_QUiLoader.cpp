@@ -2,8 +2,8 @@
 
 #include <QtScript/QScriptEngine>
 #include <QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QActionGroup>
+#include <QtGui/QAction>
+#include <QtGui/QActionGroup>
 #include <QByteArray>
 //#include <QCoreEvent>
 #include <QDir>

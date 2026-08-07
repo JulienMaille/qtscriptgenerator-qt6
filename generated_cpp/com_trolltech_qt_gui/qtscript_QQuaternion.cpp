@@ -155,7 +155,7 @@ static QScriptValue qtscript_QQuaternion_prototype_call(QScriptContext *context,
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        QQuaternion _q_result = _q_self->conjugate();
+        QQuaternion _q_result = _q_self->conjugated();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;

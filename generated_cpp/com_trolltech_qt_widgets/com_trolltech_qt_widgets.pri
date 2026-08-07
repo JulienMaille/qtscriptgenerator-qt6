@@ -8,7 +8,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QAbstractSpinBox.h \
            $$PWD/qtscriptshell_QAction.h \
            $$PWD/qtscriptshell_QActionGroup.h \
-           $$PWD/qtscriptshell_QApplication.h \
            $$PWD/qtscriptshell_QBoxLayout.h \
            $$PWD/qtscriptshell_QButtonGroup.h \
            $$PWD/qtscriptshell_QCalendarWidget.h \
@@ -22,7 +21,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QDataWidgetMapper.h \
            $$PWD/qtscriptshell_QDateEdit.h \
            $$PWD/qtscriptshell_QDateTimeEdit.h \
-           $$PWD/qtscriptshell_QDesktopWidget.h \
            $$PWD/qtscriptshell_QDial.h \
            $$PWD/qtscriptshell_QDialog.h \
            $$PWD/qtscriptshell_QDialogButtonBox.h \
@@ -45,7 +43,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QGraphicsEllipseItem.h \
            $$PWD/qtscriptshell_QGraphicsGridLayout.h \
            $$PWD/qtscriptshell_QGraphicsItem.h \
-           $$PWD/qtscriptshell_QGraphicsItemAnimation.h \
            $$PWD/qtscriptshell_QGraphicsItemGroup.h \
            $$PWD/qtscriptshell_QGraphicsLayout.h \
            $$PWD/qtscriptshell_QGraphicsLayoutItem.h \
@@ -75,7 +72,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QItemEditorCreatorBase.h \
            $$PWD/qtscriptshell_QItemEditorFactory.h \
            $$PWD/qtscriptshell_QItemSelectionModel.h \
-           $$PWD/qtscriptshell_QKeyEventTransition.h \
            $$PWD/qtscriptshell_QLCDNumber.h \
            $$PWD/qtscriptshell_QLabel.h \
            $$PWD/qtscriptshell_QLayout.h \
@@ -90,10 +86,9 @@ HEADERS += \
            $$PWD/qtscriptshell_QMenu.h \
            $$PWD/qtscriptshell_QMenuBar.h \
            $$PWD/qtscriptshell_QMessageBox.h \
-           $$PWD/qtscriptshell_QMouseEventTransition.h \
            $$PWD/qtscriptshell_QPaintDevice.h \
            $$PWD/qtscriptshell_QPanGesture.h \
-           $$PWD/qtscriptshell_QPictureFormatPlugin.h \
+           $$PWD/qtscriptshell_QPinchGesture.h \
            $$PWD/qtscriptshell_QPlainTextDocumentLayout.h \
            $$PWD/qtscriptshell_QPlainTextEdit.h \
            $$PWD/qtscriptshell_QProgressBar.h \
@@ -186,7 +181,6 @@ SOURCES += \
            $$PWD/qtscript_QAbstractSpinBox.cpp \
            $$PWD/qtscript_QAction.cpp \
            $$PWD/qtscript_QActionGroup.cpp \
-           $$PWD/qtscript_QApplication.cpp \
            $$PWD/qtscript_QBoxLayout.cpp \
            $$PWD/qtscript_QButtonGroup.cpp \
            $$PWD/qtscript_QCalendarWidget.cpp \
@@ -200,7 +194,6 @@ SOURCES += \
            $$PWD/qtscript_QDataWidgetMapper.cpp \
            $$PWD/qtscript_QDateEdit.cpp \
            $$PWD/qtscript_QDateTimeEdit.cpp \
-           $$PWD/qtscript_QDesktopWidget.cpp \
            $$PWD/qtscript_QDial.cpp \
            $$PWD/qtscript_QDialog.cpp \
            $$PWD/qtscript_QDialogButtonBox.cpp \
@@ -224,7 +217,6 @@ SOURCES += \
            $$PWD/qtscript_QGraphicsEllipseItem.cpp \
            $$PWD/qtscript_QGraphicsGridLayout.cpp \
            $$PWD/qtscript_QGraphicsItem.cpp \
-           $$PWD/qtscript_QGraphicsItemAnimation.cpp \
            $$PWD/qtscript_QGraphicsItemGroup.cpp \
            $$PWD/qtscript_QGraphicsLayout.cpp \
            $$PWD/qtscript_QGraphicsLayoutItem.cpp \
@@ -265,7 +257,7 @@ SOURCES += \
            $$PWD/qtscript_QItemSelection.cpp \
            $$PWD/qtscript_QItemSelectionModel.cpp \
            $$PWD/qtscript_QItemSelectionRange.cpp \
-           $$PWD/qtscript_QKeyEventTransition.cpp \
+           $$PWD/qtscript_QKeySequenceEdit.cpp \
            $$PWD/qtscript_QLCDNumber.cpp \
            $$PWD/qtscript_QLabel.cpp \
            $$PWD/qtscript_QLayout.cpp \
@@ -280,16 +272,16 @@ SOURCES += \
            $$PWD/qtscript_QMenu.cpp \
            $$PWD/qtscript_QMenuBar.cpp \
            $$PWD/qtscript_QMessageBox.cpp \
-           $$PWD/qtscript_QMouseEventTransition.cpp \
            $$PWD/qtscript_QPaintDevice.cpp \
            $$PWD/qtscript_QPanGesture.cpp \
-           $$PWD/qtscript_QPictureFormatPlugin.cpp \
+           $$PWD/qtscript_QPinchGesture.cpp \
            $$PWD/qtscript_QPlainTextDocumentLayout.cpp \
            $$PWD/qtscript_QPlainTextEdit.cpp \
            $$PWD/qtscript_QProgressBar.cpp \
            $$PWD/qtscript_QProgressDialog.cpp \
            $$PWD/qtscript_QPushButton.cpp \
            $$PWD/qtscript_QRadioButton.cpp \
+           $$PWD/qtscript_QRhiWidget.cpp \
            $$PWD/qtscript_QRubberBand.cpp \
            $$PWD/qtscript_QScrollArea.cpp \
            $$PWD/qtscript_QScrollBar.cpp \
@@ -381,7 +373,6 @@ SOURCES += \
            $$PWD/qtscriptshell_QAbstractSpinBox.cpp \
            $$PWD/qtscriptshell_QAction.cpp \
            $$PWD/qtscriptshell_QActionGroup.cpp \
-           $$PWD/qtscriptshell_QApplication.cpp \
            $$PWD/qtscriptshell_QBoxLayout.cpp \
            $$PWD/qtscriptshell_QButtonGroup.cpp \
            $$PWD/qtscriptshell_QCalendarWidget.cpp \
@@ -395,7 +386,6 @@ SOURCES += \
            $$PWD/qtscriptshell_QDataWidgetMapper.cpp \
            $$PWD/qtscriptshell_QDateEdit.cpp \
            $$PWD/qtscriptshell_QDateTimeEdit.cpp \
-           $$PWD/qtscriptshell_QDesktopWidget.cpp \
            $$PWD/qtscriptshell_QDial.cpp \
            $$PWD/qtscriptshell_QDialog.cpp \
            $$PWD/qtscriptshell_QDialogButtonBox.cpp \
@@ -418,7 +408,6 @@ SOURCES += \
            $$PWD/qtscriptshell_QGraphicsEllipseItem.cpp \
            $$PWD/qtscriptshell_QGraphicsGridLayout.cpp \
            $$PWD/qtscriptshell_QGraphicsItem.cpp \
-           $$PWD/qtscriptshell_QGraphicsItemAnimation.cpp \
            $$PWD/qtscriptshell_QGraphicsItemGroup.cpp \
            $$PWD/qtscriptshell_QGraphicsLayout.cpp \
            $$PWD/qtscriptshell_QGraphicsLayoutItem.cpp \
@@ -448,7 +437,6 @@ SOURCES += \
            $$PWD/qtscriptshell_QItemEditorCreatorBase.cpp \
            $$PWD/qtscriptshell_QItemEditorFactory.cpp \
            $$PWD/qtscriptshell_QItemSelectionModel.cpp \
-           $$PWD/qtscriptshell_QKeyEventTransition.cpp \
            $$PWD/qtscriptshell_QLCDNumber.cpp \
            $$PWD/qtscriptshell_QLabel.cpp \
            $$PWD/qtscriptshell_QLayout.cpp \
@@ -463,10 +451,9 @@ SOURCES += \
            $$PWD/qtscriptshell_QMenu.cpp \
            $$PWD/qtscriptshell_QMenuBar.cpp \
            $$PWD/qtscriptshell_QMessageBox.cpp \
-           $$PWD/qtscriptshell_QMouseEventTransition.cpp \
            $$PWD/qtscriptshell_QPaintDevice.cpp \
            $$PWD/qtscriptshell_QPanGesture.cpp \
-           $$PWD/qtscriptshell_QPictureFormatPlugin.cpp \
+           $$PWD/qtscriptshell_QPinchGesture.cpp \
            $$PWD/qtscriptshell_QPlainTextDocumentLayout.cpp \
            $$PWD/qtscriptshell_QPlainTextEdit.cpp \
            $$PWD/qtscriptshell_QProgressBar.cpp \

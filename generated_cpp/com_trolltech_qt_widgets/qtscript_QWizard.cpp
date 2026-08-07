@@ -550,14 +550,14 @@ static void qtscript_QWizard_WizardOptions_fromScriptValue(const QScriptValue &v
     else if (var.userType() == qMetaTypeId<QWizard::WizardOption>())
         out = qvariant_cast<QWizard::WizardOption>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QWizard_WizardOptions(QScriptContext *context, QScriptEngine *engine)
 {
-    QWizard::WizardOptions result = 0;
+    QWizard::WizardOptions result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QWizard::WizardOptions>(context->argument(0).toInt32());
+        result = QWizard::WizardOptions::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();
@@ -820,7 +820,7 @@ static QScriptValue qtscript_QWizard_prototype_call(QScriptContext *context, QSc
 
     case 22:
     if (context->argumentCount() == 0) {
-        QList<int > _q_result = _q_self->visitedPages();
+        QList<int > _q_result = _q_self->visitedIds();
         return qScriptValueFromSequence(context->engine(), _q_result);
     }
     break;

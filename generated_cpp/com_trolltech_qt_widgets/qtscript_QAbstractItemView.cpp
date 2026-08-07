@@ -531,14 +531,14 @@ static void qtscript_QAbstractItemView_EditTriggers_fromScriptValue(const QScrip
     else if (var.userType() == qMetaTypeId<QAbstractItemView::EditTrigger>())
         out = qvariant_cast<QAbstractItemView::EditTrigger>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QAbstractItemView_EditTriggers(QScriptContext *context, QScriptEngine *engine)
 {
-    QAbstractItemView::EditTriggers result = 0;
+    QAbstractItemView::EditTriggers result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QAbstractItemView::EditTriggers>(context->argument(0).toInt32());
+        result = QAbstractItemView::EditTriggers::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

@@ -212,14 +212,14 @@ static void qtscript_QFontComboBox_FontFilters_fromScriptValue(const QScriptValu
     else if (var.userType() == qMetaTypeId<QFontComboBox::FontFilter>())
         out = qvariant_cast<QFontComboBox::FontFilter>(var);
     else
-        out = 0;
+        out = {};
 }
 
 static QScriptValue qtscript_construct_QFontComboBox_FontFilters(QScriptContext *context, QScriptEngine *engine)
 {
-    QFontComboBox::FontFilters result = 0;
+    QFontComboBox::FontFilters result{};
     if ((context->argumentCount() == 1) && context->argument(0).isNumber()) {
-        result = static_cast<QFontComboBox::FontFilters>(context->argument(0).toInt32());
+        result = QFontComboBox::FontFilters::fromInt(context->argument(0).toInt32());
     } else {
         for (int i = 0; i < context->argumentCount(); ++i) {
             QVariant v = context->argument(i).toVariant();

@@ -396,14 +396,14 @@ static QScriptValue qtscript_QPainterPath_prototype_call(QScriptContext *context
     if (context->argumentCount() == 2) {
         QRectF _q_arg0 = qscriptvalue_cast<QRectF>(context->argument(0));
         int _q_arg1 = context->argument(1).toInt32();
-        _q_self->addRoundRect(_q_arg0, _q_arg1);
+        _q_self->addRoundedRect(_q_arg0, _q_arg1, 25, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 3) {
         QRectF _q_arg0 = qscriptvalue_cast<QRectF>(context->argument(0));
         int _q_arg1 = context->argument(1).toInt32();
         int _q_arg2 = context->argument(2).toInt32();
-        _q_self->addRoundRect(_q_arg0, _q_arg1, _q_arg2);
+        _q_self->addRoundedRect(_q_arg0, _q_arg1, _q_arg2, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 5) {
@@ -412,7 +412,7 @@ static QScriptValue qtscript_QPainterPath_prototype_call(QScriptContext *context
         qreal _q_arg2 = qscriptvalue_cast<qreal>(context->argument(2));
         qreal _q_arg3 = qscriptvalue_cast<qreal>(context->argument(3));
         int _q_arg4 = context->argument(4).toInt32();
-        _q_self->addRoundRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4);
+        _q_self->addRoundedRect(QRectF(_q_arg0, _q_arg1, _q_arg2, _q_arg3), _q_arg4, 25, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 6) {
@@ -422,7 +422,7 @@ static QScriptValue qtscript_QPainterPath_prototype_call(QScriptContext *context
         qreal _q_arg3 = qscriptvalue_cast<qreal>(context->argument(3));
         int _q_arg4 = context->argument(4).toInt32();
         int _q_arg5 = context->argument(5).toInt32();
-        _q_self->addRoundRect(_q_arg0, _q_arg1, _q_arg2, _q_arg3, _q_arg4, _q_arg5);
+        _q_self->addRoundedRect(QRectF(_q_arg0, _q_arg1, _q_arg2, _q_arg3), _q_arg4, _q_arg5, Qt::RelativeSize);
         return context->engine()->undefinedValue();
     }
     break;
@@ -839,8 +839,8 @@ static QScriptValue qtscript_QPainterPath_prototype_call(QScriptContext *context
     case 44:
     if (context->argumentCount() == 1) {
         QPainterPath _q_arg0 = qscriptvalue_cast<QPainterPath>(context->argument(0));
-        QPainterPath _q_result = _q_self->subtractedInverted(_q_arg0);
-        return qScriptValueFromValue(context->engine(), _q_result);
+        Q_UNUSED(_q_arg0);
+        return context->throwError(QString::fromLatin1("QPainterPath.subtractedInverted() was removed in Qt 6"));
     }
     break;
 
