@@ -4,7 +4,7 @@ This is a port of the generated QtScript bindings used by QCAD, from Qt 5 to
 Qt 6. It currently builds the `qt.core`, `qt.gui`, `qt.network`, `qt.sql`,
 `qt.widgets`, `qt.printsupport`, `qt.uitools`, `qt.xml`, `qt.svg`, and `qt.svgwidgets`
 QtScript extensions and the `qs_eval` functional-test executable with Qt
-6.9.2/MSVC x64. The evaluator is
+6.8.3 or newer/MSVC x64. The evaluator is
 linked to the ported QtScriptTools module and includes a headless debugger
 attach/widget smoke test.
 
@@ -29,15 +29,17 @@ Qt LGPL exception.
 
 ## Prerequisites
 
-- Qt 6.9.2 built for MSVC x64.
+- Qt 6.8.3 or newer built for MSVC x64.
 - [QtScript port for Qt 6](https://github.com/JulienMaille/qtscript-qt6),
   installed as `Qt6::Script` and
   `Qt6::ScriptTools` with CMake package metadata; qmake module metadata is
   also required when using the legacy nmake backend.
-- CMake 3.22 or newer (the minimum required by Qt 6.9).
+- CMake 3.16 or newer (the minimum required by Qt 6.8).
 - Visual Studio 2022 or newer with the x64 C++ toolchain.
 - Ninja Multi-Config is the default CMake generator. A Visual Studio generator
   can be selected explicitly when needed.
+
+CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.1 on Windows.
 
 ## Build and test
 

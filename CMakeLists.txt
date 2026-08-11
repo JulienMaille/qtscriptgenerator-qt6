@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.16)
 
 project(qtscriptgenerator_qt6_bindings LANGUAGES CXX)
 
@@ -9,7 +9,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTORCC OFF)
 
-find_package(Qt6 6.9.2 REQUIRED COMPONENTS
+find_package(Qt6 6.8.3 REQUIRED COMPONENTS
     Core
     Concurrent
     Gui

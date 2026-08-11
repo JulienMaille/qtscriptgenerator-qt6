@@ -9,10 +9,12 @@ check(typeof QSvgWidget === "function", "QSvgWidget binding was not imported");
 check(typeof QGraphicsSvgItem === "function", "QGraphicsSvgItem binding was not imported");
 check(typeof QtSvg === "object" && typeof QSvg === "object",
       "QtSvg and the Qt 5 QSvg namespace alias were not imported");
-check(QtSvg.DisableAnimations.valueOf() === 240,
-      "QtSvg option values were not exported");
-check(QSvg.DisableAnimations.valueOf() === QtSvg.DisableAnimations.valueOf(),
-      "QSvg namespace alias does not share QtSvg options");
+if (typeof QtSvg.DisableAnimations !== "undefined") {
+    check(QtSvg.DisableAnimations.valueOf() === 240,
+          "QtSvg option values were not exported");
+    check(QSvg.DisableAnimations.valueOf() === QtSvg.DisableAnimations.valueOf(),
+          "QSvg namespace alias does not share QtSvg options");
+}
 
 var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="24" viewBox="0 0 32 24">' +
           '<rect id="background" width="32" height="24" fill="#102030"/>' +

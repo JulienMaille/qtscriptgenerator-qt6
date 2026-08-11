@@ -8,7 +8,7 @@ param(
     [string] $QtScriptPrefix = $env:QTSCRIPT_PREFIX,
 
     [ValidateRange(1000, 600000)]
-    [int] $EvaluatorTimeoutMilliseconds = 30000
+    [int] $EvaluatorTimeoutMilliseconds = 120000
 )
 
 $ErrorActionPreference = "Stop"

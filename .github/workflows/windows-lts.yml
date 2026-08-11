@@ -1,0 +1,78 @@
+name: Windows Qt 6.8 LTS
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  QT_VERSION: '6.8.3'
+  QT_ARCH: 'win64_msvc2022_64'
+  QT_ARTIFACT_ID: 'windows-msvc2022'
+  QTSCRIPT_REF: 'main'
+
+concurrency:
+  group: windows-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Qt 6.8 LTS MSVC 2022 (Release)
+    runs-on: windows-2022
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out bindings
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Check out QtScript port
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: JulienMaille/qtscript-qt6
+          ref: ${{ env.QTSCRIPT_REF }}
+          path: qtscript-qt6
+          submodules: true
+
+      - name: Install Qt ${{ env.QT_VERSION }}
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730 # v4.3.1
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: windows
+          target: desktop
+          arch: ${{ env.QT_ARCH }}
+          cache: true
+
+      - name: Build QtScript dependency
+        shell: pwsh
+        env:
+          QTSCRIPT_ROOT: ${{ github.workspace }}\qtscript-qt6
+          QSCRIPT_WORK_ROOT: ${{ runner.temp }}\qtscript-work
+        run: >-
+          & "$env:QTSCRIPT_ROOT\scripts\build-windows.ps1"
+          -QtRoot $env:QT_ROOT_DIR
+          -WorkRoot $env:QSCRIPT_WORK_ROOT
+          -Configuration Release
+          -Parallel 4
+
+      - name: Build bindings
+        shell: pwsh
+        run: .\build.ps1 -QtPrefix $env:QT_ROOT_DIR -Configuration Release
+
+      - name: Run binding smoke tests
+        shell: pwsh
+        run: .\test.ps1 -QtPrefix $env:QT_ROOT_DIR -Configuration Release -EvaluatorTimeoutMilliseconds 120000
+
+      - name: Upload Release bindings
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: qtscriptgenerator-qt${{ env.QT_VERSION }}-${{ env.QT_ARTIFACT_ID }}-Release
+          path: |
+            plugins/script/*.dll
+            qtbindings/qs_eval/release/qs_eval.exe
+          if-no-files-found: error
+          retention-days: 3
