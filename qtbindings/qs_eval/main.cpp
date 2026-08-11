@@ -164,6 +164,7 @@ int main(int argc, char *argv[])
                << "qt.widgets"
                << "qt.printsupport"
                << "qt.uitools"
+               << "qt.xml"
                << "qt.svg"
                << "qt.svgwidgets";
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)

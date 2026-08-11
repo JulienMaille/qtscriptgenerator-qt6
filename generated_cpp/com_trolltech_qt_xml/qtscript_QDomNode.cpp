@@ -252,6 +252,88 @@ Q_DECLARE_METATYPE(QDomNotation)
 Q_DECLARE_METATYPE(QDomProcessingInstruction)
 Q_DECLARE_METATYPE(QDomText)
 
+// Generated value wrappers for QDomElement and the other DOM subclasses use
+// their concrete QVariant type.  QtScript's pointer cast does not walk that
+// C++ inheritance hierarchy, so normalize those values before invoking the
+// shared QDomNode API (appendChild, cloneNode, removeChild, and friends).
+static QDomNode *qtscript_QDomNode_self(QScriptContext *context, QDomNode &storage)
+{
+    if (QDomNode *self = qscriptvalue_cast<QDomNode *>(context->thisObject()))
+        return self;
+
+    const QVariant value = context->thisObject().toVariant();
+    const int type = value.userType();
+    if (type == qMetaTypeId<QDomNode>())
+        storage = qvariant_cast<QDomNode>(value);
+    else if (type == qMetaTypeId<QDomElement>())
+        storage = qvariant_cast<QDomElement>(value);
+    else if (type == qMetaTypeId<QDomDocument>())
+        storage = qvariant_cast<QDomDocument>(value);
+    else if (type == qMetaTypeId<QDomAttr>())
+        storage = qvariant_cast<QDomAttr>(value);
+    else if (type == qMetaTypeId<QDomCDATASection>())
+        storage = qvariant_cast<QDomCDATASection>(value);
+    else if (type == qMetaTypeId<QDomCharacterData>())
+        storage = qvariant_cast<QDomCharacterData>(value);
+    else if (type == qMetaTypeId<QDomComment>())
+        storage = qvariant_cast<QDomComment>(value);
+    else if (type == qMetaTypeId<QDomDocumentFragment>())
+        storage = qvariant_cast<QDomDocumentFragment>(value);
+    else if (type == qMetaTypeId<QDomDocumentType>())
+        storage = qvariant_cast<QDomDocumentType>(value);
+    else if (type == qMetaTypeId<QDomEntity>())
+        storage = qvariant_cast<QDomEntity>(value);
+    else if (type == qMetaTypeId<QDomEntityReference>())
+        storage = qvariant_cast<QDomEntityReference>(value);
+    else if (type == qMetaTypeId<QDomNotation>())
+        storage = qvariant_cast<QDomNotation>(value);
+    else if (type == qMetaTypeId<QDomProcessingInstruction>())
+        storage = qvariant_cast<QDomProcessingInstruction>(value);
+    else if (type == qMetaTypeId<QDomText>())
+        storage = qvariant_cast<QDomText>(value);
+    else
+        return nullptr;
+    return &storage;
+}
+
+static QDomNode qtscript_QDomNode_value(const QScriptValue &scriptValue)
+{
+    if (QDomNode *pointer = qscriptvalue_cast<QDomNode *>(scriptValue))
+        return *pointer;
+
+    const QVariant value = scriptValue.toVariant();
+    const int type = value.userType();
+    if (type == qMetaTypeId<QDomNode>())
+        return qvariant_cast<QDomNode>(value);
+    if (type == qMetaTypeId<QDomElement>())
+        return qvariant_cast<QDomElement>(value);
+    if (type == qMetaTypeId<QDomDocument>())
+        return qvariant_cast<QDomDocument>(value);
+    if (type == qMetaTypeId<QDomAttr>())
+        return qvariant_cast<QDomAttr>(value);
+    if (type == qMetaTypeId<QDomCDATASection>())
+        return qvariant_cast<QDomCDATASection>(value);
+    if (type == qMetaTypeId<QDomCharacterData>())
+        return qvariant_cast<QDomCharacterData>(value);
+    if (type == qMetaTypeId<QDomComment>())
+        return qvariant_cast<QDomComment>(value);
+    if (type == qMetaTypeId<QDomDocumentFragment>())
+        return qvariant_cast<QDomDocumentFragment>(value);
+    if (type == qMetaTypeId<QDomDocumentType>())
+        return qvariant_cast<QDomDocumentType>(value);
+    if (type == qMetaTypeId<QDomEntity>())
+        return qvariant_cast<QDomEntity>(value);
+    if (type == qMetaTypeId<QDomEntityReference>())
+        return qvariant_cast<QDomEntityReference>(value);
+    if (type == qMetaTypeId<QDomNotation>())
+        return qvariant_cast<QDomNotation>(value);
+    if (type == qMetaTypeId<QDomProcessingInstruction>())
+        return qvariant_cast<QDomProcessingInstruction>(value);
+    if (type == qMetaTypeId<QDomText>())
+        return qvariant_cast<QDomText>(value);
+    return qscriptvalue_cast<QDomNode>(scriptValue);
+}
+
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
     QScriptEngine::FunctionSignature construct,
@@ -446,7 +528,8 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
-    QDomNode* _q_self = qscriptvalue_cast<QDomNode*>(context->thisObject());
+    QDomNode _q_storage;
+    QDomNode* _q_self = qtscript_QDomNode_self(context, _q_storage);
     if (!_q_self) {
         return context->throwError(QScriptContext::TypeError,
             QString::fromLatin1("QDomNode.%0(): this object is not a QDomNode")
@@ -456,7 +539,7 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
     switch (_id) {
     case 0:
     if (context->argumentCount() == 1) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
         QDomNode _q_result = _q_self->appendChild(_q_arg0);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
@@ -530,8 +613,8 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 
     case 9:
     if (context->argumentCount() == 2) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
-        QDomNode _q_arg1 = qscriptvalue_cast<QDomNode>(context->argument(1));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
+        QDomNode _q_arg1 = qtscript_QDomNode_value(context->argument(1));
         QDomNode _q_result = _q_self->insertAfter(_q_arg0, _q_arg1);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
@@ -539,8 +622,8 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 
     case 10:
     if (context->argumentCount() == 2) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
-        QDomNode _q_arg1 = qscriptvalue_cast<QDomNode>(context->argument(1));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
+        QDomNode _q_arg1 = qtscript_QDomNode_value(context->argument(1));
         QDomNode _q_result = _q_self->insertBefore(_q_arg0, _q_arg1);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
@@ -750,7 +833,7 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 
     case 38:
     if (context->argumentCount() == 1) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
         bool _q_result = _q_self->operator==(_q_arg0);
         return QScriptValue(context->engine(), _q_result);
     }
@@ -798,7 +881,7 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 
     case 44:
     if (context->argumentCount() == 1) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
         QDomNode _q_result = _q_self->removeChild(_q_arg0);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
@@ -806,8 +889,8 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
 
     case 45:
     if (context->argumentCount() == 2) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
-        QDomNode _q_arg1 = qscriptvalue_cast<QDomNode>(context->argument(1));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
+        QDomNode _q_arg1 = qtscript_QDomNode_value(context->argument(1));
         QDomNode _q_result = _q_self->replaceChild(_q_arg0, _q_arg1);
         return qScriptValueFromValue(context->engine(), _q_result);
     }
@@ -974,7 +1057,7 @@ static QScriptValue qtscript_QDomNode_static_call(QScriptContext *context, QScri
         QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
         return _q_result;
     } else if (context->argumentCount() == 1) {
-        QDomNode _q_arg0 = qscriptvalue_cast<QDomNode>(context->argument(0));
+        QDomNode _q_arg0 = qtscript_QDomNode_value(context->argument(0));
         QDomNode _q_cpp_result(_q_arg0);
         QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
         return _q_result;

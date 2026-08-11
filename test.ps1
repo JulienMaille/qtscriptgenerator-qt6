@@ -134,6 +134,7 @@ foreach ($name in $configurations) {
         "gui-smoke.js", "gui-regressions-smoke.js",
         "network-smoke.js", "network-regressions-smoke.js",
         "sql-smoke.js", "sql-regressions-smoke.js",
+        "xml-smoke.js", "xml-regressions-smoke.js",
         "widgets-smoke.js", "widgets-regressions-smoke.js",
         "printsupport-smoke.js", "printsupport-regressions-smoke.js",
         "uitools-smoke.js", "uitools-regressions-smoke.js",
