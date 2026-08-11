@@ -1,0 +1,75 @@
+name: Linux Qt 6.8 LTS
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  QT_VERSION: '6.8.3'
+  QT_ARTIFACT_ID: 'linux-gcc'
+  QTSCRIPT_REF: 'main'
+
+concurrency:
+  group: linux-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Qt 6.8 LTS GCC 64-bit (Release)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out bindings
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30af803 # v6
+
+      - name: Check out QtScript port
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30af803 # v6
+        with:
+          repository: JulienMaille/qtscript-qt6
+          ref: ${{ env.QTSCRIPT_REF }}
+          path: qtscript-qt6
+          submodules: true
+
+      - name: Install Qt ${{ env.QT_VERSION }}
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730 # v4.3.1
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: linux
+          target: desktop
+          cache: true
+
+      - name: Build QtScript dependency
+        shell: bash
+        env:
+          QSCRIPT_WORK_ROOT: ${{ runner.temp }}/qtscript-work
+        run: >-
+          ./qtscript-qt6/scripts/build-linux.sh
+          --qt-root "$QT_ROOT_DIR"
+          --work-root "$QSCRIPT_WORK_ROOT"
+          --configuration Release
+          --parallel 4
+
+      - name: Build bindings
+        shell: bash
+        run: ./build-linux.sh --qt-prefix "$QT_ROOT_DIR" --configuration Release --parallel 4
+
+      - name: Run binding smoke tests
+        shell: bash
+        run: ./test-linux.sh --qt-prefix "$QT_ROOT_DIR" --configuration Release --timeout 120
+
+      - name: Upload Release bindings
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: qtscriptgenerator-qt${{ env.QT_VERSION }}-${{ env.QT_ARTIFACT_ID }}-Release
+          path: |
+            plugins/script/*.so
+            qtbindings/qs_eval/release/qs_eval
+          if-no-files-found: error
+          retention-days: 3
