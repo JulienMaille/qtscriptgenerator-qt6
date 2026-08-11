@@ -73,8 +73,15 @@ run_evaluator() {
     shift 2
     local stdout_log="$log_root/$label.stdout.log"
     local stderr_log="$log_root/$label.stderr.log"
+    local -a runner=("$evaluator")
+    local -a environment=()
 
-    if ! timeout --foreground "${timeout_seconds}s" "$evaluator" "$@" \
+    if command -v xvfb-run >/dev/null; then
+        runner=(xvfb-run -a -s "-screen 0 1280x1024x24" "${runner[@]}")
+        environment=(env -u QT_QPA_PLATFORM)
+    fi
+
+    if ! "${environment[@]}" timeout --foreground "${timeout_seconds}s" "${runner[@]}" "$@" \
         >"$stdout_log" 2>"$stderr_log"; then
         echo "$label failed; see $stderr_log" >&2
         cat "$stdout_log" "$stderr_log" >&2
