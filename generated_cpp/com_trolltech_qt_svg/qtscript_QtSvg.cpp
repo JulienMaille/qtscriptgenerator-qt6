@@ -35,18 +35,22 @@ static const QtSvg::Option optionValues[] = {
     QtSvg::NoOption,
     QtSvg::Tiny12FeaturesOnly,
     QtSvg::AssumeTrustedSource,
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
     QtSvg::DisableSMILAnimations,
     QtSvg::DisableCSSAnimations,
     QtSvg::DisableAnimations
+#endif
 };
 
 static const char * const optionNames[] = {
     "NoOption",
     "Tiny12FeaturesOnly",
     "AssumeTrustedSource",
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
     "DisableSMILAnimations",
     "DisableCSSAnimations",
     "DisableAnimations"
+#endif
 };
 
 static QString optionName(QtSvg::Option value)

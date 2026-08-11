@@ -11,7 +11,9 @@ check(renderer.load(new QByteArray(validSvg)), "renderer could not recover after
 check(renderer.isValid() && renderer.elementExists("one"),
       "renderer state was not reset by a successful reload");
 
-var flags = new QtSvg.Options(QtSvg.Tiny12FeaturesOnly, QtSvg.DisableAnimations);
+var flags = typeof QtSvg.DisableAnimations !== "undefined"
+    ? new QtSvg.Options(QtSvg.Tiny12FeaturesOnly, QtSvg.DisableAnimations)
+    : new QtSvg.Options(QtSvg.Tiny12FeaturesOnly);
 renderer.setOptions(flags);
 check((renderer.options.valueOf() & flags.valueOf()) === flags.valueOf(),
       "QtSvg option flags did not survive a renderer round-trip");
@@ -39,9 +41,12 @@ check(output.size() > 0, "configured generator emitted no output");
 output.close();
 
 var widget = new QSvgWidget();
-widget.setOptions(new QtSvg.Options(QtSvg.DisableCSSAnimations));
-check((widget.options().valueOf() & QtSvg.DisableCSSAnimations.valueOf()) !== 0,
-      "widget animation option did not survive a round-trip");
+var widgetOption = typeof QtSvg.DisableCSSAnimations !== "undefined"
+    ? QtSvg.DisableCSSAnimations
+    : QtSvg.AssumeTrustedSource;
+widget.setOptions(new QtSvg.Options(widgetOption));
+check((widget.options().valueOf() & widgetOption.valueOf()) !== 0,
+      "widget SVG option did not survive a round-trip");
 var item = new QGraphicsSvgItem();
 item.setSharedRenderer(renderer);
 item.setElementId("does-not-exist");
