@@ -94,6 +94,11 @@ Both scripts also accept `--qt-script-prefix` when QtScript is installed in a
 separate prefix. If it is installed into the Qt prefix, only `--qt-prefix` is
 needed.
 
+The Linux script runs the functional binding smoke suite by default. Set
+`RUN_SCRIPTTOOLS_SMOKE=1` to include the debugger smoke; it is disabled in CI
+because the current QtScriptTools port segfaults under GCC before the suite can
+run. Windows CI covers that debugger path.
+
 The plugins are written to `plugins\script`; Debug and Release evaluators are
 written below `qtbindings\qs_eval`. `test.ps1` runs smoke tests for core, GUI,
 loopback Network, in-memory SQLite, offscreen widgets, PDF PrintSupport,

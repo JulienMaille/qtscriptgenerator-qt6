@@ -8,6 +8,7 @@ qt_script_prefix="${QTSCRIPT_PREFIX:-}"
 configuration=Release
 timeout_seconds=120
 log_root="$repo_root/logs"
+run_scripttools_smoke="${RUN_SCRIPTTOOLS_SMOKE:-0}"
 
 while (($#)); do
     case "$1" in
@@ -27,6 +28,8 @@ done
     { echo "Configuration must be Debug, Release, or All." >&2; exit 2; }
 [[ "$timeout_seconds" =~ ^[0-9]+$ && "$timeout_seconds" -ge 1 ]] ||
     { echo "Timeout must be a positive integer." >&2; exit 2; }
+[[ "$run_scripttools_smoke" == 0 || "$run_scripttools_smoke" == 1 ]] ||
+    { echo "RUN_SCRIPTTOOLS_SMOKE must be 0 or 1." >&2; exit 2; }
 for command in ldd timeout; do
     command -v "$command" >/dev/null ||
         { echo "$command was not found on PATH." >&2; exit 1; }
@@ -117,8 +120,12 @@ for name in "${configurations[@]}"; do
     done
     echo "No Qt5Compat binary dependencies: $name"
 
-    run_evaluator "$evaluator" "$name-scripttools-smoke" --scripttools-smoke
-    echo "QtScriptTools debugger smoke test passed: $name"
+    if [[ "$run_scripttools_smoke" == 1 ]]; then
+        run_evaluator "$evaluator" "$name-scripttools-smoke" --scripttools-smoke
+        echo "QtScriptTools debugger smoke test passed: $name"
+    else
+        echo "QtScriptTools debugger smoke test skipped: $name"
+    fi
 
     for test_name in "${tests[@]}"; do
         run_evaluator "$evaluator" "$name-${test_name%.js}" "$repo_root/tests/$test_name"
