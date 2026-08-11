@@ -3,15 +3,18 @@ param(
     [ValidateSet("Debug", "Release", "All")]
     [string] $Configuration = "All",
 
-    [string] $QtPrefix = "C:\Qt\6-build\qt-6.9.2-dynamic-msvc-x64",
+    [string] $QtPrefix = $env:QT_ROOT_DIR,
 
-    [string] $QtScriptPrefix = "C:\Qt\qtscript-qt6-port-codex\install",
+    [string] $QtScriptPrefix = $env:QTSCRIPT_PREFIX,
 
     [ValidateRange(1000, 600000)]
     [int] $EvaluatorTimeoutMilliseconds = 30000
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "build-config.ps1")
+$QtPrefix = Resolve-QtPrefix $QtPrefix
+$QtScriptPrefix = Resolve-QtScriptPrefix $QtScriptPrefix $QtPrefix
 $env:PATH = "$QtScriptPrefix\bin;$QtPrefix\bin;$env:PATH"
 $env:QT_QPA_PLATFORM = "offscreen"
 $testRoot = $PSScriptRoot
