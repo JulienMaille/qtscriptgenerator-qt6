@@ -21,7 +21,7 @@ static const char * const qtscript_QMutex_function_names[] = {
 };
 
 static const char * const qtscript_QMutex_function_signatures[] = {
-    "RecursionMode mode"
+    ""
     // static
     // prototype
     , ""
@@ -52,89 +52,7 @@ static QScriptValue qtscript_QMutex_throw_ambiguity_error_helper(
 }
 
 Q_DECLARE_METATYPE(QMutex*)
-Q_DECLARE_METATYPE(QMutex::RecursionMode)
 Q_DECLARE_METATYPE(QBasicMutex*)
-
-static QScriptValue qtscript_create_enum_class_helper(
-    QScriptEngine *engine,
-    QScriptEngine::FunctionSignature construct,
-    QScriptEngine::FunctionSignature valueOf,
-    QScriptEngine::FunctionSignature toString)
-{
-    QScriptValue proto = engine->newObject();
-    proto.setProperty(QString::fromLatin1("valueOf"),
-        engine->newFunction(valueOf), QScriptValue::SkipInEnumeration);
-    proto.setProperty(QString::fromLatin1("toString"),
-        engine->newFunction(toString), QScriptValue::SkipInEnumeration);
-    return engine->newFunction(construct, proto, 1);
-}
-
-//
-// QMutex::RecursionMode
-//
-
-static const QMutex::RecursionMode qtscript_QMutex_RecursionMode_values[] = {
-    QMutex::NonRecursive
-    , QMutex::Recursive
-};
-
-static const char * const qtscript_QMutex_RecursionMode_keys[] = {
-    "NonRecursive"
-    , "Recursive"
-};
-
-static QString qtscript_QMutex_RecursionMode_toStringHelper(QMutex::RecursionMode value)
-{
-    if ((value >= QMutex::NonRecursive) && (value <= QMutex::Recursive))
-        return qtscript_QMutex_RecursionMode_keys[static_cast<int>(value)-static_cast<int>(QMutex::NonRecursive)];
-    return QString();
-}
-
-static QScriptValue qtscript_QMutex_RecursionMode_toScriptValue(QScriptEngine *engine, const QMutex::RecursionMode &value)
-{
-    QScriptValue clazz = engine->globalObject().property(QString::fromLatin1("QMutex"));
-    return clazz.property(qtscript_QMutex_RecursionMode_toStringHelper(value));
-}
-
-static void qtscript_QMutex_RecursionMode_fromScriptValue(const QScriptValue &value, QMutex::RecursionMode &out)
-{
-    out = qvariant_cast<QMutex::RecursionMode>(value.toVariant());
-}
-
-static QScriptValue qtscript_construct_QMutex_RecursionMode(QScriptContext *context, QScriptEngine *engine)
-{
-    int arg = context->argument(0).toInt32();
-    if ((arg >= QMutex::NonRecursive) && (arg <= QMutex::Recursive))
-        return qScriptValueFromValue(engine,  static_cast<QMutex::RecursionMode>(arg));
-    return context->throwError(QString::fromLatin1("RecursionMode(): invalid enum value (%0)").arg(arg));
-}
-
-static QScriptValue qtscript_QMutex_RecursionMode_valueOf(QScriptContext *context, QScriptEngine *engine)
-{
-    QMutex::RecursionMode value = qscriptvalue_cast<QMutex::RecursionMode>(context->thisObject());
-    return QScriptValue(engine, static_cast<int>(value));
-}
-
-static QScriptValue qtscript_QMutex_RecursionMode_toString(QScriptContext *context, QScriptEngine *engine)
-{
-    QMutex::RecursionMode value = qscriptvalue_cast<QMutex::RecursionMode>(context->thisObject());
-    return QScriptValue(engine, qtscript_QMutex_RecursionMode_toStringHelper(value));
-}
-
-static QScriptValue qtscript_create_QMutex_RecursionMode_class(QScriptEngine *engine, QScriptValue &clazz)
-{
-    QScriptValue ctor = qtscript_create_enum_class_helper(
-        engine, qtscript_construct_QMutex_RecursionMode,
-        qtscript_QMutex_RecursionMode_valueOf, qtscript_QMutex_RecursionMode_toString);
-    qScriptRegisterMetaType<QMutex::RecursionMode>(engine, qtscript_QMutex_RecursionMode_toScriptValue,
-        qtscript_QMutex_RecursionMode_fromScriptValue, ctor.property(QString::fromLatin1("prototype")));
-    for (int i = 0; i < 2; ++i) {
-        clazz.setProperty(QString::fromLatin1(qtscript_QMutex_RecursionMode_keys[i]),
-            engine->newVariant(qVariantFromValue(qtscript_QMutex_RecursionMode_values[i])),
-            QScriptValue::ReadOnly | QScriptValue::Undeletable);
-    }
-    return ctor;
-}
 
 //
 // QMutex
@@ -215,11 +133,6 @@ static QScriptValue qtscript_QMutex_static_call(QScriptContext *context, QScript
         QMutex* _q_cpp_result = new QMutex();
         QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
         return _q_result;
-    } else if (context->argumentCount() == 1) {
-        QMutex::RecursionMode _q_arg0 = qscriptvalue_cast<QMutex::RecursionMode>(context->argument(0));
-        QMutex* _q_cpp_result = new QMutex(_q_arg0);
-        QScriptValue _q_result = context->engine()->newVariant(context->thisObject(), qVariantFromValue(_q_cpp_result));
-        return _q_result;
     }
     break;
 
@@ -248,7 +161,5 @@ QScriptValue qtscript_create_QMutex_class(QScriptEngine *engine)
     QScriptValue ctor = engine->newFunction(qtscript_QMutex_static_call, proto, qtscript_QMutex_function_lengths[0]);
     ctor.setData(QScriptValue(engine, uint(0xBABE0000 + 0)));
 
-    ctor.setProperty(QString::fromLatin1("RecursionMode"),
-        qtscript_create_QMutex_RecursionMode_class(engine, ctor));
     return ctor;
 }

@@ -82,6 +82,8 @@ SOURCES += \
            $$PWD/qtscript_QImageReader.cpp \
            $$PWD/qtscript_QImageWriter.cpp \
            $$PWD/qtscript_QInputEvent.cpp \
+           $$PWD/qtscript_QEventPoint.cpp \
+           $$PWD/qtscript_QPointerEvent.cpp \
            $$PWD/qtscript_QIntValidator.cpp \
            $$PWD/qtscript_QKeyEvent.cpp \
            $$PWD/qtscript_QKeySequence.cpp \
@@ -92,6 +94,8 @@ SOURCES += \
            $$PWD/qtscript_QMatrix3x3.cpp \
            $$PWD/qtscript_QMatrix4x4.cpp \
            $$PWD/qtscript_QMouseEvent.cpp \
+           $$PWD/qtscript_QTabletEvent.cpp \
+           $$PWD/qtscript_QWheelEvent.cpp \
            $$PWD/qtscript_QMoveEvent.cpp \
            $$PWD/qtscript_QMovie.cpp \
            $$PWD/qtscript_QPaintDevice.cpp \

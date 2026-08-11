@@ -72,6 +72,8 @@ QScriptValue qtscript_create_QTextObject_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QWindowStateChangeEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRadialGradient_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QInputEvent_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QEventPoint_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QPointerEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QHideEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QResizeEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBlockFormat_class(QScriptEngine *engine);
@@ -96,6 +98,8 @@ QScriptValue qtscript_create_QTextTableCellFormat_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextTableFormat_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBlockGroup_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QMouseEvent_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QTabletEvent_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QWheelEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QKeyEvent_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextFrame_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDragMoveEvent_class(QScriptEngine *engine);
@@ -179,6 +183,8 @@ static const char * const qtscript_com_trolltech_qt_gui_class_names[] = {
     , "QWindowStateChangeEvent"
     , "QRadialGradient"
     , "QInputEvent"
+    , "QEventPoint"
+    , "QPointerEvent"
     , "QHideEvent"
     , "QResizeEvent"
     , "QTextBlockFormat"
@@ -203,6 +209,8 @@ static const char * const qtscript_com_trolltech_qt_gui_class_names[] = {
     , "QTextTableFormat"
     , "QTextBlockGroup"
     , "QMouseEvent"
+    , "QTabletEvent"
+    , "QWheelEvent"
     , "QKeyEvent"
     , "QTextFrame"
     , "QDragMoveEvent"
@@ -288,6 +296,8 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
     , qtscript_create_QWindowStateChangeEvent_class
     , qtscript_create_QRadialGradient_class
     , qtscript_create_QInputEvent_class
+    , qtscript_create_QEventPoint_class
+    , qtscript_create_QPointerEvent_class
     , qtscript_create_QHideEvent_class
     , qtscript_create_QResizeEvent_class
     , qtscript_create_QTextBlockFormat_class
@@ -312,6 +322,8 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
     , qtscript_create_QTextTableFormat_class
     , qtscript_create_QTextBlockGroup_class
     , qtscript_create_QMouseEvent_class
+    , qtscript_create_QTabletEvent_class
+    , qtscript_create_QWheelEvent_class
     , qtscript_create_QKeyEvent_class
     , qtscript_create_QTextFrame_class
     , qtscript_create_QDragMoveEvent_class
@@ -327,7 +339,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_gui_class_functions[] = 
 void qtscript_initialize_com_trolltech_qt_gui_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 105; ++i) {
+    for (int i = 0; i < 109; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_gui_class_names[i],
             qtscript_com_trolltech_qt_gui_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

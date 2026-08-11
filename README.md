@@ -134,11 +134,19 @@ selected APIs introduced after Qt 5.15:
 - Qt XML DOM parsing through `QDomDocument`, including Qt 6
   `ParseOption`/`ParseOptions` and structured `ParseResult` diagnostics,
   namespace-aware lookup, node cloning/import, and serialization.
+- Qt 6 date/time parity through the curated `QLocale` and `QTimeZone` value
+  bindings, `QDateTime`'s `fromSecsSinceEpoch`/`toSecsSinceEpoch` and
+  time-zone conversion APIs, `QDateTimeEdit.timeZone`, plus locale code/BCP-47
+  and IANA-zone helpers.
+- Qt 6 input-event parity through `QEvent` category predicates, input-device
+  metadata, modern `QMouseEvent` positions/lifecycle, `QEventPoint` value
+  construction/accessors, and synthetic `QPointerEvent` point-list events,
+  together with native `QWheelEvent`/`QTabletEvent` pixel, phase, pressure,
+  and tilt accessors.
 
 `tests\qt6-additions-smoke.js`, `tests\xml-smoke.js`, and
 `tests\xml-regressions-smoke.js` exercise these additions. Still deferred are
-`QStyleOptionHeaderV2`, `QDateTimeEdit.timeZone` (the core extension first
-needs a useful `QTimeZone` binding), and script-implemented `QRhiWidget`
+`QStyleOptionHeaderV2` and script-implemented `QRhiWidget`
 rendering hooks that would require exposing the QRhi integration types.
 
 ## Current compatibility scope
@@ -156,6 +164,11 @@ removed SAX `QXmlReader`/`QXmlInputSource` family; QtCore's
 `QDate`, `QTime`, and `QDateTime` return values on their QtScript QVariant
 wrappers instead of Qt 6's built-in JavaScript-Date conversion, which preserves
 the generated value prototypes during chained calls.
+
+`QLocale` and `QTimeZone` are curated Qt 6 value bindings rather than a
+mechanical Qt 5 surface dump: removed `QStringRef` overloads and obsolete
+country/time-zone constructors are omitted, while locale-code, BCP-47, IANA,
+fixed-offset, and `QDateTime` conversion paths are covered by regression tests.
 
 Some removed APIs have constrained compatibility behavior:
 
@@ -178,20 +191,20 @@ Some removed APIs have constrained compatibility behavior:
   methods are adapted to Qt 6 `QPageLayout`, `QPageSize`, and `copyCount()`.
   The removed Windows page-size ID methods raise explicit script errors.
 
-Deferred core classes are `QBasicTimer` (move-only in Qt 6), `QLocale`
-(generated API relies heavily on removed overloads/enums), `QMutex` (the
-recursive mode became `QRecursiveMutex`), and the state-machine classes (the
-Qt 6 prefix used here does not contain QtStateMachine).
+Deferred core classes are `QBasicTimer` (move-only in Qt 6), `QMutex`'s removed
+recursive-mode constructor (the recursive type became `QRecursiveMutex`), and
+the state-machine classes (the Qt 6 prefix used here does not contain
+QtStateMachine).
 
 Widget classes removed from Qt 6 are not exported: `QDesktopWidget`,
 `QGraphicsItemAnimation`, `QPictureFormatPlugin`, `QKeyEventTransition`, and
-`QMouseEventTransition`. `QApplication` is supplied by the evaluator rather
-than registered as a generated constructible type.
+`QMouseEventTransition`. `QApplication` is exported as a static-only facade;
+the evaluator still provides the live `qApp` instance for instance-level use.
 
 The GUI extension omits APIs removed without a direct Qt 6 equivalent:
-`QPictureIO`, `QRegExpValidator`, and the generated legacy event constructors
-for `QTouchEvent.TouchPoint`, `QTabletEvent`, and `QWheelEvent`. `QMatrix` is
-kept as a source-compatible alias backed by `QTransform`.
+`QPictureIO`, `QRegExpValidator`, and the generated legacy event constructor
+for `QTouchEvent.TouchPoint`. `QMatrix` is kept as a source-compatible alias
+backed by `QTransform`.
 
 The SQL extension preserves the generated Qt 5 API across Qt 6 changes:
 `QSqlError.number()` and its setter methods are backed by the string-based

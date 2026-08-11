@@ -9,11 +9,14 @@ QScriptValue qtscript_create_QModelIndex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QLibraryInfo_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QUuid_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QDateTime_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QLocale_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QTimeZone_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QByteArray_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRegExp_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QUrl_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStringMatcher_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QWaitCondition_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QMutex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRect_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QEasingCurve_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QObject_class(QScriptEngine *engine);
@@ -97,11 +100,14 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QLibraryInfo"
     , "QUuid"
     , "QDateTime"
+    , "QLocale"
+    , "QTimeZone"
     , "QByteArray"
     , "QRegExp"
     , "QUrl"
     , "QStringMatcher"
     , "QWaitCondition"
+    , "QMutex"
     , "QRect"
     , "QEasingCurve"
     , "QObject"
@@ -187,11 +193,14 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QLibraryInfo_class
     , qtscript_create_QUuid_class
     , qtscript_create_QDateTime_class
+    , qtscript_create_QLocale_class
+    , qtscript_create_QTimeZone_class
     , qtscript_create_QByteArray_class
     , qtscript_create_QRegExp_class
     , qtscript_create_QUrl_class
     , qtscript_create_QStringMatcher_class
     , qtscript_create_QWaitCondition_class
+    , qtscript_create_QMutex_class
     , qtscript_create_QRect_class
     , qtscript_create_QEasingCurve_class
     , qtscript_create_QObject_class
@@ -270,7 +279,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
 void qtscript_initialize_com_trolltech_qt_core_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 76; ++i) {
+    for (int i = 0; i < 79; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_core_class_names[i],
             qtscript_com_trolltech_qt_core_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

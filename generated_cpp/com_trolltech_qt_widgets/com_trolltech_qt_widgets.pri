@@ -179,6 +179,7 @@ SOURCES += \
            $$PWD/qtscript_QAbstractScrollArea.cpp \
            $$PWD/qtscript_QAbstractSlider.cpp \
            $$PWD/qtscript_QAbstractSpinBox.cpp \
+           $$PWD/qtscript_QApplication.cpp \
            $$PWD/qtscript_QAction.cpp \
            $$PWD/qtscript_QActionGroup.cpp \
            $$PWD/qtscript_QBoxLayout.cpp \

@@ -20,6 +20,9 @@ static const char * const qtscript_QEvent_function_names[] = {
     , "accept"
     , "ignore"
     , "isAccepted"
+    , "isInputEvent"
+    , "isPointerEvent"
+    , "isSinglePointEvent"
     , "operator_assign"
     , "setAccepted"
     , "spontaneous"
@@ -35,6 +38,9 @@ static const char * const qtscript_QEvent_function_signatures[] = {
     , ""
     , ""
     , ""
+    , ""
+    , ""
+    , ""
     , "QEvent other"
     , "bool accepted"
     , ""
@@ -47,6 +53,9 @@ static const int qtscript_QEvent_function_lengths[] = {
     // static
     , 1
     // prototype
+    , 0
+    , 0
+    , 0
     , 0
     , 0
     , 0
@@ -502,7 +511,7 @@ static QScriptValue qtscript_QEvent_prototype_call(QScriptContext *context, QScr
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 7;
+        _id = 0xBABE0000 + 10;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -536,6 +545,27 @@ static QScriptValue qtscript_QEvent_prototype_call(QScriptContext *context, QScr
     break;
 
     case 3:
+    if (context->argumentCount() == 0) {
+        bool _q_result = _q_self->isInputEvent();
+        return QScriptValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 4:
+    if (context->argumentCount() == 0) {
+        bool _q_result = _q_self->isPointerEvent();
+        return QScriptValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 5:
+    if (context->argumentCount() == 0) {
+        bool _q_result = _q_self->isSinglePointEvent();
+        return QScriptValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 6:
     if (context->argumentCount() == 1) {
 //        QEvent _q_arg0 = qscriptvalue_cast<QEvent>(context->argument(0));
 //        QEvent& _q_result = _q_self->operator=(_q_arg0);
@@ -544,7 +574,7 @@ static QScriptValue qtscript_QEvent_prototype_call(QScriptContext *context, QScr
     }
     break;
 
-    case 4:
+    case 7:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
         _q_self->setAccepted(_q_arg0);
@@ -552,21 +582,21 @@ static QScriptValue qtscript_QEvent_prototype_call(QScriptContext *context, QScr
     }
     break;
 
-    case 5:
+    case 8:
     if (context->argumentCount() == 0) {
         bool _q_result = _q_self->spontaneous();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
-    case 6:
+    case 9:
     if (context->argumentCount() == 0) {
         QEvent::Type _q_result = _q_self->type();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
-    case 7: {
+    case 10: {
     QString result;
     QDebug d(&result);
     d << _q_self;
@@ -632,7 +662,7 @@ QScriptValue qtscript_create_QEvent_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QEvent*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QEvent*)0));
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 11; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QEvent_prototype_call, qtscript_QEvent_function_lengths[i+2]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QEvent_function_names[i+2]),

@@ -9,13 +9,13 @@ check(leapDay.isValid(), "QDate constructor or isValid failed");
 check(leapDay.day() === 29 && leapDay.month() === 2, "QDate accessors failed");
 
 check(typeof QByteArray === "function", "QByteArray binding was not imported");
-var bytes = new QByteArray("blink");
-check(bytes.size() === 5, "QByteArray construction failed");
-check(bytes.toString() === "blink", "QByteArray conversion failed");
+var bytes = new QByteArray("sample");
+check(bytes.size() === 6, "QByteArray construction failed");
+check(bytes.toString() === "sample", "QByteArray conversion failed");
 
 check(typeof QRegExp === "function", "QRegExp compatibility binding was not imported");
-var expression = new QRegExp("b.*k");
-check(expression.exactMatch("blink"), "QRegExp compatibility failed");
+var expression = new QRegExp("s.*e");
+check(expression.exactMatch("sample"), "QRegExp compatibility failed");
 
 check(typeof QTextCodec === "function", "QTextCodec facade was not imported");
 var utf8 = QTextCodec.codecForName(new QByteArray("UTF-8"));

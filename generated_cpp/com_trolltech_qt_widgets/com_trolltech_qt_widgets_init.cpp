@@ -11,6 +11,7 @@ QScriptValue qtscript_create_QStyleHintReturn_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTreeWidgetItem_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QStandardItem_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QSizePolicy_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QApplication_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QItemEditorCreatorBase_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextEdit_ExtraSelection_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPaintDevice_class(QScriptEngine *engine);
@@ -205,6 +206,7 @@ static const char * const qtscript_com_trolltech_qt_widgets_class_names[] = {
     , "QTreeWidgetItem"
     , "QStandardItem"
     , "QSizePolicy"
+    , "QApplication"
     , "QItemEditorCreatorBase"
     , "QTextEdit_ExtraSelection"
     , "QPaintDevice"
@@ -401,6 +403,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
     , qtscript_create_QTreeWidgetItem_class
     , qtscript_create_QStandardItem_class
     , qtscript_create_QSizePolicy_class
+    , qtscript_create_QApplication_class
     , qtscript_create_QItemEditorCreatorBase_class
     , qtscript_create_QTextEdit_ExtraSelection_class
     , qtscript_create_QPaintDevice_class
@@ -588,7 +591,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_widgets_class_functions[
 void qtscript_initialize_com_trolltech_qt_widgets_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 192; ++i) {
+    for (int i = 0; i < 193; ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_widgets_class_names[i],
             qtscript_com_trolltech_qt_widgets_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);
