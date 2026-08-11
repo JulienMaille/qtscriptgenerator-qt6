@@ -1,6 +1,7 @@
 /logs/
 /plugins/
 /.work/
+/.cmake/
 /qtbindings/.qmake.stash
 /qtbindings/Makefile*
 /qtbindings/*/Makefile*

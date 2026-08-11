@@ -32,8 +32,12 @@ Qt LGPL exception.
 - Qt 6.9.2 built for MSVC x64.
 - [QtScript port for Qt 6](https://github.com/JulienMaille/qtscript-qt6),
   installed as `Qt6::Script` and
-  `Qt6::ScriptTools` plus their qmake module metadata.
+  `Qt6::ScriptTools` with CMake package metadata; qmake module metadata is
+  also required when using the legacy nmake backend.
+- CMake 3.22 or newer (the minimum required by Qt 6.9).
 - Visual Studio 2022 or newer with the x64 C++ toolchain.
+- Ninja Multi-Config is the default CMake generator. A Visual Studio generator
+  can be selected explicitly when needed.
 
 ## Build and test
 
@@ -44,10 +48,31 @@ From PowerShell:
 .\test.ps1 -Configuration All
 ```
 
+`build.ps1` uses CMake with Ninja Multi-Config by default. The existing
+qmake/nmake build remains available explicitly:
+
+```powershell
+.\build.ps1 -Backend NMake -Configuration All
+```
+
 Custom Qt locations can be selected without editing files:
 
 ```powershell
 .\build.ps1 -QtPrefix C:\Qt\my-qt6 -QtScriptPrefix C:\Qt\my-qtscript-overlay
+```
+
+The scripts also accept `QT_ROOT_DIR` and `QTSCRIPT_PREFIX`. If QtScript is
+installed into the Qt prefix, only `QT_ROOT_DIR` is needed:
+
+```powershell
+$env:QT_ROOT_DIR = 'C:\Qt\6.11.1\6.11.1\msvc2022_64'
+.\build.ps1 -Generator "Ninja Multi-Config" -Configuration Release
+```
+
+The Visual Studio generator can be selected explicitly:
+
+```powershell
+.\build.ps1 -Generator "Visual Studio 17 2022" -Configuration All
 ```
 
 The plugins are written to `plugins\script`; Debug and Release evaluators are
