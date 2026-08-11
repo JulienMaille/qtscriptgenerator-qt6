@@ -1,17 +1,3 @@
-HEADERS += \
-           $$PWD/qtscriptshell_QXmlAttributes.h \
-           $$PWD/qtscriptshell_QXmlContentHandler.h \
-           $$PWD/qtscriptshell_QXmlDTDHandler.h \
-           $$PWD/qtscriptshell_QXmlDeclHandler.h \
-           $$PWD/qtscriptshell_QXmlDefaultHandler.h \
-           $$PWD/qtscriptshell_QXmlEntityResolver.h \
-           $$PWD/qtscriptshell_QXmlErrorHandler.h \
-           $$PWD/qtscriptshell_QXmlInputSource.h \
-           $$PWD/qtscriptshell_QXmlLexicalHandler.h \
-           $$PWD/qtscriptshell_QXmlLocator.h \
-           $$PWD/qtscriptshell_QXmlReader.h \
-           $$PWD/qtscriptshell_QXmlSimpleReader.h \
-
 SOURCES += \
            $$PWD/qtscript_QDomAttr.cpp \
            $$PWD/qtscript_QDomCDATASection.cpp \
@@ -30,29 +16,5 @@ SOURCES += \
            $$PWD/qtscript_QDomNotation.cpp \
            $$PWD/qtscript_QDomProcessingInstruction.cpp \
            $$PWD/qtscript_QDomText.cpp \
-           $$PWD/qtscript_QXmlAttributes.cpp \
-           $$PWD/qtscript_QXmlContentHandler.cpp \
-           $$PWD/qtscript_QXmlDTDHandler.cpp \
-           $$PWD/qtscript_QXmlDeclHandler.cpp \
-           $$PWD/qtscript_QXmlDefaultHandler.cpp \
-           $$PWD/qtscript_QXmlEntityResolver.cpp \
-           $$PWD/qtscript_QXmlErrorHandler.cpp \
-           $$PWD/qtscript_QXmlInputSource.cpp \
-           $$PWD/qtscript_QXmlLexicalHandler.cpp \
-           $$PWD/qtscript_QXmlLocator.cpp \
-           $$PWD/qtscript_QXmlParseException.cpp \
-           $$PWD/qtscript_QXmlReader.cpp \
-           $$PWD/qtscript_QXmlSimpleReader.cpp \
-           $$PWD/qtscriptshell_QXmlAttributes.cpp \
-           $$PWD/qtscriptshell_QXmlContentHandler.cpp \
-           $$PWD/qtscriptshell_QXmlDTDHandler.cpp \
-           $$PWD/qtscriptshell_QXmlDeclHandler.cpp \
-           $$PWD/qtscriptshell_QXmlDefaultHandler.cpp \
-           $$PWD/qtscriptshell_QXmlEntityResolver.cpp \
-           $$PWD/qtscriptshell_QXmlErrorHandler.cpp \
-           $$PWD/qtscriptshell_QXmlInputSource.cpp \
-           $$PWD/qtscriptshell_QXmlLexicalHandler.cpp \
-           $$PWD/qtscriptshell_QXmlLocator.cpp \
-           $$PWD/qtscriptshell_QXmlReader.cpp \
-           $$PWD/qtscriptshell_QXmlSimpleReader.cpp \
+           $$PWD/qtscript_QtXml.cpp \
            $$PWD/com_trolltech_qt_xml_init.cpp

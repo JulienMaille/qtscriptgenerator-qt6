@@ -15,6 +15,7 @@ find_package(Qt6 6.9.2 REQUIRED COMPONENTS
     Gui
     Network
     Sql
+    Xml
     Widgets
     PrintSupport
     UiTools
@@ -117,6 +118,8 @@ qt6_add_binding(qtscript_network com_trolltech_qt_network
     Qt6::Network)
 qt6_add_binding(qtscript_sql com_trolltech_qt_sql
     Qt6::Sql)
+qt6_add_binding(qtscript_xml com_trolltech_qt_xml
+    Qt6::Xml)
 qt6_add_binding(qtscript_widgets com_trolltech_qt_widgets
     Qt6::Gui Qt6::Widgets)
 qt6_add_binding(qtscript_printsupport com_trolltech_qt_printsupport
@@ -129,6 +132,7 @@ qt6_add_binding(qtscript_svg com_trolltech_qt_svg
 add_dependencies(qtscript_gui qtscript_core)
 add_dependencies(qtscript_network qtscript_core)
 add_dependencies(qtscript_sql qtscript_core)
+add_dependencies(qtscript_xml qtscript_core)
 add_dependencies(qtscript_widgets qtscript_core)
 add_dependencies(qtscript_printsupport qtscript_core qtscript_gui qtscript_widgets)
 add_dependencies(qtscript_uitools qtscript_core qtscript_widgets)
@@ -142,6 +146,7 @@ target_link_libraries(qs_eval PRIVATE
     Qt6::Script
     Qt6::ScriptTools
     Qt6::Sql
+    Qt6::Xml
     Qt6::UiTools
     Qt6::Widgets
 )
@@ -158,6 +163,7 @@ add_dependencies(qs_eval
     qtscript_gui
     qtscript_network
     qtscript_sql
+    qtscript_xml
     qtscript_widgets
     qtscript_printsupport
     qtscript_uitools

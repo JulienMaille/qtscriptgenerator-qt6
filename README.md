@@ -2,7 +2,7 @@
 
 This is a port of the generated QtScript bindings used by QCAD, from Qt 5 to
 Qt 6. It currently builds the `qt.core`, `qt.gui`, `qt.network`, `qt.sql`,
-`qt.widgets`, `qt.printsupport`, `qt.uitools`, `qt.svg`, and `qt.svgwidgets`
+`qt.widgets`, `qt.printsupport`, `qt.uitools`, `qt.xml`, `qt.svg`, and `qt.svgwidgets`
 QtScript extensions and the `qs_eval` functional-test executable with Qt
 6.9.2/MSVC x64. The evaluator is
 linked to the ported QtScriptTools module and includes a headless debugger
@@ -78,7 +78,8 @@ The Visual Studio generator can be selected explicitly:
 The plugins are written to `plugins\script`; Debug and Release evaluators are
 written below `qtbindings\qs_eval`. `test.ps1` runs smoke tests for core, GUI,
 loopback Network, in-memory SQLite, offscreen widgets, PDF PrintSupport,
-Designer UI, SVG rendering/generation, and SVG Widgets through that evaluator.
+Designer UI, DOM XML parsing/manipulation, SVG rendering/generation, and SVG
+Widgets through that evaluator.
 Each module also has a regression smoke
 script covering value conversion, overloads, state changes, and failure/cleanup
 paths (for example, leap-day `QDateTime` arithmetic, transaction rollback,
@@ -130,20 +131,28 @@ selected APIs introduced after Qt 5.15:
 - QtSvg's `QtSvg.Option`/`QtSvg.Options` flags, `QSvgRenderer` loading and
   raster rendering, `QSvgGenerator` output, and the QtSvgWidgets
   `QSvgWidget`/`QGraphicsSvgItem` classes.
+- Qt XML DOM parsing through `QDomDocument`, including Qt 6
+  `ParseOption`/`ParseOptions` and structured `ParseResult` diagnostics,
+  namespace-aware lookup, node cloning/import, and serialization.
 
-`tests\qt6-additions-smoke.js` exercises these additions. Still deferred are
+`tests\qt6-additions-smoke.js`, `tests\xml-smoke.js`, and
+`tests\xml-regressions-smoke.js` exercise these additions. Still deferred are
 `QStyleOptionHeaderV2`, `QDateTimeEdit.timeZone` (the core extension first
 needs a useful `QTimeZone` binding), and script-implemented `QRhiWidget`
 rendering hooks that would require exposing the QRhi integration types.
 
 ## Current compatibility scope
 
-The Core, GUI, Network, SQL, Widgets, PrintSupport, UI Tools, SVG, and SVG
-Widgets extensions
+The Core, GUI, Network, SQL, XML DOM, Widgets, PrintSupport, UI Tools, SVG, and
+SVG Widgets extensions
 retain the generated Qt 5 script API where a direct Qt 6 equivalent exists.
 Compatibility adapters cover Qt 6 metatypes and flags, QtScript `QRegExp`, a
 local `QStringConverter`-backed `QTextCodec` facade, XML `QStringView` results,
-container changes, and removed enum aliases. The Core generated sources keep
+container changes, and removed enum aliases. The XML extension intentionally
+exposes the Qt 6 DOM module and its parse options/results while omitting the
+removed SAX `QXmlReader`/`QXmlInputSource` family; QtCore's
+`QXmlStreamReader`/`QXmlStreamWriter` bindings remain available.
+
 `QDate`, `QTime`, and `QDateTime` return values on their QtScript QVariant
 wrappers instead of Qt 6's built-in JavaScript-Date conversion, which preserves
 the generated value prototypes during chained calls.
@@ -211,7 +220,6 @@ original binding families are also out of scope:
 
 - OpenGL and OpenGL Widgets.
 - Multimedia and Multimedia Widgets.
-- XML DOM bindings.
 - WebEngine bindings as a replacement for the old WebKit API.
 - Generating bindings for additional Qt 6 modules.
 

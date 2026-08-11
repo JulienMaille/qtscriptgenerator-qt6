@@ -19,7 +19,6 @@ static const char * const qtscript_QDomNodeList_function_names[] = {
     , "isEmpty"
     , "item"
     , "length"
-    , "equals"
     , "size"
     , "toString"
 };
@@ -33,7 +32,6 @@ static const char * const qtscript_QDomNodeList_function_signatures[] = {
     , ""
     , "int index"
     , ""
-    , "QDomNodeList arg__1"
     , ""
 ""
 };
@@ -42,7 +40,6 @@ static const int qtscript_QDomNodeList_function_lengths[] = {
     1
     // static
     // prototype
-    , 1
     , 0
     , 0
     , 1
@@ -131,21 +128,13 @@ static QScriptValue qtscript_QDomNodeList_prototype_call(QScriptContext *context
     break;
 
     case 5:
-    if (context->argumentCount() == 1) {
-        QDomNodeList _q_arg0 = qscriptvalue_cast<QDomNodeList>(context->argument(0));
-        bool _q_result = _q_self->operator==(_q_arg0);
-        return QScriptValue(context->engine(), _q_result);
-    }
-    break;
-
-    case 6:
     if (context->argumentCount() == 0) {
         int _q_result = _q_self->size();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
-    case 7: {
+    case 6: {
     QString result = QString::fromLatin1("QDomNodeList");
     return QScriptValue(context->engine(), result);
     }
@@ -192,7 +181,7 @@ QScriptValue qtscript_create_QDomNodeList_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QDomNodeList*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QDomNodeList*)0));
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 7; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QDomNodeList_prototype_call, qtscript_QDomNodeList_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QDomNodeList_function_names[i+1]),
