@@ -1,4 +1,6 @@
 #include <QtScript/QScriptValue>
+#include <QtCore/qglobal.h>
+#include <stdio.h>
 #include <QtScript/QScriptEngine>
 
 QScriptValue qtscript_create_QTextCodec_class(QScriptEngine *engine);
@@ -279,9 +281,15 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
 void qtscript_initialize_com_trolltech_qt_core_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
+    const bool trace = qEnvironmentVariableIsSet("QTSCRIPT_IMPORT_TRACE");
     for (int i = 0; i < 79; ++i) {
+        if (trace)
+            fprintf(stderr, "[bindings] qt.core %d %s\n", i,
+                    qtscript_com_trolltech_qt_core_class_names[i]);
         extensionObject.setProperty(qtscript_com_trolltech_qt_core_class_names[i],
             qtscript_com_trolltech_qt_core_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);
+        if (trace)
+            fprintf(stderr, "[bindings] qt.core %d done\n", i);
     }
 }

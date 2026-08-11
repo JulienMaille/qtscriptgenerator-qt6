@@ -180,9 +180,14 @@ int main(int argc, char *argv[])
                << "qt.xmlpatterns"
                << "qt.uitools";
 #endif
+    const bool traceImports = qEnvironmentVariableIsSet("QTSCRIPT_IMPORT_TRACE");
     QStringList failExtensions;
     foreach (const QString &ext, extensions) {
+        if (traceImports)
+            fprintf(stderr, "[bindings] importing %s\n", ext.toLocal8Bit().constData());
         QScriptValue ret = eng->importExtension(ext);
+        if (traceImports)
+            fprintf(stderr, "[bindings] imported %s\n", ext.toLocal8Bit().constData());
         if (ret.isError())
             failExtensions.append(ext);
     }

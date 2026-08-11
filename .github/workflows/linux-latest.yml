@@ -62,6 +62,8 @@ jobs:
 
       - name: Run binding smoke tests
         shell: bash
+        env:
+          QTSCRIPT_IMPORT_TRACE: '1'
         run: ./test-linux.sh --qt-prefix "$QT_ROOT_DIR" --configuration Release --timeout 120
 
       - name: Upload Release bindings
