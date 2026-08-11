@@ -1,6 +1,6 @@
 TARGET = qtscript_svg
 include(../qtbindingsbase.pri)
-QT += svg
+QT += gui widgets svg svgwidgets
 SOURCES += plugin.cpp
 HEADERS += plugin.h
 INCLUDEPATH += ./include/

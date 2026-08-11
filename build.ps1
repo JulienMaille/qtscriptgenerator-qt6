@@ -73,5 +73,5 @@ finally {
     Pop-Location
 }
 
-Write-Host "Qt 6 Core, GUI, Network, SQL, Widgets, PrintSupport, and UI Tools bindings built successfully."
+Write-Host "Qt 6 Core, GUI, Network, SQL, Widgets, PrintSupport, UI Tools, SVG, and SVG Widgets bindings built successfully."
 Write-Host "Plugins: $portRoot\plugins\script"

@@ -134,6 +134,7 @@ foreach ($name in $configurations) {
         "widgets-smoke.js", "widgets-regressions-smoke.js",
         "printsupport-smoke.js", "printsupport-regressions-smoke.js",
         "uitools-smoke.js", "uitools-regressions-smoke.js",
+        "svg-smoke.js", "svg-regressions-smoke.js",
         "qt6-additions-smoke.js"
     )) {
         $smokeTest = Join-Path $PSScriptRoot "tests\$testName"

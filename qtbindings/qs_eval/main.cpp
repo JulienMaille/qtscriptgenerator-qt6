@@ -163,7 +163,9 @@ int main(int argc, char *argv[])
                << "qt.sql"
                << "qt.widgets"
                << "qt.printsupport"
-               << "qt.uitools";
+               << "qt.uitools"
+               << "qt.svg"
+               << "qt.svgwidgets";
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     extensions
                << "qt.gui"
