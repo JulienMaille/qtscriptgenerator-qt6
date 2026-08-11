@@ -79,7 +79,7 @@ run_evaluator() {
     local -a runner=("$evaluator")
     local -a environment=()
 
-    if command -v xvfb-run >/dev/null; then
+    if [[ "$label" == *-scripttools-smoke ]] && command -v xvfb-run >/dev/null; then
         runner=(xvfb-run -a -s "-screen 0 1280x1024x24" "${runner[@]}")
         environment=(env -u QT_QPA_PLATFORM)
     fi
