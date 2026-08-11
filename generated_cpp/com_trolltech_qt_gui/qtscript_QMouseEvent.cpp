@@ -7,6 +7,8 @@
 #include <__package_shared.h>
 
 #include <qevent.h>
+#include <qinputdevice.h>
+#include <qpointingdevice.h>
 #include <QVariant>
 #include <qcoreevent.h>
 #include <qpoint.h>
@@ -29,12 +31,35 @@ static const char * const qtscript_QMouseEvent_function_names[] = {
     , "x"
     , "y"
     , "toString"
+    , "device"
+    , "deviceType"
+    , "flags"
+    , "globalPosition"
+    , "isBeginEvent"
+    , "isEndEvent"
+    , "isUpdateEvent"
+    , "pointCount"
+    , "pointingDevice"
+    , "position"
+    , "scenePosition"
+    , "source"
 };
 
 static const char * const qtscript_QMouseEvent_function_signatures[] = {
     "Type type, QPointF localPos, MouseButton button, MouseButtons buttons, KeyboardModifiers modifiers\nType type, QPointF localPos, QPointF screenPos, MouseButton button, MouseButtons buttons, KeyboardModifiers modifiers\nType type, QPointF localPos, QPointF windowPos, QPointF screenPos, MouseButton button, MouseButtons buttons, KeyboardModifiers modifiers"
     // static
     // prototype
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
+    , ""
     , ""
     , ""
     , ""
@@ -53,6 +78,17 @@ static const int qtscript_QMouseEvent_function_lengths[] = {
     7
     // static
     // prototype
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
     , 0
     , 0
     , 0
@@ -100,7 +136,7 @@ static QScriptValue qtscript_QMouseEvent_prototype_call(QScriptContext *context,
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 11;
+        _id = 0xBABE0000 + 23;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -194,6 +230,96 @@ static QScriptValue qtscript_QMouseEvent_prototype_call(QScriptContext *context,
     return QScriptValue(context->engine(), result);
     }
 
+    case 12:
+    if (context->argumentCount() == 0) {
+        const QInputDevice* _q_result = _q_self->device();
+        if (!_q_result)
+            return context->engine()->nullValue();
+        return context->engine()->newQObject(
+            const_cast<QInputDevice*>(_q_result),
+            QScriptEngine::QtOwnership,
+            QScriptEngine::PreferExistingWrapperObject);
+    }
+    break;
+
+    case 13:
+    if (context->argumentCount() == 0) {
+        QInputDevice::DeviceType _q_result = _q_self->deviceType();
+        return QScriptValue(context->engine(), static_cast<int>(_q_result));
+    }
+    break;
+
+    case 14:
+    if (context->argumentCount() == 0) {
+        Qt::MouseEventFlags _q_result = _q_self->flags();
+        return qScriptValueFromValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 15:
+    if (context->argumentCount() == 0) {
+        QPointF _q_result = _q_self->globalPosition();
+        return qScriptValueFromValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 16:
+    if (context->argumentCount() == 0) {
+        return QScriptValue(context->engine(), _q_self->isBeginEvent());
+    }
+    break;
+
+    case 17:
+    if (context->argumentCount() == 0) {
+        return QScriptValue(context->engine(), _q_self->isEndEvent());
+    }
+    break;
+
+    case 18:
+    if (context->argumentCount() == 0) {
+        return QScriptValue(context->engine(), _q_self->isUpdateEvent());
+    }
+    break;
+
+    case 19:
+    if (context->argumentCount() == 0) {
+        return QScriptValue(context->engine(), static_cast<int>(_q_self->pointCount()));
+    }
+    break;
+
+    case 20:
+    if (context->argumentCount() == 0) {
+        const QPointingDevice* _q_result = _q_self->pointingDevice();
+        if (!_q_result)
+            return context->engine()->nullValue();
+        return context->engine()->newQObject(
+            const_cast<QPointingDevice*>(_q_result),
+            QScriptEngine::QtOwnership,
+            QScriptEngine::PreferExistingWrapperObject);
+    }
+    break;
+
+    case 21:
+    if (context->argumentCount() == 0) {
+        QPointF _q_result = _q_self->position();
+        return qScriptValueFromValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 22:
+    if (context->argumentCount() == 0) {
+        QPointF _q_result = _q_self->scenePosition();
+        return qScriptValueFromValue(context->engine(), _q_result);
+    }
+    break;
+
+    case 23:
+    if (context->argumentCount() == 0) {
+        Qt::MouseEventSource _q_result = _q_self->source();
+        return qScriptValueFromValue(context->engine(), _q_result);
+    }
+    break;
+
     default:
     Q_ASSERT(false);
     }
@@ -261,7 +387,7 @@ QScriptValue qtscript_create_QMouseEvent_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QMouseEvent*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QMouseEvent*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QInputEvent*>()));
-    for (int i = 0; i < 12; ++i) {
+    for (int i = 0; i < 24; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QMouseEvent_prototype_call, qtscript_QMouseEvent_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QMouseEvent_function_names[i+1]),

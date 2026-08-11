@@ -16,6 +16,7 @@
 #include <qcursor.h>
 #include <qdatetime.h>
 #include <qdatetimeedit.h>
+#include <qtimezone.h>
 #include <qevent.h>
 #include <qfont.h>
 #include <qgraphicseffect.h>
@@ -62,6 +63,8 @@ static const char * const qtscript_QDateTimeEdit_function_names[] = {
     , "setDateTimeRange"
     , "setSelectedSection"
     , "setTimeRange"
+    , "timeZone"
+    , "setTimeZone"
     , "toString"
 };
 
@@ -83,6 +86,8 @@ static const char * const qtscript_QDateTimeEdit_function_signatures[] = {
     , "QDateTime min, QDateTime max"
     , "Section section"
     , "QTime min, QTime max"
+    , ""
+    , "QTimeZone zone"
 ""
 };
 
@@ -104,6 +109,8 @@ static const int qtscript_QDateTimeEdit_function_lengths[] = {
     , 2
     , 1
     , 2
+    , 0
+    , 1
     , 0
 };
 
@@ -130,6 +137,7 @@ Q_DECLARE_METATYPE(QFlags<QDateTimeEdit::Section>)
 Q_DECLARE_METATYPE(QCalendarWidget*)
 Q_DECLARE_METATYPE(QWidget*)
 Q_DECLARE_METATYPE(QAbstractSpinBox*)
+Q_DECLARE_METATYPE(QTimeZone)
 
 static QScriptValue qtscript_create_enum_class_helper(
     QScriptEngine *engine,
@@ -343,7 +351,7 @@ static QScriptValue qtscript_QDateTimeEdit_prototype_call(QScriptContext *contex
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 14;
+        _id = 0xBABE0000 + 16;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -463,7 +471,22 @@ static QScriptValue qtscript_QDateTimeEdit_prototype_call(QScriptContext *contex
     }
     break;
 
-    case 14: {
+    case 14:
+    if (context->argumentCount() == 0) {
+        QTimeZone _q_result = _q_self->timeZone();
+        return context->engine()->newVariant(qVariantFromValue(_q_result));
+    }
+    break;
+
+    case 15:
+    if (context->argumentCount() == 1) {
+        QTimeZone _q_arg0 = qscriptvalue_cast<QTimeZone>(context->argument(0));
+        _q_self->setTimeZone(_q_arg0);
+        return context->engine()->undefinedValue();
+    }
+    break;
+
+    case 16: {
     QString result = QString::fromLatin1("QDateTimeEdit");
     return QScriptValue(context->engine(), result);
     }
@@ -569,7 +592,7 @@ QScriptValue qtscript_create_QDateTimeEdit_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QDateTimeEdit*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QDateTimeEdit*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QAbstractSpinBox*>()));
-    for (int i = 0; i < 15; ++i) {
+    for (int i = 0; i < 17; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QDateTimeEdit_prototype_call, qtscript_QDateTimeEdit_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QDateTimeEdit_function_names[i+1]),

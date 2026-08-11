@@ -41,4 +41,27 @@ check(model.select() && model.rowCount() === 0,
 
 database.close();
 QSqlDatabase.removeDatabase(connectionName);
+
+// Consumer scripts inspect available drivers and reuse named connections.
+// Keep this server-free while covering those exact static APIs.
+var drivers = QSqlDatabase.drivers();
+check(drivers.indexOf("QSQLITE") !== -1,
+      "QSqlDatabase.drivers() did not report the SQLite plugin");
+check(QSqlDatabase.isDriverAvailable("QSQLITE"),
+      "QSQLITE was reported by drivers() but isDriverAvailable() returned false");
+check(typeof QSqlDatabase.isDriverAvailable("QMYSQL") === "boolean",
+      "QMYSQL driver capability query did not return a boolean");
+var namedConnection = "namedConnectionSmoke";
+var namedDatabase = QSqlDatabase.addDatabase("QSQLITE", namedConnection);
+check(namedDatabase.isValid() && namedDatabase.connectionName() === namedConnection,
+      "named QSqlDatabase construction failed");
+check(QSqlDatabase.connectionNames().indexOf(namedConnection) !== -1,
+      "QSqlDatabase.connectionNames() omitted the named connection");
+var reopened = QSqlDatabase.database(namedConnection);
+check(reopened.isValid() && reopened.connectionName() === namedConnection,
+      "QSqlDatabase.database(name) did not return the named connection");
+reopened.close();
+namedDatabase.close();
+QSqlDatabase.removeDatabase(namedConnection);
+
 print("SQL regression smoke passed");

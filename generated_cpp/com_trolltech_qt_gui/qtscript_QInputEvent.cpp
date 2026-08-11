@@ -7,6 +7,7 @@
 #include <__package_shared.h>
 
 #include <qevent.h>
+#include <qinputdevice.h>
 #include <QVariant>
 #include <qcoreevent.h>
 
@@ -16,6 +17,8 @@ static const char * const qtscript_QInputEvent_function_names[] = {
     "QInputEvent"
     // static
     // prototype
+    , "device"
+    , "deviceType"
     , "modifiers"
     , "setModifiers"
     , "setTimestamp"
@@ -28,6 +31,8 @@ static const char * const qtscript_QInputEvent_function_signatures[] = {
     // static
     // prototype
     , ""
+    , ""
+    , ""
     , "KeyboardModifiers amodifiers"
     , "ulong atimestamp"
     , ""
@@ -38,6 +43,8 @@ static const int qtscript_QInputEvent_function_lengths[] = {
     2
     // static
     // prototype
+    , 0
+    , 0
     , 0
     , 1
     , 1
@@ -76,7 +83,7 @@ static QScriptValue qtscript_QInputEvent_prototype_call(QScriptContext *context,
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 4;
+        _id = 0xBABE0000 + 6;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -90,12 +97,31 @@ static QScriptValue qtscript_QInputEvent_prototype_call(QScriptContext *context,
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
+        const QInputDevice* _q_result = _q_self->device();
+        if (!_q_result)
+            return context->engine()->nullValue();
+        return context->engine()->newQObject(
+            const_cast<QInputDevice*>(_q_result),
+            QScriptEngine::QtOwnership,
+            QScriptEngine::PreferExistingWrapperObject);
+    }
+    break;
+
+    case 1:
+    if (context->argumentCount() == 0) {
+        QInputDevice::DeviceType _q_result = _q_self->deviceType();
+        return QScriptValue(context->engine(), static_cast<int>(_q_result));
+    }
+    break;
+
+    case 2:
+    if (context->argumentCount() == 0) {
         QFlags<Qt::KeyboardModifier> _q_result = _q_self->modifiers();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
-    case 1:
+    case 3:
     if (context->argumentCount() == 1) {
         QFlags<Qt::KeyboardModifier> _q_arg0 = qscriptvalue_cast<QFlags<Qt::KeyboardModifier> >(context->argument(0));
         _q_self->setModifiers(_q_arg0);
@@ -103,7 +129,7 @@ static QScriptValue qtscript_QInputEvent_prototype_call(QScriptContext *context,
     }
     break;
 
-    case 2:
+    case 4:
     if (context->argumentCount() == 1) {
         ulong _q_arg0 = qscriptvalue_cast<ulong>(context->argument(0));
         _q_self->setTimestamp(_q_arg0);
@@ -111,14 +137,14 @@ static QScriptValue qtscript_QInputEvent_prototype_call(QScriptContext *context,
     }
     break;
 
-    case 3:
+    case 5:
     if (context->argumentCount() == 0) {
         ulong _q_result = _q_self->timestamp();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
-    case 4: {
+    case 6: {
     QString result = QString::fromLatin1("QInputEvent");
     return QScriptValue(context->engine(), result);
     }
@@ -170,7 +196,7 @@ QScriptValue qtscript_create_QInputEvent_class(QScriptEngine *engine)
     engine->setDefaultPrototype(qMetaTypeId<QInputEvent*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QInputEvent*)0));
     proto.setPrototype(engine->defaultPrototype(qMetaTypeId<QEvent*>()));
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < 7; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QInputEvent_prototype_call, qtscript_QInputEvent_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QInputEvent_function_names[i+1]),

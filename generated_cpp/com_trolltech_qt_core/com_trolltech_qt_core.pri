@@ -58,6 +58,8 @@ SOURCES += \
            #$$PWD/qtscript_QDataStream.cpp \
            $$PWD/qtscript_QDate.cpp \
            $$PWD/qtscript_QDateTime.cpp \
+           $$PWD/qtscript_QLocale.cpp \
+           $$PWD/qtscript_QTimeZone.cpp \
            $$PWD/qtscript_QDir.cpp \
            $$PWD/qtscript_QDirIterator.cpp \
            $$PWD/qtscript_QDynamicPropertyChangeEvent.cpp \
@@ -90,6 +92,7 @@ SOURCES += \
            $$PWD/qtscript_QProcessEnvironment.cpp \
            $$PWD/qtscript_QPropertyAnimation.cpp \
            $$PWD/qtscript_QReadWriteLock.cpp \
+           $$PWD/qtscript_QMutex.cpp \
            $$PWD/qtscript_QRect.cpp \
            $$PWD/qtscript_QRectF.cpp \
            $$PWD/qtscript_QRegExp.cpp \
