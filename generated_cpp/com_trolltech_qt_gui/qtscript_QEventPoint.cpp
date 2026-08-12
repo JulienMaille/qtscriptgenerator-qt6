@@ -10,6 +10,8 @@
 #include <qpointingdevice.h>
 #include <qsize.h>
 #include <qvariant.h>
+#include <QtCore/qglobal.h>
+#include <stdio.h>
 
 static const char * const qtscript_QEventPoint_function_names[] = {
     "QEventPoint"
@@ -395,8 +397,12 @@ static QScriptValue qtscript_QEventPoint_static_call(QScriptContext *context, QS
 
 QScriptValue qtscript_create_QEventPoint_class(QScriptEngine *engine)
 {
+    const bool trace = qEnvironmentVariableIsSet("QTSCRIPT_IMPORT_TRACE");
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 0\n");
     engine->setDefaultPrototype(qMetaTypeId<QEventPoint *>(), QScriptValue());
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 1\n");
     QScriptValue proto = engine->newObject();
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 2\n");
     for (int i = 0; i < 39; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QEventPoint_prototype_call,
             qtscript_QEventPoint_function_lengths[i + 1]);
@@ -405,8 +411,11 @@ QScriptValue qtscript_create_QEventPoint_class(QScriptEngine *engine)
             fun, QScriptValue::SkipInEnumeration);
     }
 
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 3\n");
     engine->setDefaultPrototype(qMetaTypeId<QEventPoint>(), proto);
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 4\n");
     engine->setDefaultPrototype(qMetaTypeId<QEventPoint *>(), proto);
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 5\n");
 
     QScriptValue ctor = engine->newFunction(qtscript_QEventPoint_static_call, proto,
         qtscript_QEventPoint_function_lengths[0]);
@@ -421,5 +430,6 @@ QScriptValue qtscript_create_QEventPoint_class(QScriptEngine *engine)
         QScriptValue(engine, static_cast<int>(QEventPoint::Updated)));
     ctor.setProperty(QString::fromLatin1("Released"),
         QScriptValue(engine, static_cast<int>(QEventPoint::Released)));
+    if (trace) fprintf(stderr, "[bindings] QEventPoint create 6\n");
     return ctor;
 }
