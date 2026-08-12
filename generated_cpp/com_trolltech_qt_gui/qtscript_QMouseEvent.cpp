@@ -101,6 +101,7 @@ static const int qtscript_QMouseEvent_function_lengths[] = {
     , 0
     , 0
     , 0
+    , 0
 };
 
 static QScriptValue qtscript_QMouseEvent_throw_ambiguity_error_helper(
