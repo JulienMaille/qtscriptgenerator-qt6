@@ -396,7 +396,7 @@ static QScriptValue qtscript_QEventPoint_static_call(QScriptContext *context, QS
 QScriptValue qtscript_create_QEventPoint_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QEventPoint *>(), QScriptValue());
-    QScriptValue proto = engine->newVariant(qVariantFromValue(static_cast<QEventPoint *>(nullptr)));
+    QScriptValue proto = engine->newObject();
     for (int i = 0; i < 39; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QEventPoint_prototype_call,
             qtscript_QEventPoint_function_lengths[i + 1]);
