@@ -146,6 +146,7 @@ static const int qtscript_QEventPoint_function_lengths[] = {
     , 0
     , 0
     , 0
+    , 0
 };
 
 static QScriptValue qtscript_QEventPoint_throw_ambiguity_error_helper(
