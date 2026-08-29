@@ -34,19 +34,11 @@ inline QRegularExpression qtscriptRegularExpression(const QRegExp &expression)
 }
 
 #if defined(QT_NO_SSL) && defined(QTSCRIPT_NETWORK_PACKAGE)
-#include <QtCore/QObject>
-
-class QSslError : public QObject {
-    Q_OBJECT
-public:
-    QSslError() : QObject() {}
-    QSslError(const QSslError &) : QObject() {}
-};
-
-class QSslConfiguration : public QObject {
-    Q_OBJECT
-public:
-    QSslConfiguration() : QObject() {}
-    QSslConfiguration(const QSslConfiguration &) : QObject() {}
-};
+// The generated qtscript_network bindings call the full QtNetwork SSL surface
+// (QSslError, QSslConfiguration, QSslCertificate, QSslCipher, QSslKey,
+// QSslSocket, and their enums).  A Qt built without SSL support cannot satisfy
+// that surface, and a partial stand-in here would only turn a missing-module
+// build into a confusion of missing-member errors across a dozen files.  Fail
+// loudly at the source of the dependency instead.
+#error "The qtscript_network bindings require Qt with SSL support; build Qt with OpenSSL or drop qtscript_network from QTSCRIPT_NETWORK_PACKAGE."
 #endif

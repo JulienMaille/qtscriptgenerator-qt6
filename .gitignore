@@ -2,6 +2,8 @@
 /plugins/
 /.work/
 /.cmake/
+/.cmake-linux/
+/.cmake-macos/
 /qtbindings/.qmake.stash
 /qtbindings/Makefile*
 /qtbindings/*/Makefile*

@@ -109,11 +109,15 @@ public:
     { return fromUnicode(QStringView(characters, length)); }
     bool hasFailure() const
     { return m_encoder ? m_encoder->hasError() : m_state.invalidChars != 0; }
+    // True when the previous call left a partial multi-byte sequence buffered.
+    bool needsMoreData() const
+    { return m_encoder ? m_encoderPartialPending : m_state.remainingChars != 0; }
 
 private:
     const QTextCodec *m_codec = nullptr;
     QTextCodec::ConverterState m_state;
     std::optional<QStringEncoder> m_encoder;
+    bool m_encoderPartialPending = false;
 };
 
 class QTextDecoder
@@ -134,8 +138,11 @@ public:
     {
         if (!m_codec || !characters)
             return {};
-        if (m_decoder)
+        if (m_decoder) {
+            m_decoderPartialPending = endsWithPartialSequence(
+                reinterpret_cast<const uchar *>(characters), length);
             return m_decoder->decode(QByteArrayView(characters, length));
+        }
         return m_codec->toUnicode(characters, length, &m_state);
     }
     QString toUnicode(const QByteArray &data) { return toUnicode(data.constData(), data.size()); }
@@ -147,12 +154,41 @@ public:
     bool hasFailure() const
     { return m_decoder ? m_decoder->hasError() : m_state.invalidChars != 0; }
     bool needsMoreData() const
-    { return m_decoder ? false : m_state.remainingChars != 0; }
+    { return m_decoder ? m_decoderPartialPending : m_state.remainingChars != 0; }
 
 private:
+    static bool endsWithPartialSequence(const uchar *bytes, int length)
+    {
+        if (!bytes || length <= 0)
+            return false;
+        // A trailing multi-byte encoding state is meaningful only for the
+        // multi-byte converters; single-byte encodings never need more data.
+        const int i = length - 1;
+        // UTF-8 continuation: 0x80..0xBF may be part of an incomplete sequence
+        // interrupted at the end of this buffer.
+        if (bytes[i] >= 0x80 && bytes[i] <= 0xBF) {
+            int continuation = 0;
+            int j = i;
+            while (j >= 0 && bytes[j] >= 0x80 && bytes[j] <= 0xBF && continuation < 3) {
+                --j;
+                ++continuation;
+            }
+            if (j < 0)
+                return true; // buffer began mid-sequence; cannot know
+            const uchar lead = bytes[j];
+            const int expected = (lead >= 0xF0) ? 3 : (lead >= 0xE0) ? 2 : (lead >= 0xC2) ? 1 : -1;
+            return expected >= 0 && continuation < expected;
+        }
+        // UTF-16/UTF-32: a lone lead surrogate at the end is an incomplete pair.
+        if (bytes[i] >= 0xD8 && bytes[i] <= 0xDB)
+            return true;
+        return false;
+    }
+
     const QTextCodec *m_codec = nullptr;
     QTextCodec::ConverterState m_state;
     std::optional<QStringDecoder> m_decoder;
+    bool m_decoderPartialPending = false;
 };
 
 class QtBindingsBuiltinTextCodec final : public QTextCodec
@@ -169,21 +205,54 @@ protected:
     {
         QStringDecoder decoder(m_encoding, state ? state->flags : Flag::Default);
         QString result = decoder.decode(QByteArrayView(in, length));
-        if (state && decoder.hasError())
-            ++state->invalidChars;
+        if (state) {
+            if (decoder.hasError())
+                ++state->invalidChars;
+            // Report any trailing partial multi-byte sequence so an
+            // incremental consumer learns more data is required.
+            if (endsWithPartialSequence(reinterpret_cast<const uchar *>(in), length))
+                ++state->remainingChars;
+        }
         return result;
     }
     QByteArray convertFromUnicode(const QChar *in, int length, ConverterState *state) const override
     {
         QStringEncoder encoder(m_encoding, state ? state->flags : Flag::Default);
         QByteArray result = encoder.encode(QStringView(in, length));
-        if (state && encoder.hasError())
-            ++state->invalidChars;
+        if (state) {
+            if (encoder.hasError())
+                ++state->invalidChars;
+            if (length > 0 && in[length - 1].isHighSurrogate())
+                ++state->remainingChars;
+        }
         return result;
     }
     std::optional<QStringConverter::Encoding> qtEncoding() const override { return m_encoding; }
 
 private:
+    static bool endsWithPartialSequence(const uchar *bytes, int length)
+    {
+        if (!bytes || length <= 0)
+            return false;
+        const int i = length - 1;
+        if (bytes[i] >= 0x80 && bytes[i] <= 0xBF) {
+            int continuation = 0;
+            int j = i;
+            while (j >= 0 && bytes[j] >= 0x80 && bytes[j] <= 0xBF && continuation < 3) {
+                --j;
+                ++continuation;
+            }
+            if (j < 0)
+                return true;
+            const uchar lead = bytes[j];
+            const int expected = (lead >= 0xF0) ? 3 : (lead >= 0xE0) ? 2 : (lead >= 0xC2) ? 1 : -1;
+            return expected >= 0 && continuation < expected;
+        }
+        if (bytes[i] >= 0xD8 && bytes[i] <= 0xDB)
+            return true;
+        return false;
+    }
+
     QStringConverter::Encoding m_encoding;
     int m_mib;
 };

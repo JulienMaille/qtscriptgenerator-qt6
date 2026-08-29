@@ -16,7 +16,7 @@ env:
   QTSCRIPT_REF: 'main'
 
 concurrency:
-  group: linux-latest-${{ github.ref }}
+  group: linux-611-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

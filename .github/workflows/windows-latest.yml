@@ -17,7 +17,7 @@ env:
   QTSCRIPT_REF: 'main'
 
 concurrency:
-  group: windows-latest-${{ github.ref }}
+  group: windows-611-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
