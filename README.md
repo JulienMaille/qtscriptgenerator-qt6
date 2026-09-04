@@ -4,12 +4,15 @@
 [![Windows Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml)
 [![Linux Qt 6.8 LTS](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-lts.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-lts.yml)
 [![Linux Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml)
+[![macOS Qt 6.8 LTS](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-lts.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-lts.yml)
+[![macOS Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml)
 
 This is a port of the generated QtScript bindings used by QCAD, from Qt 5 to
 Qt 6. It currently builds the `qt.core`, `qt.gui`, `qt.network`, `qt.sql`,
 `qt.widgets`, `qt.printsupport`, `qt.uitools`, `qt.xml`, `qt.svg`, and `qt.svgwidgets`
 QtScript extensions and the `qs_eval` functional-test executable with Qt
-6.8.3 or newer on Windows/MSVC x64 and Linux/GCC x64. The evaluator is
+ 6.8.3 or newer on Windows/MSVC x64, Linux/GCC x64, and macOS/Clang arm64
+(universal x86_64 + arm64 frameworks). The evaluator is
 linked to the ported QtScriptTools module and includes a headless debugger
 attach/widget smoke test.
 
@@ -34,7 +37,7 @@ Qt LGPL exception.
 
 ## Prerequisites
 
-- Qt 6.8.3 or newer built for MSVC x64 or Linux x64.
+- Qt 6.8.3 or newer built for MSVC x64, Linux x64, or macOS universal.
 - [QtScript port for Qt 6](https://github.com/JulienMaille/qtscript-qt6),
   installed as `Qt6::Script` and
   `Qt6::ScriptTools` with CMake package metadata; qmake module metadata is
@@ -42,10 +45,11 @@ Qt LGPL exception.
 - CMake 3.16 or newer (the minimum required by Qt 6.8).
 - Windows: Visual Studio 2022 or newer with the x64 C++ toolchain.
 - Linux: GCC with C++17 and Ninja.
+- macOS: Apple Clang with Ninja (Xcode command line tools).
 - Windows uses Ninja Multi-Config by default; a Visual Studio generator can be
-  selected explicitly when needed. Linux uses Ninja.
+  selected explicitly when needed. Linux and macOS use Ninja.
 
-CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.1 on Windows and Linux.
+CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.1 on Windows, Linux, and macOS.
 
 ## Build and test
 
@@ -88,6 +92,13 @@ On Linux:
 ```bash
 ./build-linux.sh --qt-prefix "$QT_ROOT_DIR" --configuration Release
 ./test-linux.sh --qt-prefix "$QT_ROOT_DIR" --configuration Release
+```
+
+On macOS:
+
+```bash
+./build-macos.sh --qt-prefix "$QT_ROOT_DIR" --qt-script-prefix "$QSCRIPT_INSTALL_PREFIX" --configuration Release
+./test-macos.sh --qt-prefix "$QT_ROOT_DIR" --qt-script-prefix "$QSCRIPT_INSTALL_PREFIX" --configuration Release
 ```
 
 Both scripts also accept `--qt-script-prefix` when QtScript is installed in a

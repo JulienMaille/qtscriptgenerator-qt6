@@ -1,0 +1,94 @@
+name: macOS Qt 6.11
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  QT_VERSION: '6.11.1'
+  QT_ARTIFACT_ID: 'macos-universal'
+  QTSCRIPT_REF: 'main'
+
+concurrency:
+  group: macos-611-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Qt 6.11 Apple Silicon (Release)
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out bindings
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Check out QtScript port
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: JulienMaille/qtscript-qt6
+          ref: ${{ env.QTSCRIPT_REF }}
+          path: qtscript-qt6
+          submodules: true
+
+      - name: Install Qt ${{ env.QT_VERSION }}
+        uses: jurplel/install-qt-action@48d3ad6db93f3627c8ee7a0454bc6f3744f7e730 # v4.3.1
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: mac
+          target: desktop
+          arch: clang_64
+          cache: true
+
+      - name: Build QtScript dependency
+        shell: bash
+        env:
+          QSCRIPT_WORK_ROOT: ${{ runner.temp }}/qtscript-work
+          QSCRIPT_INSTALL_PREFIX: ${{ runner.temp }}/qtscript-install
+        run: >-
+          bash ./qtscript-qt6/scripts/build-macos.sh
+          --qt-root "$QT_ROOT_DIR"
+          --work-root "$QSCRIPT_WORK_ROOT"
+          --install-prefix "$QSCRIPT_INSTALL_PREFIX"
+          --configuration Release
+          --parallel 3
+          --architectures "x86_64;arm64"
+
+      - name: Build bindings
+        shell: bash
+        env:
+          QSCRIPT_INSTALL_PREFIX: ${{ runner.temp }}/qtscript-install
+        run: >-
+          ./build-macos.sh
+          --qt-prefix "$QT_ROOT_DIR"
+          --qt-script-prefix "$QSCRIPT_INSTALL_PREFIX"
+          --configuration Release
+          --parallel 3
+
+      - name: Run binding smoke tests
+        shell: bash
+        env:
+          QSCRIPT_INSTALL_PREFIX: ${{ runner.temp }}/qtscript-install
+          QT_QPA_PLATFORM: offscreen
+          DYLD_FRAMEWORK_PATH: ${{ runner.temp }}/qtscript-install/lib
+        run: >-
+          ./test-macos.sh
+          --qt-prefix "$QT_ROOT_DIR"
+          --qt-script-prefix "$QSCRIPT_INSTALL_PREFIX"
+          --configuration Release
+
+      - name: Upload Release bindings
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: qtscriptgenerator-qt${{ env.QT_VERSION }}-${{ env.QT_ARTIFACT_ID }}-Release
+          path: |
+            plugins/script/*.dylib
+            qtbindings/qs_eval/release/qs_eval
+          if-no-files-found: error
+          retention-days: 3
