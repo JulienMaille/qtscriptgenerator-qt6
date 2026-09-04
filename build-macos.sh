@@ -62,10 +62,16 @@ fi
 mkdir -p "$build_directory"
 build_directory="$(cd "$build_directory" && pwd)"
 
+# NOTE: Qt6 resolves component configs relative to its own install, so an
+# isolated QtScript prefix is invisible to find_package(Qt6 COMPONENTS ...).
+# Pass the package dirs explicitly (same pattern as QtScript's own smoke
+# consumer).
 cmake -S "$repo_root" -B "$build_directory" -G Ninja \
     "-DCMAKE_BUILD_TYPE=$configuration" \
     "-DCMAKE_OSX_ARCHITECTURES=$architectures" \
     "-DCMAKE_PREFIX_PATH=$qt_prefix;$qt_script_prefix" \
+    "-DQt6Script_DIR=$qt_script_prefix/lib/cmake/Qt6Script" \
+    "-DQt6ScriptTools_DIR=$qt_script_prefix/lib/cmake/Qt6ScriptTools" \
     "-DQT_BINDINGS_OUTPUT_ROOT=$repo_root" \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 cmake --build "$build_directory" --parallel "$parallel"
