@@ -98,7 +98,12 @@ for name in "${configurations[@]}"; do
     [[ -x "$evaluator" ]] ||
         { echo "Evaluator is missing for $name. Run build-macos.sh first: $evaluator" >&2; exit 1; }
 
-    mapfile -t plugins < <(find "$repo_root/plugins/script" -maxdepth 1 -type f -name 'qtscript_*.dylib')
+    # NOTE: macOS ships bash 3.2 (no mapfile builtin), so collect with a
+    # portable read loop instead of mapfile.
+    plugins=()
+    while IFS= read -r plugin; do
+        plugins+=("$plugin")
+    done < <(find "$repo_root/plugins/script" -maxdepth 1 -type f -name 'qtscript_*.dylib')
     ((${#plugins[@]})) || { echo "No plugins found for $name." >&2; exit 1; }
     for plugin in "${plugins[@]}" "$evaluator"; do
         if otool -L "$plugin" 2>&1 | grep -Eq 'Core5Compat|Qt5Compat'; then
