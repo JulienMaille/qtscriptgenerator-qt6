@@ -49,7 +49,7 @@ Qt LGPL exception.
 - Windows uses Ninja Multi-Config by default; a Visual Studio generator can be
   selected explicitly when needed. Linux and macOS use Ninja.
 
-CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.1 on Windows, Linux, and macOS.
+CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.2 on Windows, Linux, and macOS.
 
 ## Build and test
 
@@ -77,7 +77,7 @@ The scripts also accept `QT_ROOT_DIR` and `QTSCRIPT_PREFIX`. If QtScript is
 installed into the Qt prefix, only `QT_ROOT_DIR` is needed:
 
 ```powershell
-$env:QT_ROOT_DIR = 'C:\Qt\6.11.1\6.11.1\msvc2022_64'
+$env:QT_ROOT_DIR = 'C:\Qt\6.11.2\6.11.2\msvc2022_64'
 .\build.ps1 -Generator "Ninja Multi-Config" -Configuration Release
 ```
 
