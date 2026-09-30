@@ -1,4 +1,4 @@
-name: Linux Qt 6.11
+name: Linux Qt 6.12
 
 on:
   push:
@@ -11,17 +11,17 @@ permissions:
   contents: read
 
 env:
-  QT_VERSION: '6.11.2'
+  QT_VERSION: '6.12.0'
   QT_ARTIFACT_ID: 'linux-gcc'
   QTSCRIPT_REF: 'main'
 
 concurrency:
-  group: linux-611-${{ github.ref }}
+  group: linux-612-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Qt 6.11 GCC 64-bit (Release)
+    name: Qt 6.12 GCC 64-bit (Release)
     runs-on: ubuntu-22.04
     timeout-minutes: 60
 
