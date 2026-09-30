@@ -15,7 +15,9 @@ static const char * const qtscript_QXmlStreamEntityResolver_function_names[] = {
     "QXmlStreamEntityResolver"
     // static
     // prototype
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     , "resolveEntity"
+#endif
     , "resolveUndeclaredEntity"
     , "toString"
 };
@@ -24,7 +26,9 @@ static const char * const qtscript_QXmlStreamEntityResolver_function_signatures[
     ""
     // static
     // prototype
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     , "String publicId, String systemId"
+#endif
     , "String name"
 ""
 };
@@ -33,7 +37,9 @@ static const int qtscript_QXmlStreamEntityResolver_function_lengths[] = {
     0
     // static
     // prototype
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     , 2
+#endif
     , 1
     , 0
 };
@@ -78,6 +84,7 @@ static QScriptValue qtscript_QXmlStreamEntityResolver_prototype_call(QScriptCont
     }
 
     switch (_id) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     case 0:
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
@@ -88,6 +95,9 @@ static QScriptValue qtscript_QXmlStreamEntityResolver_prototype_call(QScriptCont
     break;
 
     case 1:
+#else
+    case 0:
+#endif
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         QString _q_result = _q_self->resolveUndeclaredEntity(_q_arg0);
@@ -95,7 +105,11 @@ static QScriptValue qtscript_QXmlStreamEntityResolver_prototype_call(QScriptCont
     }
     break;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     case 2: {
+#else
+    case 1: {
+#endif
     QString result = QString::fromLatin1("QXmlStreamEntityResolver");
     return QScriptValue(context->engine(), result);
     }
@@ -138,7 +152,11 @@ QScriptValue qtscript_create_QXmlStreamEntityResolver_class(QScriptEngine *engin
 {
     engine->setDefaultPrototype(qMetaTypeId<QXmlStreamEntityResolver*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QXmlStreamEntityResolver*)0));
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
     for (int i = 0; i < 3; ++i) {
+#else
+    for (int i = 0; i < 2; ++i) {
+#endif
         QScriptValue fun = engine->newFunction(qtscript_QXmlStreamEntityResolver_prototype_call, qtscript_QXmlStreamEntityResolver_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QXmlStreamEntityResolver_function_names[i+1]),

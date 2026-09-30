@@ -11,6 +11,7 @@ QtScriptShell_QXmlStreamEntityResolver::QtScriptShell_QXmlStreamEntityResolver()
 
 QtScriptShell_QXmlStreamEntityResolver::~QtScriptShell_QXmlStreamEntityResolver() {}
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 12, 0)
 QString  QtScriptShell_QXmlStreamEntityResolver::resolveEntity(const QString&  publicId, const QString&  systemId)
 {
     QScriptValue _q_function = __qtscript_self.property("resolveEntity");
@@ -25,6 +26,7 @@ QString  QtScriptShell_QXmlStreamEntityResolver::resolveEntity(const QString&  p
             << qScriptValueFromValue(_q_engine, systemId)));
     }
 }
+#endif
 
 QString  QtScriptShell_QXmlStreamEntityResolver::resolveUndeclaredEntity(const QString&  name)
 {
