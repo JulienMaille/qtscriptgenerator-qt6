@@ -1,11 +1,11 @@
 # QtScriptGenerator bindings for Qt 6
 
 [![Windows Qt 6.8 LTS](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-lts.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-lts.yml)
-[![Windows Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml)
+[![Windows Qt 6.12](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/windows-latest.yml)
 [![Linux Qt 6.8 LTS](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-lts.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-lts.yml)
-[![Linux Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml)
+[![Linux Qt 6.12](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/linux-latest.yml)
 [![macOS Qt 6.8 LTS](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-lts.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-lts.yml)
-[![macOS Qt 6.11](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml)
+[![macOS Qt 6.12](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml/badge.svg)](https://github.com/JulienMaille/qtscriptgenerator-qt6/actions/workflows/macos-latest.yml)
 
 This is a port of the generated QtScript bindings used by QCAD, from Qt 5 to
 Qt 6. It currently builds the `qt.core`, `qt.gui`, `qt.network`, `qt.sql`,
@@ -42,14 +42,14 @@ Qt LGPL exception.
   installed as `Qt6::Script` and
   `Qt6::ScriptTools` with CMake package metadata; qmake module metadata is
   also required when using the legacy nmake backend.
-- CMake 3.16 or newer (the minimum required by Qt 6.8).
+- CMake 3.25 or newer (the minimum required by Qt 6.12).
 - Windows: Visual Studio 2022 or newer with the x64 C++ toolchain.
 - Linux: GCC with C++17 and Ninja.
 - macOS: Apple Clang with Ninja (Xcode command line tools).
 - Windows uses Ninja Multi-Config by default; a Visual Studio generator can be
   selected explicitly when needed. Linux and macOS use Ninja.
 
-CI covers Release builds with Qt 6.8.3 LTS and Qt 6.11.2 on Windows, Linux, and macOS.
+CI covers Release builds with Qt 6.8.3 LTS and Qt 6.12.0 on Windows, Linux, and macOS.
 
 ## Build and test
 
@@ -77,7 +77,7 @@ The scripts also accept `QT_ROOT_DIR` and `QTSCRIPT_PREFIX`. If QtScript is
 installed into the Qt prefix, only `QT_ROOT_DIR` is needed:
 
 ```powershell
-$env:QT_ROOT_DIR = 'C:\Qt\6.11.2\6.11.2\msvc2022_64'
+$env:QT_ROOT_DIR = 'C:\Qt\6.12.0\6.12.0\msvc2022_64'
 .\build.ps1 -Generator "Ninja Multi-Config" -Configuration Release
 ```
 

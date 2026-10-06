@@ -1,4 +1,4 @@
-name: macOS Qt 6.11
+name: macOS Qt 6.12
 
 on:
   push:
@@ -11,17 +11,17 @@ permissions:
   contents: read
 
 env:
-  QT_VERSION: '6.11.2'
+  QT_VERSION: '6.12.0'
   QT_ARTIFACT_ID: 'macos-universal'
   QTSCRIPT_REF: 'main'
 
 concurrency:
-  group: macos-611-${{ github.ref }}
+  group: macos-612-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Qt 6.11 Apple Silicon (Release)
+    name: Qt 6.12 Apple Silicon (Release)
     runs-on: macos-15
     timeout-minutes: 60
 
