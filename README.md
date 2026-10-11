@@ -189,10 +189,9 @@ rendering hooks that would require exposing the QRhi integration types.
 The Core, GUI, Network, SQL, XML DOM, Widgets, PrintSupport, UI Tools, SVG, and
 SVG Widgets extensions
 retain the generated Qt 5 script API where a direct Qt 6 equivalent exists.
-Compatibility adapters cover Qt 6 metatypes and flags, QtScript `QRegExp`, a
-local `QStringConverter`-backed `QTextCodec` facade, XML `QStringView` results,
-container changes, and removed enum aliases. The XML extension intentionally
-exposes the Qt 6 DOM module and its parse options/results while omitting the
+Compatibility adapters cover Qt 6 metatypes and flags, QtScript `QRegExp`,
+XML `QStringView` results, container changes, and removed enum aliases. The XML
+extension intentionally exposes the Qt 6 DOM module and its parse options/results while omitting the
 removed SAX `QXmlReader`/`QXmlInputSource` family; QtCore's
 `QXmlStreamReader`/`QXmlStreamWriter` bindings remain available.
 
@@ -205,14 +204,30 @@ mechanical Qt 5 surface dump: removed `QStringRef` overloads and obsolete
 country/time-zone constructors are omitted, while locale-code, BCP-47, IANA,
 fixed-offset, and `QDateTime` conversion paths are covered by regression tests.
 
-Some removed APIs have constrained compatibility behavior:
+The removed Core `QTextCodec`, `QTextDecoder`, and `QTextEncoder` family is not
+exported; there is no local facade or Qt5Compat dependency. Use native
+`QTextStream.encoding()` / `setEncoding(QStringConverter.Utf8)` instead.
+`QStringConverter` exposes only Qt 6's `Encoding` enum (UTF-8, UTF-16/32 with
+explicit byte orders, Latin-1, and System), not converter instances or
+`QStringEncoder`/`QStringDecoder` bindings. Numeric enum values are also accepted;
+invalid encodings and wrong types are rejected before calling Qt.
 
-- `QTextStream.setCodec()` accepts encodings supported by Qt 6
-  `QStringConverter`; unsupported legacy codecs raise a script error.
-- `QXmlStreamWriter` is UTF-8-only in Qt 6; selecting another codec raises a
-  script error.
-- `QSettings.setIniCodec()` remains callable but is a no-op because Qt 6 INI
-  files are UTF-8.
+`codec()` / `setCodec()` are omitted from `QTextStream`, `QXmlStreamWriter`,
+and `QTextDocumentWriter`; `iniCodec()` / `setIniCodec()` are omitted from
+`QSettings`. Qt 6 XML stream output and INI files use UTF-8 without an encoding
+selector. No no-op setters or artificial codec getters are provided.
+The removed `QTextDocument.toHtml(encoding)` overload is also omitted; use
+the native zero-argument `toHtml()` which returns a Unicode string.
+Encoding round trips, byte-order marks, Unicode INI persistence, XML escaping,
+and text document output are covered by the Core and GUI smoke/regression tests.
+
+A known, independent Core registration-order limitation remains: `QFileDevice`
+is initialized before `QIODevice`, so `QFile` lacks inherited bindings such as
+`read()` and `readAll()`. The INI byte-level regression test currently invokes
+`QIODevice.prototype.readAll.call(file)` explicitly; this is not a codec shim.
+
+Some other removed APIs have constrained compatibility behavior:
+
 - Removed `QLibraryInfo` queries and `QCoreApplication.hasPendingEvents()`
   raise explicit script errors.
 - Legacy `QTime` stopwatch methods use wall-clock `QTime` arithmetic.

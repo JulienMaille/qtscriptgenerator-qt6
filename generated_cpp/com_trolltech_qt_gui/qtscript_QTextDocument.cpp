@@ -130,7 +130,7 @@ static const char * const qtscript_QTextDocument_function_signatures[] = {
     , "String html"
     , "MetaInformation info, String arg__2"
     , "String text"
-    , "QByteArray encoding"
+    , ""
     , ""
     , "QTextCursor cursor"
 ""
@@ -183,7 +183,7 @@ static const int qtscript_QTextDocument_function_lengths[] = {
     , 1
     , 2
     , 1
-    , 1
+    , 0
     , 0
     , 1
     , 0
@@ -1047,12 +1047,6 @@ static QScriptValue qtscript_QTextDocument_prototype_call(QScriptContext *contex
 
     case 43:
     if (context->argumentCount() == 0) {
-        QString _q_result = _q_self->toHtml();
-        return QScriptValue(context->engine(), _q_result);
-    }
-    if (context->argumentCount() == 1) {
-        QByteArray _q_arg0 = qscriptvalue_cast<QByteArray>(context->argument(0));
-        Q_UNUSED(_q_arg0);
         QString _q_result = _q_self->toHtml();
         return QScriptValue(context->engine(), _q_result);
     }

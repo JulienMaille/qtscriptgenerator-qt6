@@ -5,7 +5,6 @@
 #include <qbytearray.h>
 #include <qiodevice.h>
 #include <qlocale.h>
-#include <qtextcodec.h>
 #include <qtextstream.h>
 
 #define QTSCRIPT_IS_GENERATED_FUNCTION(fun) ((fun.data().toUInt32() & 0xFFFF0000) == 0xBABE0000)

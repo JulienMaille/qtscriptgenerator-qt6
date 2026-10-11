@@ -17,25 +17,26 @@ check(typeof QRegExp === "function", "QRegExp compatibility binding was not impo
 var expression = new QRegExp("s.*e");
 check(expression.exactMatch("sample"), "QRegExp compatibility failed");
 
-check(typeof QTextCodec === "function", "QTextCodec facade was not imported");
-var utf8 = QTextCodec.codecForName(new QByteArray("UTF-8"));
-check(utf8 !== null, "UTF-8 codec lookup failed");
-var encodedText = utf8.fromUnicode("caf\u00e9");
-check(utf8.toUnicode(encodedText) === "caf\u00e9", "UTF-8 codec round trip failed");
-var encoder = utf8.makeEncoder();
-var decoder = utf8.makeDecoder();
-check(decoder.toUnicode(encoder.fromUnicode("streamed")) === "streamed",
-      "QTextEncoder/QTextDecoder facade round trip failed");
-check(utf8.makeEncoder().fromUnicode("A").toHex().toString() === "41",
-      "QTextCodec default encoder unexpectedly wrote a BOM");
-
-var availableCodecs = QTextCodec.availableCodecs();
-check(availableCodecs.length > 0, "QTextCodec.availableCodecs returned no codecs");
-for (var codecIndex = 0; codecIndex < availableCodecs.length; ++codecIndex) {
-    var codecName = availableCodecs[codecIndex].toString();
-    check(QTextCodec.codecForName(new QByteArray(codecName)) !== null,
-          "QTextCodec.availableCodecs returned an unresolvable codec: " + codecName);
-}
+check(typeof QTextCodec === "undefined" && typeof QTextDecoder === "undefined"
+      && typeof QTextEncoder === "undefined", "removed codec facades must not be exported");
+check(typeof QStringConverter === "object", "native encoding enum was not imported");
+var utf8 = new QStringConverter.Encoding(0);
+check(utf8.valueOf() === QStringConverter.Utf8.valueOf() && utf8.toString() === "Utf8",
+      "QStringConverter.Encoding construction failed");
+var encodedBuffer = new QBuffer();
+check(encodedBuffer.open(new QIODevice.OpenMode(QIODevice.ReadWrite)), "encoding buffer open failed");
+var encodedStream = new QTextStream(encodedBuffer);
+check(encodedStream.encoding().valueOf() === QStringConverter.Utf8.valueOf(),
+      "QTextStream default encoding must be UTF-8");
+check(typeof encodedStream.codec === "undefined" && typeof encodedStream.setCodec === "undefined",
+      "QTextStream must expose native encoding APIs, not codec shims");
+encodedStream.setEncoding(utf8);
+encodedStream.writeString("caf\u00e9");
+encodedStream.flush();
+check(encodedBuffer.seek(0) && encodedBuffer.readAll().toHex().toString() === "636166c3a9",
+      "native UTF-8 write failed or unexpectedly emitted a BOM");
+check(encodedStream.seek(0) && encodedStream.readAll() === "caf\u00e9", "UTF-8 stream round trip failed");
+encodedBuffer.close();
 
 check(typeof QXmlStreamReader === "function", "QXmlStreamReader binding was not imported");
 var reader = new QXmlStreamReader("<root>value</root>");

@@ -1,7 +1,7 @@
 #include <QtScript/QScriptValue>
 #include <QtScript/QScriptEngine>
 
-QScriptValue qtscript_create_QTextCodec_class(QScriptEngine *engine);
+QScriptValue qtscript_create_QStringConverter_class(QScriptEngine *engine);
 //QScriptValue qtscript_create_QFutureSynchronizer_class(QScriptEngine *engine);
 //QScriptValue qtscript_create_QFutureWatcherVoid_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTextBoundaryFinder_class(QScriptEngine *engine);
@@ -45,10 +45,8 @@ QScriptValue qtscript_create_QMargins_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPersistentModelIndex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QXmlStreamReader_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QPointF_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QTextEncoder_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QProcessEnvironment_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QRectF_class(QScriptEngine *engine);
-QScriptValue qtscript_create_QTextDecoder_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QXmlStreamAttributes_class(QScriptEngine *engine);
 //QScriptValue qtscript_create_QBasicMutex_class(QScriptEngine *engine);
 QScriptValue qtscript_create_QTime_class(QScriptEngine *engine);
@@ -92,7 +90,7 @@ QScriptValue qtscript_create_QParallelAnimationGroup_class(QScriptEngine *engine
 QScriptValue qtscript_create_QSequentialAnimationGroup_class(QScriptEngine *engine);
 
 static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
-    "QTextCodec"
+    "QStringConverter"
     //, "QFutureSynchronizer"
     //, "QFutureWatcherVoid"
     , "QTextBoundaryFinder"
@@ -135,10 +133,8 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QPersistentModelIndex"
     , "QXmlStreamReader"
     , "QPointF"
-    , "QTextEncoder"
     , "QProcessEnvironment"
     , "QRectF"
-    , "QTextDecoder"
     , "QXmlStreamAttributes"
     //, "QBasicMutex"
     , "QTime"
@@ -185,7 +181,7 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
 
 typedef QScriptValue (*QtBindingCreator)(QScriptEngine *engine);
 static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] = {
-    qtscript_create_QTextCodec_class
+    qtscript_create_QStringConverter_class
     //, qtscript_create_QFutureSynchronizer_class
     //, qtscript_create_QFutureWatcherVoid_class
     , qtscript_create_QTextBoundaryFinder_class
@@ -228,10 +224,8 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QPersistentModelIndex_class
     , qtscript_create_QXmlStreamReader_class
     , qtscript_create_QPointF_class
-    , qtscript_create_QTextEncoder_class
     , qtscript_create_QProcessEnvironment_class
     , qtscript_create_QRectF_class
-    , qtscript_create_QTextDecoder_class
     , qtscript_create_QXmlStreamAttributes_class
     //, qtscript_create_QBasicMutex_class
     , qtscript_create_QTime_class
@@ -279,7 +273,11 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
 void qtscript_initialize_com_trolltech_qt_core_bindings(QScriptValue &extensionObject)
 {
     QScriptEngine *engine = extensionObject.engine();
-    for (int i = 0; i < 79; ++i) {
+    static_assert(sizeof(qtscript_com_trolltech_qt_core_class_names) / sizeof(*qtscript_com_trolltech_qt_core_class_names)
+        == sizeof(qtscript_com_trolltech_qt_core_class_functions) / sizeof(*qtscript_com_trolltech_qt_core_class_functions),
+        "Core binding names and creators must match");
+    for (size_t i = 0; i < sizeof(qtscript_com_trolltech_qt_core_class_names)
+            / sizeof(*qtscript_com_trolltech_qt_core_class_names); ++i) {
         extensionObject.setProperty(qtscript_com_trolltech_qt_core_class_names[i],
             qtscript_com_trolltech_qt_core_class_functions[i](engine),
             QScriptValue::SkipInEnumeration);

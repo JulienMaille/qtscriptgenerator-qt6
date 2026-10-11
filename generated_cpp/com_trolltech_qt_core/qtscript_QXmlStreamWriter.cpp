@@ -10,21 +10,16 @@
 #include <QVariant>
 #include <qbytearray.h>
 #include <qiodevice.h>
-#include <qtextcodec.h>
 #include <qxmlstream.h>
 
 static const char * const qtscript_QXmlStreamWriter_function_names[] = {
     "QXmlStreamWriter"
-    // static
-    // prototype
     , "autoFormatting"
     , "autoFormattingIndent"
-    , "codec"
     , "device"
     , "hasError"
     , "setAutoFormatting"
     , "setAutoFormattingIndent"
-    , "setCodec"
     , "setDevice"
     , "writeAttribute"
     , "writeAttributes"
@@ -48,16 +43,12 @@ static const char * const qtscript_QXmlStreamWriter_function_names[] = {
 
 static const char * const qtscript_QXmlStreamWriter_function_signatures[] = {
     "\nQByteArray array\nQIODevice device"
-    // static
-    // prototype
-    , ""
     , ""
     , ""
     , ""
     , ""
     , "bool arg__1"
     , "int spacesOrTabs"
-    , "QTextCodec codec\nchar codecName"
     , "QIODevice device"
     , "String namespaceUri, String name, String value\nString qualifiedName, String value\nQXmlStreamAttribute attribute"
     , "QXmlStreamAttributes attributes"
@@ -76,19 +67,15 @@ static const char * const qtscript_QXmlStreamWriter_function_signatures[] = {
     , "\nString version\nString version, bool standalone"
     , "String namespaceUri, String name\nString qualifiedName"
     , "String namespaceUri, String name, String text\nString qualifiedName, String text"
-""
+    , ""
 };
 
 static const int qtscript_QXmlStreamWriter_function_lengths[] = {
     1
-    // static
-    // prototype
     , 0
     , 0
     , 0
     , 0
-    , 0
-    , 1
     , 1
     , 1
     , 1
@@ -124,7 +111,6 @@ static QScriptValue qtscript_QXmlStreamWriter_throw_ambiguity_error_helper(
 }
 
 Q_DECLARE_METATYPE(QXmlStreamWriter*)
-Q_DECLARE_METATYPE(QTextCodec*)
 Q_DECLARE_METATYPE(QIODevice*)
 Q_DECLARE_METATYPE(QXmlStreamAttribute)
 Q_DECLARE_METATYPE(QXmlStreamAttributes)
@@ -145,7 +131,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 26;
+        _id = 0xBABE0000 + 24;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -173,26 +159,19 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
 
     case 2:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = QTextCodec::codecForName("UTF-8");
+        QIODevice* _q_result = _q_self->device();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
     case 3:
     if (context->argumentCount() == 0) {
-        QIODevice* _q_result = _q_self->device();
-        return qScriptValueFromValue(context->engine(), _q_result);
-    }
-    break;
-
-    case 4:
-    if (context->argumentCount() == 0) {
         bool _q_result = _q_self->hasError();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
-    case 5:
+    case 4:
     if (context->argumentCount() == 1) {
         bool _q_arg0 = context->argument(0).toBoolean();
         _q_self->setAutoFormatting(_q_arg0);
@@ -200,7 +179,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 6:
+    case 5:
     if (context->argumentCount() == 1) {
         int _q_arg0 = context->argument(0).toInt32();
         _q_self->setAutoFormattingIndent(_q_arg0);
@@ -208,25 +187,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 7:
-    if (context->argumentCount() == 1) {
-        if (qscriptvalue_cast<QTextCodec*>(context->argument(0))) {
-            QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-            if (_q_arg0->mibEnum() != 106)
-                return context->throwError(QScriptContext::TypeError,
-                    QString::fromLatin1("QXmlStreamWriter.setCodec(): Qt 6 supports UTF-8 only"));
-            return context->engine()->undefinedValue();
-        } else if (context->argument(0).isString()) {
-            QTextCodec* _q_arg0 = QTextCodec::codecForName(context->argument(0).toString().toLatin1());
-            if (!_q_arg0 || (_q_arg0->mibEnum() != 106))
-                return context->throwError(QScriptContext::TypeError,
-                    QString::fromLatin1("QXmlStreamWriter.setCodec(): Qt 6 supports UTF-8 only"));
-            return context->engine()->undefinedValue();
-        }
-    }
-    break;
-
-    case 8:
+    case 6:
     if (context->argumentCount() == 1) {
         QIODevice* _q_arg0 = qscriptvalue_cast<QIODevice*>(context->argument(0));
         _q_self->setDevice(_q_arg0);
@@ -234,7 +195,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 9:
+    case 7:
     if (context->argumentCount() == 1) {
         QXmlStreamAttribute _q_arg0 = qscriptvalue_cast<QXmlStreamAttribute>(context->argument(0));
         _q_self->writeAttribute(_q_arg0);
@@ -255,7 +216,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 10:
+    case 8:
     if (context->argumentCount() == 1) {
         QXmlStreamAttributes _q_arg0 = qscriptvalue_cast<QXmlStreamAttributes>(context->argument(0));
         _q_self->writeAttributes(_q_arg0);
@@ -263,7 +224,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 11:
+    case 9:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeCDATA(_q_arg0);
@@ -271,7 +232,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 12:
+    case 10:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeCharacters(_q_arg0);
@@ -279,7 +240,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 13:
+    case 11:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeComment(_q_arg0);
@@ -287,7 +248,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 14:
+    case 12:
     if (context->argumentCount() == 1) {
 
             QXmlStreamReader & _q_arg0 = *qscriptvalue_cast<QXmlStreamReader*>(context->argument(0));
@@ -296,7 +257,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 15:
+    case 13:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeDTD(_q_arg0);
@@ -304,7 +265,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 16:
+    case 14:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeDefaultNamespace(_q_arg0);
@@ -312,7 +273,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 17:
+    case 15:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeEmptyElement(_q_arg0);
@@ -326,21 +287,21 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 18:
+    case 16:
     if (context->argumentCount() == 0) {
         _q_self->writeEndDocument();
         return context->engine()->undefinedValue();
     }
     break;
 
-    case 19:
+    case 17:
     if (context->argumentCount() == 0) {
         _q_self->writeEndElement();
         return context->engine()->undefinedValue();
     }
     break;
 
-    case 20:
+    case 18:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeEntityReference(_q_arg0);
@@ -348,7 +309,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 21:
+    case 19:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeNamespace(_q_arg0);
@@ -362,7 +323,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 22:
+    case 20:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeProcessingInstruction(_q_arg0);
@@ -376,7 +337,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 23:
+    case 21:
     if (context->argumentCount() == 0) {
         _q_self->writeStartDocument();
         return context->engine()->undefinedValue();
@@ -394,7 +355,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 24:
+    case 22:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->writeStartElement(_q_arg0);
@@ -408,7 +369,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 25:
+    case 23:
     if (context->argumentCount() == 2) {
         QString _q_arg0 = context->argument(0).toString();
         QString _q_arg1 = context->argument(1).toString();
@@ -424,7 +385,7 @@ static QScriptValue qtscript_QXmlStreamWriter_prototype_call(QScriptContext *con
     }
     break;
 
-    case 26: {
+    case 24: {
     QString result = QString::fromLatin1("QXmlStreamWriter");
     return QScriptValue(context->engine(), result);
     }
@@ -478,7 +439,7 @@ QScriptValue qtscript_create_QXmlStreamWriter_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QXmlStreamWriter*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QXmlStreamWriter*)0));
-    for (int i = 0; i < 27; ++i) {
+    for (int i = 0; i < 25; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QXmlStreamWriter_prototype_call, qtscript_QXmlStreamWriter_function_lengths[i+1]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QXmlStreamWriter_function_names[i+1]),

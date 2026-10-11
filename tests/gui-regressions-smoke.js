@@ -3,6 +3,29 @@ function check(condition, message) {
         throw new Error(message);
 }
 
+// QTextDocumentWriter has no codec API in Qt 6. Exercise remaining methods
+// after dispatch-table compaction, plus native UTF-8 non-ASCII output.
+var textBuffer = new QBuffer();
+check(textBuffer.open(new QIODevice.OpenMode(QIODevice.ReadWrite)), "document output buffer open");
+var documentWriter = new QTextDocumentWriter();
+check(typeof documentWriter.codec === "undefined" && typeof documentWriter.setCodec === "undefined",
+      "document writer codec shims remain exported");
+documentWriter.setDevice(textBuffer);
+documentWriter.setFormat(new QByteArray("plaintext"));
+check(documentWriter.device() !== null && documentWriter.format().toString() === "plaintext",
+      "document writer device/format dispatch failed");
+var unicodeDocument = new QTextDocument();
+unicodeDocument.setPlainText("caf\u00e9 \u03a9 \ud83d\ude00");
+var rejectedHtmlEncoding = false;
+try { unicodeDocument.toHtml("UTF-8"); } catch (error) { rejectedHtmlEncoding = true; }
+check(rejectedHtmlEncoding, "removed toHtml(encoding) overload remains callable");
+check(unicodeDocument.toHtml().indexOf("caf\u00e9") !== -1, "native HTML Unicode serialization failed");
+check(documentWriter.write(unicodeDocument), "Unicode document output failed");
+check(textBuffer.open(new QIODevice.OpenMode(QIODevice.ReadOnly)), "reopen document output buffer");
+check(textBuffer.readAll().toHex().toString() === "636166c3a920cea920f09f9880",
+      "document output is not UTF-8");
+textBuffer.close();
+
 // Pixel writes/reads and a detached copy exercise the value-type conversion
 // path rather than only checking that QImage can be constructed.
 var image = new QImage(4, 3, QImage.Format_ARGB32);

@@ -11,21 +11,16 @@
 #include <qbytearray.h>
 #include <qiodevice.h>
 #include <qlist.h>
-#include <qtextcodec.h>
 #include <qtextdocument.h>
 #include <qtextdocumentfragment.h>
 #include <qtextdocumentwriter.h>
 
 static const char * const qtscript_QTextDocumentWriter_function_names[] = {
     "QTextDocumentWriter"
-    // static
     , "supportedDocumentFormats"
-    // prototype
-    , "codec"
     , "device"
     , "fileName"
     , "format"
-    , "setCodec"
     , "setDevice"
     , "setFileName"
     , "setFormat"
@@ -35,31 +30,23 @@ static const char * const qtscript_QTextDocumentWriter_function_names[] = {
 
 static const char * const qtscript_QTextDocumentWriter_function_signatures[] = {
     "\nQIODevice device, QByteArray format\nString fileName, QByteArray format"
-    // static
-    , ""
-    // prototype
     , ""
     , ""
     , ""
     , ""
-    , "QTextCodec codec"
     , "QIODevice device"
     , "String fileName"
     , "QByteArray format"
     , "QTextDocument document\nQTextDocumentFragment fragment"
-""
+    , ""
 };
 
 static const int qtscript_QTextDocumentWriter_function_lengths[] = {
     2
-    // static
-    , 0
-    // prototype
     , 0
     , 0
     , 0
     , 0
-    , 1
     , 1
     , 1
     , 1
@@ -79,7 +66,6 @@ static QScriptValue qtscript_QTextDocumentWriter_throw_ambiguity_error_helper(
 }
 
 Q_DECLARE_METATYPE(QTextDocumentWriter*)
-Q_DECLARE_METATYPE(QTextCodec*)
 Q_DECLARE_METATYPE(QIODevice*)
 Q_DECLARE_METATYPE(const QTextDocument*)
 Q_DECLARE_METATYPE(QTextDocumentFragment)
@@ -99,7 +85,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     if (context->callee().isFunction())
         _id = context->callee().data().toUInt32();
     else
-        _id = 0xBABE0000 + 9;
+        _id = 0xBABE0000 + 7;
 #endif
     Q_ASSERT((_id & 0xFFFF0000) == 0xBABE0000);
     _id &= 0x0000FFFF;
@@ -113,40 +99,26 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     switch (_id) {
     case 0:
     if (context->argumentCount() == 0) {
-        return context->throwError(QString::fromLatin1("QTextDocumentWriter.codec() was removed in Qt 6; output is UTF-8"));
-    }
-    break;
-
-    case 1:
-    if (context->argumentCount() == 0) {
         QIODevice* _q_result = _q_self->device();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
-    case 2:
+    case 1:
     if (context->argumentCount() == 0) {
         QString _q_result = _q_self->fileName();
         return QScriptValue(context->engine(), _q_result);
     }
     break;
 
-    case 3:
+    case 2:
     if (context->argumentCount() == 0) {
         QByteArray _q_result = _q_self->format();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
 
-    case 4:
-    if (context->argumentCount() == 1) {
-        QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-        Q_UNUSED(_q_arg0);
-        return context->throwError(QString::fromLatin1("QTextDocumentWriter.setCodec() was removed in Qt 6; output is UTF-8"));
-    }
-    break;
-
-    case 5:
+    case 3:
     if (context->argumentCount() == 1) {
         QIODevice* _q_arg0 = qscriptvalue_cast<QIODevice*>(context->argument(0));
         _q_self->setDevice(_q_arg0);
@@ -154,7 +126,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     }
     break;
 
-    case 6:
+    case 4:
     if (context->argumentCount() == 1) {
         QString _q_arg0 = context->argument(0).toString();
         _q_self->setFileName(_q_arg0);
@@ -162,7 +134,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     }
     break;
 
-    case 7:
+    case 5:
     if (context->argumentCount() == 1) {
         QByteArray _q_arg0 = qscriptvalue_cast<QByteArray>(context->argument(0));
         _q_self->setFormat(_q_arg0);
@@ -170,7 +142,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     }
     break;
 
-    case 8:
+    case 6:
     if (context->argumentCount() == 1) {
         if (qscriptvalue_cast<const QTextDocument*>(context->argument(0))) {
             const QTextDocument* _q_arg0 = qscriptvalue_cast<const QTextDocument*>(context->argument(0));
@@ -184,7 +156,7 @@ static QScriptValue qtscript_QTextDocumentWriter_prototype_call(QScriptContext *
     }
     break;
 
-    case 9: {
+    case 7: {
     QString result = QString::fromLatin1("QTextDocumentWriter");
     return QScriptValue(context->engine(), result);
     }
@@ -254,7 +226,7 @@ QScriptValue qtscript_create_QTextDocumentWriter_class(QScriptEngine *engine)
 {
     engine->setDefaultPrototype(qMetaTypeId<QTextDocumentWriter*>(), QScriptValue());
     QScriptValue proto = engine->newVariant(qVariantFromValue((QTextDocumentWriter*)0));
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 8; ++i) {
         QScriptValue fun = engine->newFunction(qtscript_QTextDocumentWriter_prototype_call, qtscript_QTextDocumentWriter_function_lengths[i+2]);
         fun.setData(QScriptValue(engine, uint(0xBABE0000 + i)));
         proto.setProperty(QString::fromLatin1(qtscript_QTextDocumentWriter_function_names[i+2]),

@@ -11,7 +11,7 @@
 #include <qbytearray.h>
 #include <qiodevice.h>
 #include <qlocale.h>
-#include <qtextcodec.h>
+#include <qstringconverter.h>
 #include <qtextstream.h>
 
 #include "qtscriptshell_QTextStream.h"
@@ -22,7 +22,7 @@ static const char * const qtscript_QTextStream_function_names[] = {
     // prototype
     , "atEnd"
     , "autoDetectUnicode"
-    , "codec"
+    , "encoding"
     , "device"
     , "fieldAlignment"
     , "fieldWidth"
@@ -50,7 +50,7 @@ static const char * const qtscript_QTextStream_function_names[] = {
     , "resetStatus"
     , "seek"
     , "setAutoDetectUnicode"
-    , "setCodec"
+    , "setEncoding"
     , "setDevice"
     , "setFieldAlignment"
     , "setFieldWidth"
@@ -108,7 +108,7 @@ static const char * const qtscript_QTextStream_function_signatures[] = {
     , ""
     , "qint64 pos"
     , "bool enabled"
-    , "QTextCodec codec\nchar codecName"
+    , "QStringConverter.Encoding encoding"
     , "QIODevice device"
     , "FieldAlignment alignment"
     , "int width"
@@ -129,7 +129,7 @@ static const char * const qtscript_QTextStream_function_signatures[] = {
     , "signed int i"
     , "signed short i"
     , "String s"
-""
+    , ""
 };
 
 static const int qtscript_QTextStream_function_lengths[] = {
@@ -208,7 +208,6 @@ Q_DECLARE_METATYPE(QTextStream::RealNumberNotation)
 Q_DECLARE_METATYPE(QTextStream::NumberFlag)
 Q_DECLARE_METATYPE(QFlags<QTextStream::NumberFlag>)
 Q_DECLARE_METATYPE(QTextStream::Status)
-Q_DECLARE_METATYPE(QTextCodec*)
 Q_DECLARE_METATYPE(QIODevice*)
 Q_DECLARE_METATYPE(signed int)
 Q_DECLARE_METATYPE(signed short)
@@ -651,8 +650,7 @@ static QScriptValue qtscript_QTextStream_prototype_call(QScriptContext *context,
 
     case 2:
     if (context->argumentCount() == 0) {
-        QTextCodec* _q_result = QTextCodec::codecForName(
-            QStringConverter::nameForEncoding(_q_self->encoding()));
+        QStringConverter::Encoding _q_result = _q_self->encoding();
         return qScriptValueFromValue(context->engine(), _q_result);
     }
     break;
@@ -896,23 +894,19 @@ static QScriptValue qtscript_QTextStream_prototype_call(QScriptContext *context,
 
     case 30:
     if (context->argumentCount() == 1) {
-        if (qscriptvalue_cast<QTextCodec*>(context->argument(0))) {
-            QTextCodec* _q_arg0 = qscriptvalue_cast<QTextCodec*>(context->argument(0));
-            const auto encoding = QStringConverter::encodingForName(
-                QString::fromLatin1(_q_arg0->name()));
-            if (!encoding)
-                return context->throwError(QScriptContext::TypeError,
-                    QString::fromLatin1("QTextStream.setCodec(): codec is not supported by Qt 6 QTextStream"));
-            _q_self->setEncoding(*encoding);
-            return context->engine()->undefinedValue();
-        } else if (context->argument(0).isString()) {
-            const auto encoding = QStringConverter::encodingForName(context->argument(0).toString());
-            if (!encoding)
-                return context->throwError(QScriptContext::TypeError,
-                    QString::fromLatin1("QTextStream.setCodec(): codec is not supported by Qt 6 QTextStream"));
-            _q_self->setEncoding(*encoding);
-            return context->engine()->undefinedValue();
-        }
+        const QScriptValue value = context->argument(0);
+        const QVariant variant = value.isVariant() ? value.toVariant() : QVariant();
+        if (!value.isNumber() && variant.userType() != qMetaTypeId<QStringConverter::Encoding>())
+            return context->throwError(QScriptContext::TypeError,
+                QString::fromLatin1("QTextStream.setEncoding(): expected QStringConverter.Encoding"));
+        const double numeric = value.isNumber() ? value.toNumber()
+            : static_cast<int>(variant.value<QStringConverter::Encoding>());
+        if (!(numeric >= QStringConverter::Utf8 && numeric <= QStringConverter::LastEncoding)
+            || numeric != static_cast<int>(numeric))
+            return context->throwError(QScriptContext::RangeError,
+                QString::fromLatin1("QTextStream.setEncoding(): invalid encoding"));
+        _q_self->setEncoding(static_cast<QStringConverter::Encoding>(static_cast<int>(numeric)));
+        return context->engine()->undefinedValue();
     }
     break;
 

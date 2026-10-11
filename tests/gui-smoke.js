@@ -45,8 +45,8 @@ check(!path.isEmpty(), "QPainterPath rounded rectangle compatibility failed");
 var document = new QTextDocument();
 document.setPlainText("Qt 6 GUI binding");
 check(!document.find("GUI").isNull(), "QTextDocument find failed");
-check(document.toHtml("UTF-8").indexOf("Qt 6 GUI binding") !== -1,
-      "QTextDocument legacy codec overload failed");
+check(document.toHtml().indexOf("Qt 6 GUI binding") !== -1,
+      "QTextDocument native HTML serialization failed");
 
 check(QPainter.LosslessImageRendering !== undefined,
       "Qt 6 QPainter.LosslessImageRendering was not exported");

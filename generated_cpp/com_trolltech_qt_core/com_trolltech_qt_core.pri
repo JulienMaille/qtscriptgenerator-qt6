@@ -29,8 +29,6 @@ HEADERS += \
            $$PWD/qtscriptshell_QSignalMapper.h \
            #$$PWD/qtscriptshell_QSocketNotifier.h \
            $$PWD/qtscriptshell_QTemporaryFile.h \
-           $$PWD/qtscriptshell_QTextCodec.h \
-           #$$PWD/qtscriptshell_QTextCodecPlugin.h \
            $$PWD/qtscriptshell_QTextStream.h \
            $$PWD/qtscriptshell_QThreadPool.h \
            $$PWD/qtscriptshell_QTimeLine.h \
@@ -108,10 +106,7 @@ SOURCES += \
            $$PWD/qtscript_QSystemSemaphore.cpp \
            $$PWD/qtscript_QTemporaryFile.cpp \
            $$PWD/qtscript_QTextBoundaryFinder.cpp \
-           $$PWD/qtscript_QTextCodec.cpp \
-           #$$PWD/qtscript_QTextCodecPlugin.cpp \
-           $$PWD/qtscript_QTextDecoder.cpp \
-           $$PWD/qtscript_QTextEncoder.cpp \
+           $$PWD/qtscript_QStringConverter.cpp \
            $$PWD/qtscript_QTextStream.cpp \
            $$PWD/qtscript_QThreadPool.cpp \
            $$PWD/qtscript_QTime.cpp \
@@ -163,8 +158,6 @@ SOURCES += \
            $$PWD/qtscriptshell_QSignalMapper.cpp \
            #$$PWD/qtscriptshell_QSocketNotifier.cpp \
            $$PWD/qtscriptshell_QTemporaryFile.cpp \
-           $$PWD/qtscriptshell_QTextCodec.cpp \
-           #$$PWD/qtscriptshell_QTextCodecPlugin.cpp \
            $$PWD/qtscriptshell_QTextStream.cpp \
            $$PWD/qtscriptshell_QThreadPool.cpp \
            $$PWD/qtscriptshell_QTimeLine.cpp \
