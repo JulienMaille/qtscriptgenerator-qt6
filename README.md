@@ -221,10 +221,10 @@ the native zero-argument `toHtml()` which returns a Unicode string.
 Encoding round trips, byte-order marks, Unicode INI persistence, XML escaping,
 and text document output are covered by the Core and GUI smoke/regression tests.
 
-A known, independent Core registration-order limitation remains: `QFileDevice`
-is initialized before `QIODevice`, so `QFile` lacks inherited bindings such as
-`read()` and `readAll()`. The INI byte-level regression test currently invokes
-`QIODevice.prototype.readAll.call(file)` explicitly; this is not a codec shim.
+Core registers exported base prototypes before their derived bindings, including
+`QObject` → `QIODevice` → `QFileDevice` → `QFile` → `QTemporaryFile`.
+File regression tests exercise inherited device-state, byte-reading, seeking,
+and writing APIs directly; the INI byte-level test needs no base-method workaround.
 
 Some other removed APIs have constrained compatibility behavior:
 

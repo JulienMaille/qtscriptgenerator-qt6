@@ -116,6 +116,43 @@ check(buffer.seek(6) && buffer.readAll().toString() === "beta",
       "QBuffer seek/readAll conversion failed");
 buffer.close();
 
+// Base prototypes must exist before derived bindings are created. In Qt 6
+// QFile inherits QIODevice through QFileDevice, and QTemporaryFile adds one
+// more level. Check usable inherited methods, not just class registration.
+check(typeof QFileDevice.prototype.readAll === "function"
+      && typeof QFile.prototype.read === "function"
+      && typeof QTemporaryFile.prototype.write === "function",
+      "file bindings lost the QIODevice prototype chain");
+var rawTemporary = new QTemporaryFile();
+var rawFile = null;
+try {
+    check(rawTemporary.open(), "raw temporary file open failed");
+    check(rawTemporary.write(new QByteArray("alpha\nbeta")) === 10,
+          "QTemporaryFile inherited write failed");
+    check(rawTemporary.flush() && rawTemporary.size() === 10,
+          "QTemporaryFile QFileDevice flush/QIODevice size failed");
+    check(rawTemporary.seek(0) && rawTemporary.readAll().toString() === "alpha\nbeta",
+          "QTemporaryFile inherited seek/readAll failed");
+    var rawPath = rawTemporary.fileName();
+    rawTemporary.close();
+    rawFile = new QFile(rawPath);
+    check(rawFile.open(new QIODevice.OpenMode(QIODevice.ReadOnly)), "raw QFile open failed");
+    check(rawFile.isOpen() && rawFile.isReadable() && !rawFile.isSequential(),
+          "QFile inherited device-state predicates failed");
+    check(rawFile.peek(5).toString() === "alpha" && rawFile.pos() === 0,
+          "QFile inherited peek advanced its position");
+    check(rawFile.read(2).toString() === "al" && rawFile.pos() === 2,
+          "QFile inherited read/pos failed");
+    check(rawFile.seek(0) && rawFile.readLine().toString() === "alpha\n",
+          "QFile inherited seek/readLine failed");
+    check(rawFile.readAll().toString() === "beta" && rawFile.atEnd(),
+          "QFile inherited readAll/atEnd failed");
+} finally {
+    if (rawFile !== null) rawFile.close();
+    rawTemporary.close();
+    rawTemporary.remove();
+}
+
 // INI settings exercise QVariant persistence, groups, enumeration, and
 // removal while keeping the test self-contained and deterministic.
 var settingsPath = QDir.tempPath() + "/qtscriptgenerator-qt6-core-regression.ini";
@@ -222,9 +259,7 @@ var reread = new QSettings(settingsPath, QSettings.IniFormat);
 check(reread.value("unicode") === "caf\u00e9 \u03a9 \ud83d\ude00", "Unicode INI persistence failed");
 var iniBytes = new QFile(settingsPath);
 check(iniBytes.open(new QIODevice.OpenMode(QIODevice.ReadOnly)), "INI bytes open failed");
-// Invoke the base binding explicitly: QFileDevice currently precedes
-// QIODevice during registration, leaving QFile's readAll prototype absent.
-check(QIODevice.prototype.readAll.call(iniBytes).toHex().toString().indexOf("636166c3a920cea920f09f9880") !== -1,
+check(iniBytes.readAll().toHex().toString().indexOf("636166c3a920cea920f09f9880") !== -1,
       "INI output is not UTF-8");
 iniBytes.close();
 check(reread.value("answer") === 42 && reread.value("profile/name") === "sample",

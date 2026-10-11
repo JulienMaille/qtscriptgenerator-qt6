@@ -109,6 +109,9 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QRect"
     , "QEasingCurve"
     , "QObject"
+    // Base prototypes must precede QFileDevice, QFile, QTemporaryFile,
+    // QProcess and QBuffer; derived bindings capture the current prototype.
+    , "QIODevice"
     , "QSize"
     , "QByteArrayMatcher"
     , "QXmlStreamWriter"
@@ -157,7 +160,6 @@ static const char * const qtscript_com_trolltech_qt_core_class_names[] = {
     , "QDynamicPropertyChangeEvent"
     , "QTranslator"
     , "QChildEvent"
-    , "QIODevice"
     , "QMimeData"
     , "QTimer"
     //, "QSocketNotifier"
@@ -200,6 +202,7 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QRect_class
     , qtscript_create_QEasingCurve_class
     , qtscript_create_QObject_class
+    , qtscript_create_QIODevice_class
     , qtscript_create_QSize_class
     , qtscript_create_QByteArrayMatcher_class
     , qtscript_create_QXmlStreamWriter_class
@@ -248,7 +251,6 @@ static const QtBindingCreator qtscript_com_trolltech_qt_core_class_functions[] =
     , qtscript_create_QDynamicPropertyChangeEvent_class
     , qtscript_create_QTranslator_class
     , qtscript_create_QChildEvent_class
-    , qtscript_create_QIODevice_class
     , qtscript_create_QMimeData_class
     , qtscript_create_QTimer_class
     //, qtscript_create_QSocketNotifier_class
