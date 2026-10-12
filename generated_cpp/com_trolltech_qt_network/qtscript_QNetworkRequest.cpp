@@ -707,8 +707,13 @@ static QScriptValue qtscript_QNetworkRequest_prototype_call(QScriptContext *cont
 
     case 16:
     if (context->argumentCount() == 1) {
-        QNetworkRequest _q_arg0 = qscriptvalue_cast<QNetworkRequest>(context->argument(0));
-        _q_self->swap(_q_arg0);
+        QNetworkRequest* _q_arg0 = qscriptvalue_cast<QNetworkRequest*>(context->argument(0));
+        if( !_q_arg0 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1(
+                    "QNetworkRequest.swap(): argument 1 must be a QNetworkRequest"));
+        _q_self->swap(*_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

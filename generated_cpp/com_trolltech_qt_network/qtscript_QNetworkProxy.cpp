@@ -557,8 +557,12 @@ static QScriptValue qtscript_QNetworkProxy_prototype_call(QScriptContext *contex
 
     case 19:
     if (context->argumentCount() == 1) {
-        QNetworkProxy _q_arg0 = qscriptvalue_cast<QNetworkProxy>(context->argument(0));
-        _q_self->swap(_q_arg0);
+        QNetworkProxy* _q_arg0 = qscriptvalue_cast<QNetworkProxy*>(context->argument(0));
+        if( !_q_arg0 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QNetworkProxy.swap(): argument 1 must be a QNetworkProxy"));
+        _q_self->swap(*_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

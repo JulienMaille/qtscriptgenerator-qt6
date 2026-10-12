@@ -762,8 +762,12 @@ static QScriptValue qtscript_QTransform_static_call(QScriptContext *context, QSc
     if (context->argumentCount() == 3) {
         QPolygonF _q_arg0 = qscriptvalue_cast<QPolygonF>(context->argument(0));
         QPolygonF _q_arg1 = qscriptvalue_cast<QPolygonF>(context->argument(1));
-        QTransform _q_arg2 = qscriptvalue_cast<QTransform>(context->argument(2));
-        bool _q_result = QTransform::quadToQuad(_q_arg0, _q_arg1, _q_arg2);
+        QTransform* _q_arg2 = qscriptvalue_cast<QTransform*>(context->argument(2));
+        if( !_q_arg2 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QTransform.quadToQuad(): argument 3 must be a QTransform"));
+        bool _q_result = QTransform::quadToQuad(_q_arg0, _q_arg1, *_q_arg2);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -771,8 +775,12 @@ static QScriptValue qtscript_QTransform_static_call(QScriptContext *context, QSc
     case 4:
     if (context->argumentCount() == 2) {
         QPolygonF _q_arg0 = qscriptvalue_cast<QPolygonF>(context->argument(0));
-        QTransform _q_arg1 = qscriptvalue_cast<QTransform>(context->argument(1));
-        bool _q_result = QTransform::quadToSquare(_q_arg0, _q_arg1);
+        QTransform* _q_arg1 = qscriptvalue_cast<QTransform*>(context->argument(1));
+        if( !_q_arg1 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QTransform.quadToSquare(): argument 2 must be a QTransform"));
+        bool _q_result = QTransform::quadToSquare(_q_arg0, *_q_arg1);
         return QScriptValue(context->engine(), _q_result);
     }
     break;
@@ -780,8 +788,12 @@ static QScriptValue qtscript_QTransform_static_call(QScriptContext *context, QSc
     case 5:
     if (context->argumentCount() == 2) {
         QPolygonF _q_arg0 = qscriptvalue_cast<QPolygonF>(context->argument(0));
-        QTransform _q_arg1 = qscriptvalue_cast<QTransform>(context->argument(1));
-        bool _q_result = QTransform::squareToQuad(_q_arg0, _q_arg1);
+        QTransform* _q_arg1 = qscriptvalue_cast<QTransform*>(context->argument(1));
+        if( !_q_arg1 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QTransform.squareToQuad(): argument 2 must be a QTransform"));
+        bool _q_result = QTransform::squareToQuad(_q_arg0, *_q_arg1);
         return QScriptValue(context->engine(), _q_result);
     }
     break;

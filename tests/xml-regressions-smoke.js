@@ -44,4 +44,28 @@ check(namespaced.documentElement().elementsByTagName("item").length() === 2 &&
       namespaced.documentElement().elementsByTagNameNS("urn:a", "item").length() === 1,
       "namespace filtering returned the wrong nodes");
 
+// QTextStream is passed by reference. A failed cast must raise TypeError
+// instead of dereferencing a null stream pointer in save/writeTo.
+var invalidStreams = [null, undefined, {}, new QBuffer()];
+var serializers = [
+    function(stream) { doc.save(stream, 2); },
+    function(stream) { doc.save(stream, 2, QDomNode.EncodingFromDocument); },
+    function(stream) { doc.writeTo(stream); }
+];
+for (var c = 0; c < serializers.length; ++c) {
+    for (var j = 0; j < invalidStreams.length; ++j) {
+        var error = null;
+        try { serializers[c](invalidStreams[j]); } catch (caught) { error = caught; }
+        check(error !== null && error.name === "TypeError", "invalid DOM stream accepted");
+    }
+    var buffer = new QBuffer();
+    check(buffer.open(new QIODevice.OpenMode(QIODevice.ReadWrite)), "DOM output buffer open");
+    var stream = new QTextStream(buffer);
+    serializers[c](stream);
+    stream.flush();
+    check(buffer.seek(0), "rewind DOM output buffer");
+    check(buffer.readAll().toString().indexOf("<r>") !== -1, "valid DOM stream did not serialize");
+    buffer.close();
+}
+
 print("Qt XML DOM regression smoke test passed");

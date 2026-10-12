@@ -521,8 +521,12 @@ static QScriptValue qtscript_QKeySequence_prototype_call(QScriptContext *context
 
     case 6:
     if (context->argumentCount() == 1) {
-        QKeySequence _q_arg0 = qscriptvalue_cast<QKeySequence>(context->argument(0));
-        _q_self->swap(_q_arg0);
+        QKeySequence* _q_arg0 = qscriptvalue_cast<QKeySequence*>(context->argument(0));
+        if( !_q_arg0 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QKeySequence.swap(): argument 1 must be a QKeySequence"));
+        _q_self->swap(*_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

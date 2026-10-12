@@ -47,4 +47,33 @@ check(cookie.isSecure() && cookie.isHttpOnly() && cookie.path() === "/"
       && cookie.toRawForm().toString().indexOf("sid=abc") === 0,
       "cookie attributes were not preserved in raw serialization");
 
+// Mutable references must exchange both script-owned values and reject
+// invalid arguments before changing the receiver.
+function checkNetworkSwap(a, b, fingerprint, wrong) {
+    var oldA = fingerprint(a), oldB = fingerprint(b), alias = b;
+    check(oldA !== oldB, "swap fixtures must differ");
+    a.swap(b);
+    check(fingerprint(a) === oldB && fingerprint(b) === oldA
+          && fingerprint(alias) === oldA, "network swap did not exchange both objects");
+    a.swap(b);
+    a.swap(a);
+    check(fingerprint(a) === oldA && fingerprint(b) === oldB, "network repeat/self swap failed");
+    var invalid = [null, undefined, {}, wrong];
+    for (var i = 0; i < invalid.length; ++i) {
+        var error = null;
+        try { a.swap(invalid[i]); } catch (caught) { error = caught; }
+        check(error !== null && error.name === "TypeError" && fingerprint(a) === oldA,
+              "invalid network swap must throw without changing the receiver");
+    }
+}
+checkNetworkSwap(new QNetworkRequest(new QUrl("https://alpha.example.test/a")),
+                 new QNetworkRequest(new QUrl("https://beta.example.test/b")),
+                 function(request) { return request.url().toString(); }, new QNetworkProxy());
+checkNetworkSwap(new QNetworkProxy(QNetworkProxy.HttpProxy, "alpha.example.test", 8080, "alice", "a"),
+                 new QNetworkProxy(QNetworkProxy.Socks5Proxy, "beta.example.test", 1080, "bob", "b"),
+                 function(proxy) {
+                     return [proxy.type().valueOf(), proxy.hostName(), proxy.port(),
+                             proxy.user(), proxy.password()].join("|");
+                 }, new QNetworkRequest());
+
 print("Network regression smoke passed");

@@ -92,6 +92,68 @@ check(dateTimeEdit.timeZone.id() === "UTC",
       "QDateTimeEdit QTimeZone property did not round-trip");
 dateTimeEdit.close();
 
+// interpretText crosses C++ virtual dispatch. Calling fixup/validate directly
+// in JavaScript would only test the callback, hiding lost QString&/int& output.
+function makeDoubleSpin() {
+    var spin = new QDoubleSpinBox(host);
+    spin.setRange(0, 100);
+    spin.decimals = 2;
+    spin.keyboardTracking = false;
+    var children = spin.children(), edit = null;
+    for (var i = 0; i < children.length; ++i) {
+        if (typeof children[i].setText === "function")
+            edit = children[i];
+    }
+    check(edit !== null, "double spin box line edit missing");
+    edit.setText("9.99");
+    edit.cursorPosition = 4;
+    return {spin: spin, edit: edit};
+}
+var structuredSpin = makeDoubleSpin();
+var validatedInput = null;
+structuredSpin.spin.validate = function(input, pos) {
+    return {state: QValidator.Acceptable, input: "3.14", pos: 1};
+};
+structuredSpin.spin.valueFromText = function(input) {
+    validatedInput = input;
+    return Number(input);
+};
+structuredSpin.spin.interpretText();
+check(validatedInput === "3.14" && structuredSpin.spin.value === 3.14
+      && structuredSpin.edit.cursorPosition === 1,
+      "native validate lost input or cursor-position output");
+structuredSpin.spin.close();
+
+var fixedSpin = makeDoubleSpin();
+var fixupInput = null, parsedFixedInput = null;
+fixedSpin.spin.validate = function(input, pos) {
+    return input === "7.50" ? QValidator.Acceptable : QValidator.Intermediate;
+};
+fixedSpin.spin.fixup = function(input) {
+    fixupInput = input;
+    return "7.50";
+};
+fixedSpin.spin.valueFromText = function(input) {
+    parsedFixedInput = input;
+    return Number(input);
+};
+fixedSpin.spin.interpretText();
+check(fixupInput === "9.99" && parsedFixedInput === "7.50" && fixedSpin.spin.value === 7.5,
+      "native fixup did not write the returned string");
+fixedSpin.spin.close();
+
+var legacySpin = makeDoubleSpin();
+var legacyInput = null;
+legacySpin.spin.validate = function(input, pos) { return QValidator.Acceptable; };
+legacySpin.spin.valueFromText = function(input) {
+    legacyInput = input;
+    return Number(input);
+};
+legacySpin.spin.interpretText();
+check(legacyInput === "9.99" && legacySpin.spin.value === 9.99,
+      "legacy validate enum return changed");
+legacySpin.spin.close();
+
 // Parent every widget to one host and explicitly close it so this test does
 // not leave a top-level window behind in headless CI.
 host.close();

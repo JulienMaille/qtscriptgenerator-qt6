@@ -846,8 +846,12 @@ static QScriptValue qtscript_QPainterPath_prototype_call(QScriptContext *context
 
     case 45:
     if (context->argumentCount() == 1) {
-        QPainterPath _q_arg0 = qscriptvalue_cast<QPainterPath>(context->argument(0));
-        _q_self->swap(_q_arg0);
+        QPainterPath* _q_arg0 = qscriptvalue_cast<QPainterPath*>(context->argument(0));
+        if( !_q_arg0 )
+            return context->throwError(
+                QScriptContext::TypeError,
+                QString::fromLatin1("QPainterPath.swap(): argument 1 must be a QPainterPath"));
+        _q_self->swap(*_q_arg0);
         return context->engine()->undefinedValue();
     }
     break;

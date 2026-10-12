@@ -230,4 +230,85 @@ pointerEvent.setAccepted(false);
 check(!pointerEvent.isAccepted(), "QPointerEvent setAccepted(false) failed");
 pointerEvent.setAccepted(true);
 
+// Output references must update the script-owned transform, including when
+// the same output object is reused for another conversion.
+function makeQuad(coords) {
+    var points = [];
+    for (var i = 0; i < coords.length; ++i)
+        points.push(new QPointF(coords[i][0], coords[i][1]));
+    return new QPolygonF(points);
+}
+function checkMapping(transform, source, target, label) {
+    for (var i = 0; i < source.length; ++i) {
+        var point = transform.map(new QPointF(source[i][0], source[i][1]));
+        check(Math.abs(point.x() - target[i][0]) < 1e-8
+              && Math.abs(point.y() - target[i][1]) < 1e-8,
+              label + " did not write the output transform");
+    }
+}
+var squareCoords = [[0, 0], [1, 0], [1, 1], [0, 1]];
+var rectangleCoords = [[10, 20], [12, 20], [12, 23], [10, 23]];
+var square = makeQuad(squareCoords);
+var rectangle = makeQuad(rectangleCoords);
+var output = new QTransform();
+output.translate(123, 321);
+check(QTransform.quadToQuad(square, rectangle, output), "quadToQuad failed");
+checkMapping(output, squareCoords, rectangleCoords, "quadToQuad");
+check(QTransform.quadToSquare(rectangle, output), "quadToSquare failed");
+checkMapping(output, rectangleCoords, squareCoords, "quadToSquare");
+check(QTransform.squareToQuad(rectangle, output), "squareToQuad failed");
+checkMapping(output, squareCoords, rectangleCoords, "squareToQuad");
+var degenerate = makeQuad([[0, 0], [1, 0], [2, 0], [3, 0]]);
+check(!QTransform.quadToQuad(degenerate, rectangle, new QTransform())
+      && !QTransform.quadToQuad(square, degenerate, new QTransform())
+      && !QTransform.quadToSquare(degenerate, new QTransform())
+      && !QTransform.squareToQuad(degenerate, new QTransform()),
+      "degenerate quad conversion must fail");
+var invalidOutputs = [null, undefined, {}, new QKeySequence()];
+var conversions = [
+    function(value) { QTransform.quadToQuad(square, rectangle, value); },
+    function(value) { QTransform.quadToSquare(rectangle, value); },
+    function(value) { QTransform.squareToQuad(rectangle, value); }
+];
+for (var c = 0; c < conversions.length; ++c) {
+    for (var j = 0; j < invalidOutputs.length; ++j) {
+        var error = null;
+        try { conversions[c](invalidOutputs[j]); } catch (caught) { error = caught; }
+        check(error !== null && error.name === "TypeError", "invalid transform output accepted");
+    }
+}
+
+// Swap must exchange both wrapped objects; aliases and self-swaps preserve
+// the same identity rather than replacing a temporary copy.
+function checkGuiSwap(a, b, fingerprint, wrong) {
+    var oldA = fingerprint(a), oldB = fingerprint(b), alias = b;
+    check(oldA !== oldB, "swap fixtures must differ");
+    a.swap(b);
+    check(fingerprint(a) === oldB && fingerprint(b) === oldA
+          && fingerprint(alias) === oldA, "GUI swap did not exchange both objects");
+    a.swap(b);
+    a.swap(a);
+    check(fingerprint(a) === oldA && fingerprint(b) === oldB, "GUI repeat/self swap failed");
+    var invalid = [null, undefined, {}, wrong];
+    for (var i = 0; i < invalid.length; ++i) {
+        var error = null;
+        try { a.swap(invalid[i]); } catch (caught) { error = caught; }
+        check(error !== null && error.name === "TypeError" && fingerprint(a) === oldA,
+              "invalid GUI swap must throw without changing the receiver");
+    }
+}
+var pathA = new QPainterPath(), pathB = new QPainterPath();
+pathA.moveTo(1, 2);
+pathA.lineTo(3, 4);
+pathB.moveTo(10, 20);
+pathB.lineTo(30, 50);
+checkGuiSwap(pathA, pathB, function(path) {
+    var point = path.currentPosition(), box = path.boundingRect();
+    return [path.elementCount(), point.x(), point.y(), box.x(), box.y(),
+            box.width(), box.height()].join("|");
+}, new QKeySequence());
+checkGuiSwap(new QKeySequence("Ctrl+A", QKeySequence.PortableText),
+             new QKeySequence("Alt+B", QKeySequence.PortableText),
+             function(key) { return key.toString(QKeySequence.PortableText); }, new QPainterPath());
+
 print("GUI regression smoke passed");

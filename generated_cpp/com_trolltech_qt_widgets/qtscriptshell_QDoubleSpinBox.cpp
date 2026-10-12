@@ -285,9 +285,10 @@ void QtScriptShell_QDoubleSpinBox::fixup(QString&  str) const
         QDoubleSpinBox::fixup(str);
     } else {
         QScriptEngine *_q_engine = __qtscript_self.engine();
-        _q_function.call(__qtscript_self,
-            QScriptValueList()
-            << qScriptValueFromValue(_q_engine, str));
+        QScriptValue _q_result =
+            _q_function.call(__qtscript_self,
+                             QScriptValueList() << qScriptValueFromValue(_q_engine, str));
+        if( !_q_engine->hasUncaughtException() && _q_result.isString() ) str = _q_result.toString();
     }
 }
 
@@ -709,10 +710,29 @@ QValidator::State  QtScriptShell_QDoubleSpinBox::validate(QString&  input, int& 
         return QDoubleSpinBox::validate(input, pos);
     } else {
         QScriptEngine *_q_engine = __qtscript_self.engine();
-        return qscriptvalue_cast<QValidator::State >(_q_function.call(__qtscript_self,
-            QScriptValueList()
-            << qScriptValueFromValue(_q_engine, input)
-            << qScriptValueFromValue(_q_engine, pos)));
+        QScriptValue _q_result =
+            _q_function.call(__qtscript_self,
+                             QScriptValueList() << qScriptValueFromValue(_q_engine, input)
+                                                << qScriptValueFromValue(_q_engine, pos));
+        if( _q_engine->hasUncaughtException() ) return QValidator::Invalid;
+        if( _q_result.isObject() )
+        {
+            QScriptValue _q_state = _q_result.property("state");
+            if( _q_engine->hasUncaughtException() ) return QValidator::Invalid;
+            if( _q_state.isValid() )
+            {
+                QValidator::State _q_value = qscriptvalue_cast<QValidator::State>(_q_state);
+                if( _q_engine->hasUncaughtException() ) return QValidator::Invalid;
+                QScriptValue _q_input = _q_result.property("input");
+                if( _q_engine->hasUncaughtException() ) return QValidator::Invalid;
+                QScriptValue _q_pos = _q_result.property("pos");
+                if( _q_engine->hasUncaughtException() ) return QValidator::Invalid;
+                if( _q_input.isString() ) input = _q_input.toString();
+                if( _q_pos.isNumber() ) pos = _q_pos.toInt32();
+                return _q_value;
+            }
+        }
+        return qscriptvalue_cast<QValidator::State>(_q_result);
     }
 }
 

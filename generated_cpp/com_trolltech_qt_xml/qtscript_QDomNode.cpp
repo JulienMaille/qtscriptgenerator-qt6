@@ -899,17 +899,23 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
     case 46:
     if (context->argumentCount() == 2) {
 
-                QTextStream & _q_arg0 = *qscriptvalue_cast<QTextStream*>(context->argument(0));
-                        int _q_arg1 = context->argument(1).toInt32();
-        _q_self->save(_q_arg0, _q_arg1);
+        QTextStream* _q_arg0 = qscriptvalue_cast<QTextStream*>(context->argument(0));
+        if (!_q_arg0)
+            return context->throwError(QScriptContext::TypeError,
+                QString::fromLatin1("QDomNode.save(): argument 1 must be a QTextStream"));
+        int _q_arg1 = context->argument(1).toInt32();
+        _q_self->save(*_q_arg0, _q_arg1);
         return context->engine()->undefinedValue();
     }
     if (context->argumentCount() == 3) {
 
-                QTextStream & _q_arg0 = *qscriptvalue_cast<QTextStream*>(context->argument(0));
-                        int _q_arg1 = context->argument(1).toInt32();
+        QTextStream* _q_arg0 = qscriptvalue_cast<QTextStream*>(context->argument(0));
+        if (!_q_arg0)
+            return context->throwError(QScriptContext::TypeError,
+                QString::fromLatin1("QDomNode.save(): argument 1 must be a QTextStream"));
+        int _q_arg1 = context->argument(1).toInt32();
         QDomNode::EncodingPolicy _q_arg2 = qscriptvalue_cast<QDomNode::EncodingPolicy>(context->argument(2));
-        _q_self->save(_q_arg0, _q_arg1, _q_arg2);
+        _q_self->save(*_q_arg0, _q_arg1, _q_arg2);
         return context->engine()->undefinedValue();
     }
     break;
@@ -1024,6 +1030,9 @@ static QScriptValue qtscript_QDomNode_prototype_call(QScriptContext *context, QS
     case 62:
     if (context->argumentCount() == 1) {
         QTextStream* _q_arg0 = qscriptvalue_cast<QTextStream*>(context->argument(0));
+        if (!_q_arg0)
+            return context->throwError(QScriptContext::TypeError,
+                QString::fromLatin1("QDomNode.writeTo(): argument 1 must be a QTextStream"));
         operator<<(*_q_arg0, *_q_self);
         return context->engine()->undefinedValue();
     }
