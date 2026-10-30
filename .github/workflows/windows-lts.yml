@@ -6,9 +6,15 @@ on:
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Publish this tag to its GitHub release (for example v0.2.2)'
+        type: string
+        required: false
 
 permissions:
-  contents: read
+  contents: write
+  actions: read
 
 env:
   QT_VERSION: '6.8.3'
@@ -29,6 +35,10 @@ jobs:
     steps:
       - name: Check out bindings
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # A dispatch naming a tag builds that tag: that is how a release
+          # published before this step existed is rebuilt.
+          ref: ${{ inputs.release_tag || github.sha }}
 
       - name: Check out QtScript port
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -76,3 +86,33 @@ jobs:
             qtbindings/qs_eval/release/qs_eval.exe
           if-no-files-found: error
           retention-days: 3
+      - name: Publish release assets
+        # Publishing is a durable copy: the uploaded artifact is kept three days
+        # only, so a tag left without this step loses its binaries. The raw
+        # artifact zip is republished as the release asset, which is what the
+        # v0.1.0 assets are, so nothing invents a new archive layout.
+        if: startsWith(github.ref, 'refs/tags/v') || inputs.release_tag != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="${{ inputs.release_tag }}"
+          if [ -z "$tag" ]; then tag="${GITHUB_REF_NAME}"; fi
+          name="qtscriptgenerator-qt${QT_VERSION}-${QT_ARTIFACT_ID}-Release"
+          asset="${name}.zip"
+          echo "Publishing ${asset} to ${tag}"
+          json=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts")
+          id=$(printf '%s' "$json" | jq -r --arg n "$name" '.artifacts[] | select(.name == $n) | .id' | head -n 1)
+          if [ -z "$id" ]; then
+            echo "Artifact ${name} not found in run ${GITHUB_RUN_ID}" >&2
+            exit 1
+          fi
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}/zip" > "$asset"
+          if ! gh release view "$tag" > /dev/null 2>&1; then
+            # Two platforms can publish to the same release at once: losing the
+            # race is fine as long as the release exists afterwards.
+            gh release create "$tag" --title "$tag" --generate-notes \
+              || gh release view "$tag" > /dev/null 2>&1
+          fi
+          gh release upload "$tag" "$asset" --clobber
