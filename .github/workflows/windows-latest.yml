@@ -29,7 +29,9 @@ concurrency:
 jobs:
   build:
     name: Qt 6.12 MSVC 2026 (Release)
-    runs-on: windows-2025
+    # Pin the image so the QtScript dependency is built with the VS 2026
+    # toolset, matching the Qt 6.12 Windows CI line in qtscript-qt6.
+    runs-on: windows-2025-vs2026
     timeout-minutes: 60
 
     steps:
